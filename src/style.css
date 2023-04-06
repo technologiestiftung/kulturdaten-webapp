@@ -106,22 +106,3 @@
 		grid-template-columns: repeat(2, minmax(0, 1fr));
 	}
 }
-
-* {
-	font-family: var(--font-family-sans);
-}
-
-p {
-	margin: 0;
-}
-
-kol-kolibri {
-	display: block;
-	margin: 0 auto;
-	width: 200px;
-}
-
-kol-link::after,
-kol-link::before {
-	content: ' ';
-}

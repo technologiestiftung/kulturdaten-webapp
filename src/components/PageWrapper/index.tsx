@@ -7,10 +7,10 @@ interface PageWrapperProps {
 const PageWrapper: FC<PageWrapperProps> = ({ children }: PageWrapperProps) => {
 	return (
 		<>
-			<header className="text-center">
+			<header className="text-center w-full">
 				<strong className="text-2xl">Kulturdatenbank APP</strong>
 			</header>
-			<main className="flex w-xl max-w-7xl text-center">
+			<main className="w-full flex w-xl max-w-7xl text-center mx-auto justify-center">
 				<div>{children}</div>
 			</main>
 		</>
