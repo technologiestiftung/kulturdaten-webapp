@@ -3,28 +3,62 @@ import React from 'react';
 import PageWrapper from '../components/PageWrapper';
 import { UserContext } from '../contexts/userContext';
 import { InputTypeOnDefault, KoliBriFormCallbacks } from '@public-ui/components';
+import { UsersApi, UsersPostOperationRequest } from '../generated-api-client';
+
+const usersApi = new UsersApi();
 
 // TODO: mobile screen hook -> https://github.com/technologiestiftung/energiekarte/blob/main/src/lib/hooks/useHasMobileSize/index.ts
 
 const Registration = () => {
 	const { registered, register } = React.useContext(UserContext);
 
+	const [email, setEmail] = React.useState<string>('');
+	const [password, setPassword] = React.useState<string>('');
+	const [passwordRepeat, setPasswordRepeat] = React.useState<string>('');
+
+	const createUser = async () => {
+		const body: UsersPostOperationRequest = {
+			usersPostRequest: {
+				email,
+				password,
+				firstName: 'testgen', //TODO: to be replaced
+				lastName: 'test', //TODO: to be replaced
+			},
+		};
+
+		try {
+			await usersApi.usersPost(body); // call the method with the request body
+			console.log('User created successfully');
+			register();
+		} catch (error) {
+			console.error('Error creating user:', error); // handle any errors
+		}
+	};
+
 	const submit: KoliBriFormCallbacks = {
 		onSubmit: (event: Event) => {
-			console.log('submit');
-			console.log('event: ', event);
-			//API POST REQUEST HAPPENS HERE
-			register();
+			//TODO: Validation & Error Display
+			createUser();
 		},
 	};
 
 	const on = {
 		onChange: (event: Event, value: string) => {
-			const inputField = event;
-			console.log('input: ', inputField);
-			console.log('value: ', value);
-			console.log('event: ', event);
-			//TODO: Validation
+			event.preventDefault();
+			const target = event.target as HTMLInputElement;
+			switch (target.id) {
+				case 'email':
+					setEmail(value);
+					break;
+				case 'main_passwort':
+					setPassword(value);
+					break;
+				case 'repeat_passwort':
+					setPasswordRepeat(value);
+					break;
+				default:
+					break;
+			}
 		},
 	};
 
@@ -39,10 +73,10 @@ const Registration = () => {
 						<KolInputText _id="email" _on={on as InputTypeOnDefault} _required _placeholder="z.B. email@example.com">
 							E-Mail
 						</KolInputText>
-						<KolInputPassword _id="main_passwort" _required _name="main_passwort" _placeholder="mind. 8 Zeichen">
+						<KolInputPassword _id="main_passwort" _on={on as InputTypeOnDefault} _required _name="main_passwort" _placeholder="mind. 8 Zeichen">
 							Passwort
 						</KolInputPassword>
-						<KolInputPassword _id="repeat_passwort" _required _name="repeat_passwort" _placeholder="mind. 8 Zeichen">
+						<KolInputPassword _id="repeat_passwort" _on={on as InputTypeOnDefault} _required _name="repeat_passwort" _placeholder="mind. 8 Zeichen">
 							Passwort bestätigen
 						</KolInputPassword>
 						<KolInputCheckbox _id="checkbox" _required>

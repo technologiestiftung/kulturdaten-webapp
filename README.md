@@ -14,6 +14,18 @@ Um die Abhängigkeiten des Projekts zu installieren, wird folgender Befehl verwe
 
 `npm i` oder alternativ `npm i --legacy-peer-deps`, wenn es nachvollziehbare Probleme mit den Peer-Dependencies gibt.
 
+
+## Install API client from OpenAPI SPEC
+
+OpenAPI provides a .yml file with its specs via http://localhost:5000/v1/spec
+
+This file has to be named openAPI-specs.yml and placed in the root directory
+
+now you can rund `npm run build-client` and the client will be build in src/generated-api-client
+
+> For this script to run you need a Java Runtime linked to your systems PATH. If `java -version` returns an error install a current JDK version and make sure it's available from your terminal
+
+
 ## Entwicklung
 
 Zum Entwickeln der Anwendung wird folgender Befehl verwendet:
