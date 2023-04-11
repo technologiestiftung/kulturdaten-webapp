@@ -6,7 +6,7 @@ import { InputTypeOnDefault, KoliBriFormCallbacks } from '@public-ui/components'
 
 // TODO: mobile screen hook -> https://github.com/technologiestiftung/energiekarte/blob/main/src/lib/hooks/useHasMobileSize/index.ts
 
-const registration = () => {
+const Registration = () => {
 	const { registered, register } = React.useContext(UserContext);
 
 	const submit: KoliBriFormCallbacks = {
@@ -24,6 +24,7 @@ const registration = () => {
 			console.log('input: ', inputField);
 			console.log('value: ', value);
 			console.log('event: ', event);
+			//TODO: Validation
 		},
 	};
 
@@ -56,4 +57,4 @@ const registration = () => {
 	);
 };
 
-export default registration;
+export default Registration;
