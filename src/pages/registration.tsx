@@ -3,11 +3,11 @@ import React from 'react';
 import PageWrapper from '../components/PageWrapper';
 import { UserContext } from '../contexts/userContext';
 import { InputTypeOnDefault, KoliBriFormCallbacks } from '@public-ui/components';
-import { UsersApi, UsersPostOperationRequest } from '../generated-api-client';
-
-const usersApi = new UsersApi();
+import { UsersService, CreateUser } from '../generated-api-client';
 
 // TODO: mobile screen hook -> https://github.com/technologiestiftung/energiekarte/blob/main/src/lib/hooks/useHasMobileSize/index.ts
+
+const createUserCall = UsersService.postUsers;
 
 const Registration = () => {
 	const { registered, register } = React.useContext(UserContext);
@@ -17,17 +17,15 @@ const Registration = () => {
 	const [passwordRepeat, setPasswordRepeat] = React.useState<string>('');
 
 	const createUser = async () => {
-		const body: UsersPostOperationRequest = {
-			usersPostRequest: {
-				email,
-				password,
-				firstName: 'testgen', //TODO: to be replaced
-				lastName: 'test', //TODO: to be replaced
-			},
+		const body = {
+			email,
+			password,
+			firstName: 'testgen', //TODO: to be replaced
+			lastName: 'test', //TODO: to be replaced
 		};
 
 		try {
-			await usersApi.usersPost(body); // call the method with the request body
+			await createUserCall(body as CreateUser); // call the method with the request body
 			console.log('User created successfully');
 			register();
 		} catch (error) {
