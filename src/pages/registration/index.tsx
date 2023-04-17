@@ -1,4 +1,5 @@
 import {
+	KolAlert,
 	KolButton,
 	KolForm,
 	KolInputCheckbox,
@@ -7,38 +8,50 @@ import {
 	KolLink,
 } from '@public-ui/react';
 import React from 'react';
-import PageWrapper from '../components/PageWrapper';
-import { UserContext } from '../contexts/userContext';
+import PageWrapper from '../../components/PageWrapper';
+import { UserContext } from '../../contexts/userContext';
 import { InputTypeOnDefault, KoliBriFormCallbacks } from '@public-ui/components';
-import { UsersService, CreateUser } from '../generated-api-client';
+import { validateEmail, validatePassword, validatePasswordRepeat } from './validation';
 
 // TODO: mobile screen hook -> https://github.com/technologiestiftung/energiekarte/blob/main/src/lib/hooks/useHasMobileSize/index.ts
 
 const Registration = () => {
 	const { registered, register } = React.useContext(UserContext);
 
-	const initialErrorState = {
+	interface ErrorState {
+		email: string | undefined;
+		mainPasswort: string | undefined;
+		repeatPasswort: string | undefined;
+	}
+
+	const initialErrorState: ErrorState = {
 		email: '',
-		main_passwort: '',
-		repeat_passwort: '',
+		mainPasswort: '',
+		repeatPasswort: '',
 	};
 
-	const initialPristineState = {
+	interface PristineState {
+		email: boolean;
+		mainPasswort: boolean;
+		repeatPasswort: boolean;
+	}
+
+	const initialPristineState: PristineState = {
 		email: true,
-		main_passwort: true,
-		repeat_passwort: true,
+		mainPasswort: true,
+		repeatPasswort: true,
 	};
 
-	const [email, setEmail] = React.useState<string>('');
-	const [password, setPassword] = React.useState<string>('');
-	const [passwordRepeat, setPasswordRepeat] = React.useState<string>('');
-	const [errors, setErrors] = React.useState(initialErrorState);
-	const [pristine, setPristine] = React.useState(initialPristineState);
+	const [email, emailSet] = React.useState<string>('');
+	const [mainPassword, mainPasswordSet] = React.useState<string>('');
+	const [passwordRepeat, passwordRepeatSet] = React.useState<string>('');
+	const [errorState, errorStateSet] = React.useState<ErrorState>(initialErrorState);
+	const [pristine, pristineSet] = React.useState<PristineState>(initialPristineState);
 
 	const createUser = async () => {
 		const body = {
 			email,
-			password,
+			mainPassword,
 			firstName: 'testname', // TODO: to be replaced
 			lastName: 'testlastname', // TODO: to be replaced
 		};
@@ -85,13 +98,25 @@ const Registration = () => {
 			const target = event.target as HTMLInputElement;
 			switch (target.id) {
 				case 'email':
-					setEmail(value);
+					emailSet(value);
+					if (errorState.email !== '') {
+						errorStateSet({ ...errorState, email: validateEmail(email) });
+					}
 					break;
-				case 'main_passwort':
-					setPassword(value);
+				case 'mainPasswort':
+					mainPasswordSet(value);
+					if (errorState.mainPasswort !== '') {
+						errorStateSet({ ...errorState, mainPasswort: validatePassword(mainPassword) });
+					}
 					break;
-				case 'repeat_passwort':
-					setPasswordRepeat(value);
+				case 'repeatPasswort':
+					passwordRepeatSet(value);
+					if (errorState.repeatPasswort !== '') {
+						errorStateSet({
+							...errorState,
+							repeatPasswort: validatePasswordRepeat(mainPassword, passwordRepeat),
+						});
+					}
 					break;
 				default:
 					break;
@@ -100,7 +125,23 @@ const Registration = () => {
 		onBlur: (event: Event) => {
 			event.preventDefault();
 			const target = event.target as HTMLInputElement;
-			setPristine({ ...pristine, [target.id]: false });
+			pristineSet({ ...pristine, [target.id]: false });
+			switch (target.id) {
+				case 'email':
+					errorStateSet({ ...errorState, email: validateEmail(email) });
+					validateEmail(email);
+					break;
+				case 'mainPasswort':
+					errorStateSet({ ...errorState, mainPasswort: validatePassword(mainPassword) });
+					break;
+				case 'repeatPasswort':
+					errorStateSet({
+						...errorState,
+						repeatPasswort: validatePasswordRepeat(mainPassword, passwordRepeat),
+					});
+					break;
+				default:
+			}
 		},
 	};
 
@@ -119,29 +160,31 @@ const Registration = () => {
 							_on={on as InputTypeOnDefault}
 							_required
 							_placeholder="z.B. email@example.com"
-							_error="Passwort muss mind. 8 Zeichen lang sein"
+							_error={errorState.email}
 							_touched={!pristine.email}
 						>
 							E-Mail
+							<KolAlert slot="export">Hello</KolAlert>
 						</KolInputText>
 						<KolInputPassword
-							_id="main_passwort"
+							_id="mainPasswort"
 							_on={on as InputTypeOnDefault}
 							_required
-							_name="main_passwort"
-							_error="Passwort muss mind. 8 Zeichen lang sein"
+							_name="mainPasswort"
+							_error={errorState.mainPasswort}
 							_placeholder="mind. 8 Zeichen"
-							_touched={!pristine.main_passwort}
+							_touched={!pristine.mainPasswort}
 						>
 							Passwort
 						</KolInputPassword>
 						<KolInputPassword
-							_id="repeat_passwort"
+							_id="repeatPasswort"
 							_on={on as InputTypeOnDefault}
 							_required
-							_name="repeat_passwort"
+							_name="repeatPasswort"
+							_error={errorState.repeatPasswort}
 							_placeholder="mind. 8 Zeichen"
-							_touched={!pristine.repeat_passwort}
+							_touched={!pristine.repeatPasswort}
 						>
 							Passwort bestätigen
 						</KolInputPassword>

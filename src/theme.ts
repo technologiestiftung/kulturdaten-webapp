@@ -9,7 +9,8 @@ export const KulturDBTheme = {
 		--gray-350: #c8c8c8;
 		--border-color: #0b1d1e;
 		--clumsy-carmine: #993539;
-		--error: red;
+		--error: #cc411e;
+		--error-bg-color: #fbeff0;
 		--border-radius: 4px;
 		--box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.08),
 			0px 0px 16px rgba(0, 0, 0, 0.07);
@@ -85,10 +86,14 @@ export const KulturDBTheme = {
 		font-size: 16px;
 		box-shadow: var(--box-shadow);
 	}
+	.error input {
+		border-color: var(--error);
+		background-color: var(--error-bg-color);
+	}
 	.error {
 		color: var(--error);
-		border-color: var(--error);
 	}
+
 	input:disabled {
 		background-color: var(--color-input-bg-default);
 		border-color: var(--border-color);
@@ -131,9 +136,12 @@ export const KulturDBTheme = {
 		font-size: 16px;
 		box-shadow: var(--box-shadow);
 	}
+	.error input {
+		border-color: var(--error);
+		background-color: var(--error-bg-color);
+	}
 	.error {
 		color: var(--error);
-		border-color: var(--error);
 	}
 	input:disabled {
 		background-color: var(--color-input-bg-default);
@@ -143,6 +151,10 @@ export const KulturDBTheme = {
 	kol-alert {
 		margin-top: calc(2 * var(--spacing));
 		display: block;
+	}
+
+	kol-alert .error {
+		border-width: 0;
 	}
 	.kol-required span::after {
 		content: "*";
