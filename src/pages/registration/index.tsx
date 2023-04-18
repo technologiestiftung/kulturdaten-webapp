@@ -49,52 +49,55 @@ const Registration = () => {
 	const [pristine, pristineSet] = React.useState<PristineState>(initialPristineState);
 
 	const createUser = async () => {
-		const body = {
-			email,
-			mainPassword,
-			firstName: 'testname', // TODO: to be replaced
-			lastName: 'testlastname', // TODO: to be replaced
-		};
+		if (
+			!Object.values(pristine).includes(true) &&
+			Object.values(errorState).reduce((acc, curr) => acc + curr, '').length === 0
+		) {
+			const body = {
+				email,
+				password: mainPassword,
+				firstName: 'testname', // TODO: to be replaced
+				lastName: 'testlastname', // TODO: to be replaced
+			};
 
-		try {
-			const response = await fetch('/api/registration', {
-				method: 'POST',
-				body: JSON.stringify(body),
-				headers: {
-					'Content-Type': 'application/json',
-				},
-			});
+			try {
+				const response = await fetch('/api/registration', {
+					method: 'POST',
+					body: JSON.stringify(body),
+					headers: {
+						'Content-Type': 'application/json',
+					},
+				});
 
-			if (response.ok) {
-				console.log('User created successfully');
-				register();
-			} else {
-				const { errors } = await response.json();
-				const invalidInputFields = errors.map((error) =>
-					error.children.nest.map((child) => child.children.nest.map((child) => child.children.at))
-				)[0][0][0];
-				console.log('INVALIDS', invalidInputFields);
-
-				//DISPLAY ERRORS AT EQUIVALENT INPUT
-				console.error('Failed to create user:', response);
-				// Handle error response from server
+				if (response.ok) {
+					console.log('User created successfully');
+					register();
+				} else {
+					console.error('Error creating userresponse:', response);
+					switch (response.status) {
+						case 409:
+							errorStateSet({ ...errorState, email: 'Email bereits vergeben' });
+							break;
+						default:
+							errorStateSet({ ...errorState, email: 'Unbekannter Fehler' });
+					}
+				}
+			} catch (error) {
+				console.error('Error creating user:', error);
 			}
-		} catch (error) {
-			console.error('Error creating user:', error);
-			// Handle network error
+		} else {
+			console.log('errors');
 		}
 	};
 
 	const submit: KoliBriFormCallbacks = {
 		onSubmit: (event: Event) => {
-			//TODO: Validation & Error Display
 			createUser();
 		},
 	};
 
 	const on = {
 		onChange: (event: Event, value: string) => {
-			event.preventDefault();
 			const target = event.target as HTMLInputElement;
 			switch (target.id) {
 				case 'email':
@@ -123,7 +126,6 @@ const Registration = () => {
 			}
 		},
 		onBlur: (event: Event) => {
-			event.preventDefault();
 			const target = event.target as HTMLInputElement;
 			pristineSet({ ...pristine, [target.id]: false });
 			switch (target.id) {
