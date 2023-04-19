@@ -1,4 +1,3 @@
-import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import PageWrapper from '../../components/PageWrapper';
 import { Input } from '../../components/input';
@@ -34,28 +33,34 @@ const LoginPage = () => {
 
 	return (
 		<PageWrapper>
-			<form onSubmit={handleLogin}>
-				<Input
-					type="email"
-					label={'email'}
-					required
-					placeholder={'some@mail.com'}
-					onChange={(value, pristine, error) => onEmailChange(value, pristine, error)}
-					validate={(value) => validateEmail(value)}
-				/>
-				<Input
-					type="password"
-					label={'password'}
-					required
-					placeholder={'this-super-secret-password'}
-					onChange={(value) => onPasswordChange(value)}
-					validate={(value) => validatePassword(value)}
-				/>
-				<button type="submit" className="btn btn-primary">
-					Login
-				</button>
-			</form>
-			{error && <p>{error}</p>}
+			<div className="w-full max-w-110 desktop:max-w-130">
+				<h1>Bei kulturdaten.berlin einloggen</h1>
+				<p className="mt-2 mb-8">
+					kulturdaten.berlin ist kostenlos - und macht deine Programminfos einfacher zugänglich!
+				</p>
+				<form onSubmit={handleLogin}>
+					<Input
+						type="email"
+						label={'Email'}
+						required
+						placeholder={'Hier bitte Email eingeben … '}
+						onChange={(value, pristine, error) => onEmailChange(value, pristine, error)}
+						validate={(value) => validateEmail(value)}
+					/>
+					<Input
+						type="password"
+						label={'Password'}
+						required
+						placeholder={'Hier bitte Passwort eingeben … '}
+						onChange={(value) => onPasswordChange(value)}
+						validate={(value) => validatePassword(value)}
+					/>
+					<button data-type="submit" className="btn">
+						Login
+					</button>
+				</form>
+				{error && <p>{error}</p>}
+			</div>
 		</PageWrapper>
 	);
 };

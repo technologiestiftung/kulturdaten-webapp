@@ -42,17 +42,17 @@ export const Input = ({ type, label, placeholder, validate, onChange, required }
 	}, [value, onChange]);
 
 	return (
-		<div className="mb-4">
-			<label className="flex flex-col">
+		<div className="mb-8">
+			<label className="flex flex-col font-bold">
 				{label}
 				<input
-					className="border border-black rounded-md p-2"
-					type={type}
-					value={value}
+					className="border border-black rounded-md font-normal p-2 text-sm leading-6"
+					data-type={type}
+					data-value={value}
 					placeholder={placeholder}
 					onChange={handleChange}
 					onBlur={handleBlur}
-					required={required}
+					data-required={required}
 				/>
 			</label>
 			{error && <span style={{ color: 'red' }}>{error}</span>}
