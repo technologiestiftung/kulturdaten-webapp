@@ -8,6 +8,6 @@ export const validatePassword = (password: string): string => {
 	return password.length >= 8 ? '' : 'Bitte gib ein Passwort mit mindestens 8 Zeichen ein';
 };
 
-export const validatePasswordRepeat = (password: string, passwordRepeat: string): string => {
+export const validateRepeatPassword = (password: string, passwordRepeat: string): string => {
 	return password === passwordRepeat ? '' : 'Passwörter stimmen nicht überein';
 };

@@ -1,18 +1,10 @@
-import {
-	KolAlert,
-	KolButton,
-	KolForm,
-	KolInputCheckbox,
-	KolInputPassword,
-	KolInputText,
-	KolLink,
-} from '@public-ui/react';
 import React from 'react';
 import PageWrapper from '../../components/PageWrapper';
 import { UserContext } from '../../contexts/userContext';
-import { InputTypeOnDefault, KoliBriFormCallbacks } from '@public-ui/components';
-import { validateEmail, validatePassword, validatePasswordRepeat } from './validation';
+import { validateEmail, validatePassword, validateRepeatPassword } from './validation';
 import { UsersService } from '../../generated-api-client';
+import { Input } from '../../components/InputField';
+import { Button } from '../../components/Button';
 
 // TODO: mobile screen hook -> https://github.com/technologiestiftung/energiekarte/blob/main/src/lib/hooks/useHasMobileSize/index.ts
 
@@ -20,38 +12,39 @@ const Registration = () => {
 	const { registered, register } = React.useContext(UserContext);
 
 	interface ErrorState {
-		email: string | undefined;
-		mainPasswort: string | undefined;
-		repeatPasswort: string | undefined;
+		email: string;
+		mainPassword: string;
+		repeatPassword: string;
 	}
 
 	const initialErrorState: ErrorState = {
 		email: '',
-		mainPasswort: '',
-		repeatPasswort: '',
+		mainPassword: '',
+		repeatPassword: '',
 	};
 
 	interface PristineState {
 		email: boolean;
-		mainPasswort: boolean;
-		repeatPasswort: boolean;
+		mainPassword: boolean;
+		repeatPassword: boolean;
 	}
 
 	const initialPristineState: PristineState = {
 		email: true,
-		mainPasswort: true,
-		repeatPasswort: true,
+		mainPassword: true,
+		repeatPassword: true,
 	};
 
 	const [email, emailSet] = React.useState<string>('');
 	const [mainPassword, mainPasswordSet] = React.useState<string>('');
-	const [passwordRepeat, passwordRepeatSet] = React.useState<string>('');
+	const [repeatPassword, repeatPasswordSet] = React.useState<string>('');
 	const [errorState, errorStateSet] = React.useState<ErrorState>(initialErrorState);
-	const [pristine, pristineSet] = React.useState<PristineState>(initialPristineState);
+	const [pristineState, pristineStateSet] = React.useState<PristineState>(initialPristineState);
 
-	const createUser = async () => {
+	const handleRegistration = async (e) => {
+		e.preventDefault();
 		if (
-			!Object.values(pristine).includes(true) &&
+			!Object.values(pristineState).includes(true) &&
 			Object.values(errorState).reduce((acc, curr) => acc + curr, '').length === 0
 		) {
 			const body = {
@@ -79,66 +72,26 @@ const Registration = () => {
 				}
 			}
 		} else {
-			console.log('errors');
+			console.log('client errors');
 		}
 	};
 
-	const submit: KoliBriFormCallbacks = {
-		onSubmit: (event: Event) => {
-			createUser();
-		},
-	};
-
-	const on = {
-		onChange: (event: Event, value: string) => {
-			const target = event.target as HTMLInputElement;
-			console.log(target);
-			switch (target.id) {
-				case 'email':
-					emailSet(value);
-					if (errorState.email !== '') {
-						errorStateSet({ ...errorState, email: validateEmail(email) });
-					}
-					break;
-				// case 'mainPasswort':
-				// 	mainPasswordSet(value);
-				// 	if (errorState.mainPasswort !== '') {
-				// 		errorStateSet({ ...errorState, mainPasswort: validatePassword(mainPassword) });
-				// 	}
-				// 	break;
-				// case 'repeatPasswort':
-				// 	passwordRepeatSet(value);
-				// 	if (errorState.repeatPasswort !== '') {
-				// 		errorStateSet({
-				// 			...errorState,
-				// 			repeatPasswort: validatePasswordRepeat(mainPassword, passwordRepeat),
-				// 		});
-				// 	}
-				// 	break;
-				default:
-					break;
-			}
-		},
-		onBlur: (event: Event) => {
-			const target = event.target as HTMLInputElement;
-			pristineSet({ ...pristine, [target.id]: false });
-			switch (target.id) {
-				case 'email':
-					errorStateSet({ ...errorState, email: validateEmail(email) });
-					validateEmail(email);
-					break;
-				case 'mainPasswort':
-					errorStateSet({ ...errorState, mainPasswort: validatePassword(mainPassword) });
-					break;
-				case 'repeatPasswort':
-					errorStateSet({
-						...errorState,
-						repeatPasswort: validatePasswordRepeat(mainPassword, passwordRepeat),
-					});
-					break;
-				default:
-			}
-		},
+	const onChange = (value: string, pristine: boolean, error: string, id: string) => {
+		pristineState[id] !== pristine && pristineStateSet({ ...pristineState, [id]: pristine });
+		errorState[id] !== error && errorStateSet({ ...errorState, [id]: error });
+		switch (id) {
+			case 'email':
+				emailSet(value);
+				break;
+			case 'mainPassword':
+				mainPasswordSet(value);
+				break;
+			case 'repeatPassword':
+				repeatPasswordSet(value);
+				break;
+			default:
+				console.log('no id', id);
+		}
 	};
 
 	return (
@@ -149,50 +102,36 @@ const Registration = () => {
 				<p className="mt-2 mb-8">
 					kulturdaten.berlin ist kostenlos - und macht deine Programminfos einfacher zugänglich!
 				</p>
-				<KolForm _on={submit} _requiredText={false}>
-					<div className="flex flex-col gap-6">
-						<KolInputText
-							_id="email"
-							_on={on as InputTypeOnDefault}
-							_required
-							_placeholder="z.B. email@example.com"
-							_error={errorState.email}
-							_touched={!pristine.email}
-						>
-							E-Mail
-							<KolAlert slot="export">Hello</KolAlert>
-						</KolInputText>
-						<KolInputPassword
-							_id="mainPasswort"
-							_on={on as InputTypeOnDefault}
-							_required
-							_name="mainPasswort"
-							_error={errorState.mainPasswort}
-							_placeholder="mind. 8 Zeichen"
-							_touched={!pristine.mainPasswort}
-						>
-							Passwort
-						</KolInputPassword>
-						<KolInputPassword
-							_id="repeatPasswort"
-							_on={on as InputTypeOnDefault}
-							_required
-							_name="repeatPasswort"
-							_error={errorState.repeatPasswort}
-							_placeholder="mind. 8 Zeichen"
-							_touched={!pristine.repeatPasswort}
-						>
-							Passwort bestätigen
-						</KolInputPassword>
-						<KolInputCheckbox _id="checkbox" _required>
-							Ich habe die{' '}
-							<KolLink _href="#" _label="Nutzungsbedingungen" _target="_blanc"></KolLink> und{' '}
-							<KolLink _href="#" _label="Datenschutzerklärung" _target="_blanc"></KolLink> von
-							kulturdaten.berlin gelesen und stimme ihnen ausdrücklich zu.
-						</KolInputCheckbox>
-						<KolButton _label="Registrieren" _variant="primary" _type="submit" />
-					</div>
-				</KolForm>
+				<form onSubmit={(e) => handleRegistration(e)}>
+					<Input
+						type="email"
+						id="email"
+						label={'Email'}
+						required
+						placeholder={'Hier bitte Email eingeben … '}
+						onChange={(value, pristine, error, id) => onChange(value, pristine, error, id)}
+						validate={(value) => validateEmail(value)}
+					/>
+					<Input
+						type="password"
+						id="mainPassword"
+						label={'Password'}
+						required
+						placeholder={'Hier bitte Passwort eingeben … '}
+						onChange={(value, pristine, error, id) => onChange(value, pristine, error, id)}
+						validate={(value) => validatePassword(value)}
+					/>
+					<Input
+						type="password"
+						id="repeatPassword"
+						label={'Passwort bestätigen'}
+						required
+						placeholder={'Hier bitte Passwort eingeben … '}
+						onChange={(value, pristine, error, id) => onChange(value, pristine, error, id)}
+						validate={(value) => validateRepeatPassword(value, mainPassword)}
+					/>
+					<Button label="Registrieren" type="submit" />
+				</form>
 			</div>
 		</PageWrapper>
 	);

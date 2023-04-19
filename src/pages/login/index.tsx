@@ -1,13 +1,17 @@
 import React, { useState } from 'react';
 import PageWrapper from '../../components/PageWrapper';
-import { Input } from '../../components/input';
+import { Input } from '../../components/InputField';
 import { validateEmail, validatePassword } from '../registration/validation';
 import { AuthService } from '../../generated-api-client';
+import { Button } from '../../components/Button';
+import { useRouter } from 'next/router';
 
 const LoginPage = () => {
 	const [email, emailSet] = useState('');
 	const [password, passwordSet] = useState('');
 	const [error, errorSet] = useState<string>('');
+
+	const router = useRouter();
 
 	const onEmailChange = (value: string, pristine: boolean, error: string | null) => {
 		emailSet(value);
@@ -22,12 +26,14 @@ const LoginPage = () => {
 		try {
 			const authToken = await AuthService.postAuthToken({ email, password });
 			console.log('Login successful', authToken);
+			errorSet('');
+			router.push('/');
 		} catch (error) {
 			console.error('Error logging in:', error);
 			Object.keys(error).map((key) => {
 				console.log(key, error[key]);
 			});
-			errorSet(error.statusText);
+			errorSet('Login fehlgeschlagen');
 		}
 	};
 
@@ -41,6 +47,7 @@ const LoginPage = () => {
 				<form onSubmit={handleLogin}>
 					<Input
 						type="email"
+						id="email"
 						label={'Email'}
 						required
 						placeholder={'Hier bitte Email eingeben … '}
@@ -49,15 +56,14 @@ const LoginPage = () => {
 					/>
 					<Input
 						type="password"
+						id="password"
 						label={'Password'}
 						required
 						placeholder={'Hier bitte Passwort eingeben … '}
 						onChange={(value) => onPasswordChange(value)}
 						validate={(value) => validatePassword(value)}
 					/>
-					<button data-type="submit" className="btn">
-						Login
-					</button>
+					<Button type="submit" label="Login" />
 				</form>
 				{error && <p>{error}</p>}
 			</div>
