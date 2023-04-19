@@ -12,6 +12,7 @@ import PageWrapper from '../../components/PageWrapper';
 import { UserContext } from '../../contexts/userContext';
 import { InputTypeOnDefault, KoliBriFormCallbacks } from '@public-ui/components';
 import { validateEmail, validatePassword, validatePasswordRepeat } from './validation';
+import { UsersService } from '../../generated-api-client';
 
 // TODO: mobile screen hook -> https://github.com/technologiestiftung/energiekarte/blob/main/src/lib/hooks/useHasMobileSize/index.ts
 
@@ -61,29 +62,21 @@ const Registration = () => {
 			};
 
 			try {
-				const response = await fetch('/api/registration', {
-					method: 'POST',
-					body: JSON.stringify(body),
-					headers: {
-						'Content-Type': 'application/json',
-					},
-				});
-
-				if (response.ok) {
-					console.log('User created successfully');
-					register();
-				} else {
-					console.error('Error creating userresponse:', response);
-					switch (response.status) {
-						case 409:
-							errorStateSet({ ...errorState, email: 'Email bereits vergeben' });
-							break;
-						default:
-							errorStateSet({ ...errorState, email: 'Unbekannter Fehler' });
-					}
-				}
+				const identifier = await UsersService.postUsers(body);
+				console.log('User created successfully', identifier);
+				register();
 			} catch (error) {
 				console.error('Error creating user:', error);
+				Object.keys(error).map((key) => {
+					console.log(key, error[key]);
+				});
+				switch (error.status) {
+					case 409:
+						errorStateSet({ ...errorState, email: 'Email bereits vergeben' });
+						break;
+					default:
+						errorStateSet({ ...errorState, email: 'Unbekannter Fehler' });
+				}
 			}
 		} else {
 			console.log('errors');
@@ -99,6 +92,7 @@ const Registration = () => {
 	const on = {
 		onChange: (event: Event, value: string) => {
 			const target = event.target as HTMLInputElement;
+			console.log(target);
 			switch (target.id) {
 				case 'email':
 					emailSet(value);
@@ -106,21 +100,21 @@ const Registration = () => {
 						errorStateSet({ ...errorState, email: validateEmail(email) });
 					}
 					break;
-				case 'mainPasswort':
-					mainPasswordSet(value);
-					if (errorState.mainPasswort !== '') {
-						errorStateSet({ ...errorState, mainPasswort: validatePassword(mainPassword) });
-					}
-					break;
-				case 'repeatPasswort':
-					passwordRepeatSet(value);
-					if (errorState.repeatPasswort !== '') {
-						errorStateSet({
-							...errorState,
-							repeatPasswort: validatePasswordRepeat(mainPassword, passwordRepeat),
-						});
-					}
-					break;
+				// case 'mainPasswort':
+				// 	mainPasswordSet(value);
+				// 	if (errorState.mainPasswort !== '') {
+				// 		errorStateSet({ ...errorState, mainPasswort: validatePassword(mainPassword) });
+				// 	}
+				// 	break;
+				// case 'repeatPasswort':
+				// 	passwordRepeatSet(value);
+				// 	if (errorState.repeatPasswort !== '') {
+				// 		errorStateSet({
+				// 			...errorState,
+				// 			repeatPasswort: validatePasswordRepeat(mainPassword, passwordRepeat),
+				// 		});
+				// 	}
+				// 	break;
 				default:
 					break;
 			}

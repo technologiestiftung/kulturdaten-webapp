@@ -3,13 +3,12 @@ import React, { useState } from 'react';
 import PageWrapper from '../../components/PageWrapper';
 import { Input } from '../../components/input';
 import { validateEmail, validatePassword } from '../registration/validation';
+import { AuthService } from '../../generated-api-client';
 
 const LoginPage = () => {
 	const [email, emailSet] = useState('');
 	const [password, passwordSet] = useState('');
-	const [error, errorSet] = useState<string | null>('');
-
-	const router = useRouter();
+	const [error, errorSet] = useState<string>('');
 
 	const onEmailChange = (value: string, pristine: boolean, error: string | null) => {
 		emailSet(value);
@@ -20,26 +19,16 @@ const LoginPage = () => {
 	};
 
 	const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
-		console.log('LOGIN');
 		e.preventDefault();
 		try {
-			const response = await fetch('/api/login', {
-				method: 'POST',
-				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify({ email, password }),
-			});
-			const data = await response.json();
-			if (response.status === 200) {
-				// Login successful
-				console.log('Login successful', data);
-				router.push('/');
-			} else {
-				// Login failed
-				console.error('Error logging in:', data.error.statusText);
-				errorSet(data.error.statusText);
-			}
+			const authToken = await AuthService.postAuthToken({ email, password });
+			console.log('Login successful', authToken);
 		} catch (error) {
 			console.error('Error logging in:', error);
+			Object.keys(error).map((key) => {
+				console.log(key, error[key]);
+			});
+			errorSet(error.statusText);
 		}
 	};
 
