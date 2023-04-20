@@ -43,8 +43,9 @@ export const Input = ({
 	};
 
 	const handleBlur = () => {
-		setPristine(false);
+		const pristine = false;
 		onChange(value, pristine, error, id);
+		setPristine(pristine);
 	};
 
 	return (
