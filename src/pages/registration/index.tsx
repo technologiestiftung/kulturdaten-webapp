@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PageWrapper from '../../components/PageWrapper';
 import { UserContext } from '../../contexts/userContext';
 import { validateEmail, validatePassword, validateRepeatPassword } from './validation';
@@ -40,13 +40,22 @@ const Registration = () => {
 	const [repeatPassword, repeatPasswordSet] = React.useState<string>('');
 	const [errorState, errorStateSet] = React.useState<ErrorState>(initialErrorState);
 	const [pristineState, pristineStateSet] = React.useState<PristineState>(initialPristineState);
+	const [formValid, formValidSet] = React.useState<boolean>(false);
 
-	const handleRegistration = async (e) => {
-		e.preventDefault();
+	useEffect(() => {
 		if (
 			!Object.values(pristineState).includes(true) &&
 			Object.values(errorState).reduce((acc, curr) => acc + curr, '').length === 0
 		) {
+			formValidSet(true);
+		} else {
+			formValidSet(false);
+		}
+	}, [pristineState, errorState]);
+
+	const handleRegistration = async (e) => {
+		e.preventDefault();
+		if (formValid) {
 			const body = {
 				email,
 				password: mainPassword,
@@ -130,7 +139,8 @@ const Registration = () => {
 						onChange={(value, pristine, error, id) => onChange(value, pristine, error, id)}
 						validate={(value) => validateRepeatPassword(value, mainPassword)}
 					/>
-					<Button label="Registrieren" type="submit" />
+					{/* TODO: disabled is bad practice.. error message instead */}
+					<Button label="Registrieren" type="submit" disabled={!formValid} />
 				</form>
 			</div>
 		</PageWrapper>

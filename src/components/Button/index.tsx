@@ -18,9 +18,9 @@ export const Button = ({ label, onClick, disabled, type = ButtonTypes.BUTTON }: 
 	return (
 		<button
 			onClick={onClick}
-			data-type={type}
-			className="w-full bg-highlight p-2 text-white rounded"
-			data-disabled={disabled || false}
+			type={type}
+			className="w-full bg-highlight p-2 text-white rounded disabled:opacity-75"
+			disabled={disabled || false}
 		>
 			{label}
 		</button>

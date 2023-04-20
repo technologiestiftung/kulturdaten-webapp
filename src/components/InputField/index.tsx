@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useId } from 'react';
 
 const InputTypes = {
 	EMAIL: 'email',
@@ -33,6 +33,8 @@ export const Input = ({
 	const [error, errorSet] = useState<string>('');
 	const [pristine, setPristine] = useState(true);
 
+	const idPrefix = useId();
+
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const inputValue = e.target.value;
 		const error = validate ? validate(inputValue) : '';
@@ -49,21 +51,35 @@ export const Input = ({
 	};
 
 	return (
-		<div className="mb-8">
-			<label className="flex flex-col font-bold">
+		<div className="mb-8 flex flex-col gap-1.5">
+			<label className="font-bold" htmlFor={id + idPrefix}>
 				{label}
-				<input
-					className="border border-black rounded font-normal p-2 text-sm leading-6 placeholder:italic"
-					type={type}
-					value={value}
-					placeholder={placeholder}
-					onChange={handleChange}
-					onBlur={handleBlur}
-					required={required}
-					id={id}
-				/>
 			</label>
-			{error && !pristine && <span className="block text-warning mt-3">{error}</span>}
+			<input
+				name={id + idPrefix}
+				className="border border-black rounded font-normal p-2 text-sm leading-6 placeholder:italic"
+				type={type}
+				value={value}
+				placeholder={placeholder}
+				onChange={handleChange}
+				onBlur={handleBlur}
+				required={required}
+				aria-invalid={error.length > 0}
+				aria-describedby="errorMessage"
+				id={id}
+			/>
+			{error && !pristine && (
+				//This is the visible error message for sighted users which is not read by screen readers
+				<span id="errorMessage" className="block text-warning mt-1" aria-hidden>
+					{error}
+				</span>
+			)}
+			{/* This is an invisible error message for screen readers only */}
+			{!pristine && (
+				<p aria-live="assertive" className="sr-only">
+					{error}
+				</p>
+			)}
 		</div>
 	);
 };
