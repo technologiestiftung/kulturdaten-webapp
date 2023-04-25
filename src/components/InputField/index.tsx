@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useId } from 'react';
+import React, { useState, useId, FC } from 'react';
 
 const InputTypes = {
 	EMAIL: 'email',
@@ -18,9 +18,10 @@ interface InputProps {
 	required?: boolean;
 	placeholder: string;
 	id: string;
+	errorMessage?: string;
 }
 
-export const Input = ({
+export const Input: FC<InputProps> = ({
 	type,
 	label,
 	placeholder,
@@ -28,6 +29,7 @@ export const Input = ({
 	onChange,
 	required,
 	id,
+	errorMessage,
 }: InputProps) => {
 	const [value, valueSet] = useState('');
 	const [error, errorSet] = useState<string>('');

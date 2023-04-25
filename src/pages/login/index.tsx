@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { FC, useState } from 'react';
 import PageWrapper from '../../components/PageWrapper';
 import { Input } from '../../components/InputField';
 import { validateEmail, validatePassword } from '../registration/validation';
@@ -6,7 +6,7 @@ import { AuthService } from '../../generated-api-client';
 import { Button } from '../../components/Button';
 import { useRouter } from 'next/router';
 
-const LoginPage = () => {
+const LoginPage: FC = () => {
 	const [email, emailSet] = useState('');
 	const [password, passwordSet] = useState('');
 	const [error, errorSet] = useState<string>('');
@@ -28,12 +28,25 @@ const LoginPage = () => {
 			console.log('Login successful', authToken);
 			errorSet('');
 			router.push('/');
-		} catch (error) {
+		} catch (error: any) {
 			console.error('Error logging in:', error);
+
 			Object.keys(error).map((key) => {
 				console.log(key, error[key]);
 			});
-			errorSet('Login fehlgeschlagen');
+			if (error.status) {
+				console.log('server error', error.status);
+				switch (error.status) {
+					case 401:
+						errorSet('Login fehlgeschlagen');
+						break;
+					default:
+						errorSet('Unbekannter Fehler');
+				}
+			} else {
+				errorSet('Verbindung fehlgeschlagen');
+			}
+			errorSet('Verbindung fehlgeschlagen');
 		}
 	};
 
@@ -65,7 +78,7 @@ const LoginPage = () => {
 					/>
 					<Button type="submit" label="Login" />
 				</form>
-				{error && <p>{error}</p>}
+				{error && <p aria-live="assertive">{error}</p>}
 			</div>
 		</PageWrapper>
 	);

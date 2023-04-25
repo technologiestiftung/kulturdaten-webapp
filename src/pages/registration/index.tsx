@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { FC, FormEvent, useEffect } from 'react';
 import PageWrapper from '../../components/PageWrapper';
 import { UserContext } from '../../contexts/userContext';
 import { validateEmail, validatePassword, validateRepeatPassword } from './validation';
@@ -8,19 +8,21 @@ import { Button } from '../../components/Button';
 
 // TODO: mobile screen hook -> https://github.com/technologiestiftung/energiekarte/blob/main/src/lib/hooks/useHasMobileSize/index.ts
 
-const Registration = () => {
+const Registration: FC = () => {
 	const { registered, register } = React.useContext(UserContext);
 
 	interface ErrorState {
 		email: string;
 		mainPassword: string;
 		repeatPassword: string;
+		general: string;
 	}
 
 	const initialErrorState: ErrorState = {
 		email: '',
 		mainPassword: '',
 		repeatPassword: '',
+		general: '',
 	};
 
 	interface PristineState {
@@ -53,7 +55,7 @@ const Registration = () => {
 		}
 	}, [pristineState, errorState]);
 
-	const handleRegistration = async (e) => {
+	const handleRegistration = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		if (formValid) {
 			const body = {
@@ -66,18 +68,24 @@ const Registration = () => {
 			try {
 				const identifier = await UsersService.postUsers(body);
 				console.log('User created successfully', identifier);
+				errorStateSet(initialErrorState);
 				register();
-			} catch (error) {
+			} catch (error: any) {
 				console.error('Error creating user:', error);
 				Object.keys(error).map((key) => {
 					console.log(key, error[key]);
 				});
-				switch (error.status) {
-					case 409:
-						errorStateSet({ ...errorState, email: 'Email bereits vergeben' });
-						break;
-					default:
-						errorStateSet({ ...errorState, email: 'Unbekannter Fehler' });
+				if (error.status) {
+					console.log('server error', error.status);
+					switch (error.status) {
+						case 409:
+							errorStateSet({ ...errorState, general: 'Email bereits vergeben' });
+							break;
+						default:
+							errorStateSet({ ...errorState, general: 'Unbekannter Fehler' });
+					}
+				} else {
+					errorStateSet({ ...errorState, general: 'Verbindung fehlgeschlagen' });
 				}
 			}
 		} else {
@@ -86,7 +94,9 @@ const Registration = () => {
 	};
 
 	const onChange = (value: string, pristine: boolean, error: string, id: string) => {
+		//@ts-ignore
 		pristineState[id] !== pristine && pristineStateSet({ ...pristineState, [id]: pristine });
+		//@ts-ignore
 		errorState[id] !== error && errorStateSet({ ...errorState, [id]: error });
 		switch (id) {
 			case 'email':
@@ -120,6 +130,7 @@ const Registration = () => {
 						placeholder={'Hier bitte Email eingeben … '}
 						onChange={(value, pristine, error, id) => onChange(value, pristine, error, id)}
 						validate={(value) => validateEmail(value)}
+						errorMessage={errorState.email}
 					/>
 					<Input
 						type="password"
@@ -139,10 +150,10 @@ const Registration = () => {
 						onChange={(value, pristine, error, id) => onChange(value, pristine, error, id)}
 						validate={(value) => validateRepeatPassword(value, mainPassword)}
 					/>
-					{/* TODO: disabled is bad practice.. error message instead */}
-					<Button label="Registrieren" type="submit" disabled={!formValid} />
+					<Button label="Registrieren" type="submit" />
 				</form>
 			</div>
+			{errorState.general && <span aria-live="assertive">{errorState.general}</span>}
 		</PageWrapper>
 	);
 };

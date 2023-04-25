@@ -14,7 +14,9 @@ type UserContextProviderProps = {
 	children?: ReactNode;
 };
 
-export const UserContextProvider: FC<UserContextProviderProps> = ({ children }: UserContextProviderProps) => {
+export const UserContextProvider: FC<UserContextProviderProps> = ({
+	children,
+}: UserContextProviderProps) => {
 	const [registered, setRegistered] = useState<boolean>(false);
 	// useEffect to fetch userdata from API
 

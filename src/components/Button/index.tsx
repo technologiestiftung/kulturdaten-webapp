@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 
 const ButtonTypes = {
 	BUTTON: 'button',
@@ -14,7 +14,12 @@ interface ButtonProps {
 	disabled?: boolean;
 }
 
-export const Button = ({ label, onClick, disabled, type = ButtonTypes.BUTTON }: ButtonProps) => {
+export const Button: FC<ButtonProps> = ({
+	label,
+	onClick,
+	disabled,
+	type = ButtonTypes.BUTTON,
+}: ButtonProps) => {
 	return (
 		<button
 			onClick={onClick}
