@@ -1,10 +1,10 @@
 import React, { FC, FormEvent, useEffect } from 'react';
-import PageWrapper from '../../components/PageWrapper';
-import { UserContext } from '../../contexts/userContext';
+import PageWrapper from '@components/PageWrapper';
+import { UserContext } from '@contexts/userContext';
 import { validateEmail, validatePassword, validateRepeatPassword } from './validation';
 import { UsersService } from '../../generated-api-client';
-import { Input } from '../../components/InputField';
-import { Button } from '../../components/Button';
+import { Input } from '@components/InputField';
+import { Button } from '@components/Button';
 
 // TODO: mobile screen hook -> https://github.com/technologiestiftung/energiekarte/blob/main/src/lib/hooks/useHasMobileSize/index.ts
 
@@ -47,7 +47,9 @@ const Registration: FC = () => {
 	useEffect(() => {
 		if (
 			!Object.values(pristineState).includes(true) &&
-			Object.values(errorState).reduce((acc, curr) => acc + curr, '').length === 0
+			Object.values(errorState)
+				.filter((error) => error !== errorState.general)
+				.reduce((acc, curr) => acc + curr, '').length === 0
 		) {
 			formValidSet(true);
 		} else {
@@ -94,6 +96,7 @@ const Registration: FC = () => {
 	};
 
 	const onChange = (value: string, pristine: boolean, error: string, id: string) => {
+		errorStateSet({ ...errorState, general: '' });
 		//@ts-ignore
 		pristineState[id] !== pristine && pristineStateSet({ ...pristineState, [id]: pristine });
 		//@ts-ignore

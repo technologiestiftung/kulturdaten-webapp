@@ -1,9 +1,9 @@
 import React, { FC, useState } from 'react';
-import PageWrapper from '../../components/PageWrapper';
-import { Input } from '../../components/InputField';
+import PageWrapper from '@components/PageWrapper';
+import { Input } from '@components/InputField';
 import { validateEmail, validatePassword } from '../registration/validation';
 import { AuthService } from '../../generated-api-client';
-import { Button } from '../../components/Button';
+import { Button } from '@components/Button';
 import { useRouter } from 'next/router';
 
 const LoginPage: FC = () => {
@@ -23,10 +23,10 @@ const LoginPage: FC = () => {
 
 	const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
+		errorSet('');
 		try {
 			const authToken = await AuthService.postAuthToken({ email, password });
 			console.log('Login successful', authToken);
-			errorSet('');
 			router.push('/');
 		} catch (error: any) {
 			console.error('Error logging in:', error);
@@ -46,7 +46,6 @@ const LoginPage: FC = () => {
 			} else {
 				errorSet('Verbindung fehlgeschlagen');
 			}
-			errorSet('Verbindung fehlgeschlagen');
 		}
 	};
 
