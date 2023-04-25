@@ -5,11 +5,13 @@ import { validateEmail, validatePassword, validateRepeatPassword } from './valid
 import { UsersService } from '../../generated-api-client';
 import { Input } from '@components/InputField';
 import { Button } from '@components/Button';
+import { useRouter } from 'next/router';
 
 // TODO: mobile screen hook -> https://github.com/technologiestiftung/energiekarte/blob/main/src/lib/hooks/useHasMobileSize/index.ts
 
 const Registration: FC = () => {
 	const { registered, register } = React.useContext(UserContext);
+	const router = useRouter();
 
 	interface ErrorState {
 		email: string;
@@ -72,6 +74,7 @@ const Registration: FC = () => {
 				console.log('User created successfully', identifier);
 				errorStateSet(initialErrorState);
 				register();
+				router.push('/');
 			} catch (error: any) {
 				console.error('Error creating user:', error);
 				Object.keys(error).map((key) => {
@@ -90,8 +93,10 @@ const Registration: FC = () => {
 					errorStateSet({ ...errorState, general: 'Verbindung fehlgeschlagen' });
 				}
 			}
+		} else if (Object.values(pristineState).includes(true)) {
+			errorStateSet({ ...errorState, general: 'Mindestens ein Feld ist noch leer' });
 		} else {
-			console.log('client errors');
+			console.log('Eingabe fehlerhaft');
 		}
 	};
 

@@ -1,7 +1,6 @@
 import React, { FC, useState } from 'react';
 import PageWrapper from '@components/PageWrapper';
 import { Input } from '@components/InputField';
-import { validateEmail, validatePassword } from '../registration/validation';
 import { AuthService } from '../../generated-api-client';
 import { Button } from '@components/Button';
 import { useRouter } from 'next/router';
@@ -14,10 +13,12 @@ const LoginPage: FC = () => {
 	const router = useRouter();
 
 	const onEmailChange = (value: string, pristine: boolean, error: string | null) => {
+		errorSet('');
 		emailSet(value);
 	};
 
 	const onPasswordChange = (value: string) => {
+		errorSet('');
 		passwordSet(value);
 	};
 
@@ -64,7 +65,6 @@ const LoginPage: FC = () => {
 						required
 						placeholder={'Hier bitte Email eingeben … '}
 						onChange={(value, pristine, error) => onEmailChange(value, pristine, error)}
-						validate={(value) => validateEmail(value)}
 					/>
 					<Input
 						type="password"
@@ -73,7 +73,6 @@ const LoginPage: FC = () => {
 						required
 						placeholder={'Hier bitte Passwort eingeben … '}
 						onChange={(value) => onPasswordChange(value)}
-						validate={(value) => validatePassword(value)}
 					/>
 					<Button type="submit" label="Login" />
 				</form>
