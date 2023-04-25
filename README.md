@@ -1,47 +1,67 @@
-# Basis-Projekt für JavaScript-basierte Webanwendungen
+# Kulturdatenbank-App
 
-> **Keywords:** <u>S</u>ingle-<u>P</u>age-<u>A</u>pplication (SPA), <u>P</u>rogressive-<u>W</u>eb-<u>A</u>pplication (PWA), React, KoliBri
-
-## Package Manager
-
-Für `Node.js` gibt es `NPM` als primären Package Manager. Um den gesamten Entwicklungsprozess (Code, DevOps, Betrieb) so schlank wie möglich zu halten, wird sehr darauf geachtet, dass die Tools nicht unnötig erweitert werden. Daher verzichten wir auf den primären Einsatz von z.B. `PNPM` oder `Yarn`.
-
-> Unter der Voraussetzung, dass die `package-lock.json` im Git synchron gehalten wird, kann lokal in der Entwicklung auch `PNPM` verwendet werden. Bei `PNPM` werden die Ressourcen der Entwicklungsumgebung geschont, da alle Abhängigkeiten Projekt-übergreifend nur einmal installiert werden. Aus diesem Grund ist auch eine erneute Installation deutlich schneller als mit `NPM`.
+The GUI of the Kulturdatenbank app.
 
 ## Installation
 
-Um die Abhängigkeiten des Projekts zu installieren, wird folgender Befehl verwendet:
+1. Clone this repository: `git clone git@github.com:username/repo.git`
+2. Install dependencies: `npm install` or `yarn install`
+3. Generate API client from OpenAPI spec: 
+    - OpenAPI provides a .yml file with its specs via `http://localhost:5000/v1/spec`
+    - This file has to be named `openAPI-specs.yml` and placed in the root directory
+    - Run `npm run generate` and the client will be built in `src/generated-api-client`
 
-`npm i` oder alternativ `npm i --legacy-peer-deps`, wenn es nachvollziehbare Probleme mit den Peer-Dependencies gibt.
+## Available Scripts
 
+In the project directory, you can run:
 
-## Install API client from OpenAPI SPEC
+- `npm run build`: Builds the Next.js application for production usage.
+- `npm run format`: Runs Prettier to format source code.
+- `npm run run`: Runs the Next.js application with Node.js debugging enabled.
+- `npm run start`: Runs the Next.js development server.
+- `npm run update`: Updates dependencies with the `ncu` tool.
+- `npm run generate`: Generates an API client from an OpenAPI specification file.
 
-OpenAPI provides a .yml file with its specs via http://localhost:5000/v1/spec
+## Dependencies
 
-This file has to be named openAPI-specs.yml and placed in the root directory
+- "@types/node": "18.16.0"
+- "@types/react": "18.0.38"
+- "@types/react-dom": "18.0.11"
+- "autoprefixer": "10.4.14"
+- "classnames": "^2.3.2"
+- "eslint": "8.39.0"
+- "eslint-config-next": "13.3.1"
+- "next": "13.3.1"
+- "openapi-types": "^12.1.0"
+- "openapi-typescript-codegen": "^0.24.0"
+- "postcss": "8.4.23"
+- "react": "18.2.0"
+- "react-dom": "18.2.0"
+- "sass": "^1.62.0"
+- "tailwindcss": "3.3.1"
+- "typescript": "5.0.4"
 
-now you can rund `npm run generate` and the client will be build in src/generated-api-client
+## Content Licensing
 
+Texts and content available as [CC BY](https://creativecommons.org/licenses/by/3.0/de/).
 
-## Entwicklung
+## Credits
 
-Zum Entwickeln der Anwendung wird folgender Befehl verwendet:
-
-`npm start`
-
-## Testen
-
-Zum Testen gibt es unterschiedliche Szenarien, die jeweils in den folgenden Unterabschnitten dargestellt werden.
-
-### Unit-Testen
-
-Unit-Tests lassen sich wie folgt ausführen:
-
-`npm test` oder mit Coverage-Bericht `npm run coverage`
-
-### E2E-test
-
-E2E-Tests lassen sich wie folge ausführen:
-
-`npm run nightwatch -- -e chrome`
+<table>
+  <tr>
+    <td>
+      A project by: <a href="https://www.technologiestiftung-berlin.de/en/">
+        <br />
+        <br />
+        <img width="150" src="src/assets/tsb-logo-text.png" />
+      </a>
+    </td>
+    <td>
+      Supported by: <a href="https://www.berlin.de/sen/inneres/">
+        <br />
+        <br />
+        <img width="100" src="https://logos.citylab-berlin.org/logo-berlin-seninnds-en.svg" />
+      </a>
+    </td>
+  </tr>
+</table>
