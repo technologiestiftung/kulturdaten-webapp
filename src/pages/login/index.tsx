@@ -64,6 +64,8 @@ const LoginPage: FC = () => {
 						label={'Email'}
 						required
 						placeholder={'Hier bitte Email eingeben … '}
+						// TODO: Add validation
+						// Email case sensitive
 						onChange={(value, pristine, error) => onEmailChange(value, pristine, error)}
 					/>
 					<Input
