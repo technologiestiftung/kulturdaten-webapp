@@ -29,7 +29,6 @@ export const Input: FC<InputProps> = ({
 	onChange,
 	required,
 	id,
-	errorMessage,
 }: InputProps) => {
 	const [value, valueSet] = useState('');
 	const [error, errorSet] = useState<string>('');

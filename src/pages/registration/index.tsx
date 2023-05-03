@@ -63,10 +63,8 @@ const Registration: FC = () => {
 		e.preventDefault();
 		if (formValid) {
 			const body = {
-				email,
+				email: email.toLowerCase(),
 				password: mainPassword,
-				firstName: 'testname', // TODO: to be replaced
-				lastName: 'testlastname', // TODO: to be replaced
 			};
 
 			try {
@@ -77,20 +75,21 @@ const Registration: FC = () => {
 				router.push('/');
 			} catch (error: any) {
 				console.error('Error creating user:', error);
-				Object.keys(error).map((key) => {
-					console.log(key, error[key]);
-				});
+				// Uncomment for complete error report
+				// Object.keys(error).map((key) => {
+				// 	console.log(key, error[key]);
+				// });
 				if (error.status) {
 					console.log('server error', error.status);
 					switch (error.status) {
 						case 409:
-							errorStateSet({ ...errorState, general: 'Email bereits vergeben' });
+							errorStateSet({ ...errorState, general: `Email bereits vergeben ${error.status}` });
 							break;
 						default:
-							errorStateSet({ ...errorState, general: 'Unbekannter Fehler' });
+							errorStateSet({ ...errorState, general: `Unbekannter Fehler ${error.status}` });
 					}
 				} else {
-					errorStateSet({ ...errorState, general: 'Verbindung fehlgeschlagen' });
+					errorStateSet({ ...errorState, general: `Verbindung fehlgeschlagen ${error.status}` });
 				}
 			}
 		} else if (Object.values(pristineState).includes(true)) {
