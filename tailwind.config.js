@@ -2,7 +2,25 @@
 module.exports = {
 	content: ['./src/**/*.{js,ts,jsx,tsx}'],
 	theme: {
-		extend: {},
+		colors: {
+			white: '#FFFFFF',
+			highlight: '#993539',
+			text: '#381516',
+			error: '#CC411E',
+			warning: '#A4660A',
+			success: '#4F7D63',
+		},
+		extend: {
+			maxWidth: {
+				110: '27.5rem',
+				130: '32.5rem',
+			},
+			screens: {
+				mobile: '375px',
+				tablet: '744px',
+				desktop: '1280px',
+			},
+		},
 	},
 	plugins: [],
 };

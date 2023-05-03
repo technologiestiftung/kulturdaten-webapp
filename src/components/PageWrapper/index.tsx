@@ -1,3 +1,4 @@
+import React from 'react';
 import { FC, ReactNode } from 'react';
 
 interface PageWrapperProps {
@@ -10,7 +11,7 @@ const PageWrapper: FC<PageWrapperProps> = ({ children }: PageWrapperProps) => {
 			<header className="text-center w-full px-6">
 				<strong className="text-2xl">Kulturdatenbank APP</strong>
 			</header>
-			<main className="w-full flex w-xl max-w-7xl mx-auto justify-center px-6">
+			<main className="w-full flex w-xl max-w-desktop mx-auto justify-center px-6">
 				<div>{children}</div>
 			</main>
 		</>
