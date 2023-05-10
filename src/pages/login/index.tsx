@@ -32,6 +32,7 @@ const LoginPage: FC = () => {
 			router.push('/');
 		} catch (error: any) {
 			console.error('Error logging in:', error);
+			// Uncomment for complete error report
 			// Object.keys(error).map((key) => {
 			// 	console.log(key, error[key]);
 			// });

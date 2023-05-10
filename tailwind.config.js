@@ -14,6 +14,7 @@ module.exports = {
 			maxWidth: {
 				110: '27.5rem',
 				130: '32.5rem',
+				desktop: '1280px',
 			},
 			screens: {
 				mobile: '375px',

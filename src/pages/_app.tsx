@@ -2,6 +2,7 @@ import React from 'react';
 import App from 'next/app';
 import '../style.css';
 import '../style.scss';
+import { NextUIProvider } from '@nextui-org/react';
 import { UserContextProvider } from '../contexts/userContext';
 
 class RootApp extends App {
@@ -10,7 +11,9 @@ class RootApp extends App {
 		return (
 			<>
 				<UserContextProvider>
-					<Component {...pageProps} />
+					<NextUIProvider>
+						<Component {...pageProps} />
+					</NextUIProvider>
 				</UserContextProvider>
 			</>
 		);
