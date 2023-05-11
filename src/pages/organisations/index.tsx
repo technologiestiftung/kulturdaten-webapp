@@ -5,8 +5,9 @@ import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import React, { useState } from 'react';
 import PageWrapper from '@components/PageWrapper';
 import ContentWrapper from '@components/ContentWrapper';
+import { OrganisationTable } from '../../components/Table/OrganisationTable';
 
-interface CulturalOrganization {
+export interface CulturalOrganization {
 	id: number;
 	name: {
 		de: string;
@@ -225,10 +226,6 @@ const culturalOrganizations: CulturalOrganization[] = [
 				},
 			},
 		],
-		origin: {
-			name: 'Bezirkskalender',
-			originId: '36072',
-		},
 	},
 ];
 
@@ -281,6 +278,12 @@ const Organisations = () => {
 	return (
 		<PageWrapper>
 			<ContentWrapper>
+				<h1>TailwindUI</h1>
+				<OrganisationTable
+					headers={columns.map((column) => column.headerName)}
+					organisations={destructuredCulturalOrganizations}
+				/>
+				<Spacer y={5} />
 				<h1>NextUI</h1>
 				<Table
 					aria-label="Example table with static content"
@@ -333,8 +336,6 @@ const Organisations = () => {
 					pageSizeOptions={[5, 10]}
 					checkboxSelection
 				/>
-				<Spacer y={5} />
-				<h1>TailwindUI coming...</h1>
 			</ContentWrapper>
 		</PageWrapper>
 	);
