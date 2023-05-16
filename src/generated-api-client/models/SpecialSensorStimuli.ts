@@ -2,4 +2,6 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export type Reference = Record<string, any>;
+export type SpecialSensorStimuli = {
+};
+

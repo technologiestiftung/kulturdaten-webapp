@@ -47,7 +47,7 @@ const LoginPage: FC = () => {
 
 	return (
 		<PageWrapper>
-			<div className="w-full max-w-110 desktop:max-w-130">
+			<div className="w-full max-w-110 desktop:max-w-130 mx-auto">
 				<h1>Bei kulturdaten.berlin einloggen</h1>
 				<p className="mt-2 mb-8">
 					kulturdaten.berlin ist kostenlos - und macht deine Programminfos einfacher zugänglich!

@@ -122,7 +122,7 @@ const Registration: FC = () => {
 
 	return (
 		<PageWrapper>
-			<div className="max-w-lg">
+			<div className="max-w-lg mx-auto">
 				<h1>Registriere dich jetzt!</h1>
 				{registered ? <div>Registriert</div> : <div>Nicht registriert</div>}
 				<p className="mt-2 mb-8">

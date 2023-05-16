@@ -2,9 +2,6 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export type NotFoundError = {
-    error?: {
-        msg?: string;
-    };
+export type Categorization = {
 };
 

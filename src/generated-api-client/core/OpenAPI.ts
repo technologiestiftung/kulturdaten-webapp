@@ -19,8 +19,8 @@ export type OpenAPIConfig = {
 };
 
 export const OpenAPI: OpenAPIConfig = {
-    BASE: 'http://localhost:3000/api/v1',
-    VERSION: '1.0.0',
+    BASE: 'https://api.kulturdaten.berlin/vbeta',
+    VERSION: '0.1',
     WITH_CREDENTIALS: false,
     CREDENTIALS: 'include',
     TOKEN: undefined,
