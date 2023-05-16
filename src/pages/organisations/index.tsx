@@ -1,7 +1,3 @@
-import { Button, Table, TableProps } from '@nextui-org/react';
-import { Spacer } from '@nextui-org/react';
-import { DataGrid, GridColDef } from '@mui/x-data-grid';
-
 import React, { useState } from 'react';
 import PageWrapper from '@components/PageWrapper';
 import ContentWrapper from '@components/ContentWrapper';
@@ -253,29 +249,6 @@ const columns = [
 ];
 
 const Organisations = () => {
-	const [organisations, organisationsSet] = useState(destructuredCulturalOrganizations);
-	const [selectedMUI, selctedMUISet] = useState(null);
-	const [selectedNextUI, selectedNextUISet] = useState(null);
-
-	const sortAlphabetically = (
-		arr: typeof destructuredCulturalOrganizations,
-		key: string,
-		reverse: boolean = false
-	) => {
-		const copiedArr = [...arr];
-		const sorted = copiedArr.sort((a, b) => {
-			const keyLow = key.toLowerCase();
-			let nameA = a[keyLow].toUpperCase();
-			let nameB = b[keyLow].toUpperCase();
-			if (nameA < nameB) {
-				return -1;
-			} else {
-				return 1;
-			}
-		});
-		organisationsSet(reverse ? sorted.reverse() : sorted);
-	};
-
 	return (
 		<PageWrapper>
 			<ContentWrapper>
@@ -283,59 +256,6 @@ const Organisations = () => {
 				<OrganisationTable
 					headers={columns.map((column) => column.headerName)}
 					organisations={destructuredCulturalOrganizations}
-				/>
-				<Spacer y={5} />
-				<h1>NextUI</h1>
-				<Table
-					aria-label="Example table with static content"
-					selectionMode="single"
-					css={{
-						height: 'auto',
-						minWidth: '100%',
-					}}
-				>
-					<Table.Header>
-						{columns.map((column) => (
-							<Table.Column key={column.field}>{column.headerName}</Table.Column>
-						))}
-					</Table.Header>
-					<Table.Body>
-						{organisations.map((organisation) => (
-							<Table.Row key={organisation.name}>
-								<Table.Cell>{organisation.name}</Table.Cell>
-								<Table.Cell>{organisation.website}</Table.Cell>
-								<Table.Cell>{`${organisation.address}`}</Table.Cell>
-								<Table.Cell>{organisation.phone}</Table.Cell>
-							</Table.Row>
-						))}
-					</Table.Body>
-				</Table>
-				<Spacer y={5} />
-				<h1>MaterialUI-DataGrid</h1>
-				<button
-					className="text-black border"
-					onClick={() => sortAlphabetically(organisations, 'name')}
-				>
-					Sort Alphabetically
-				</button>
-				<Spacer y={1} />
-				<button
-					className="text-black border"
-					onClick={() => sortAlphabetically(organisations, 'name', true)}
-				>
-					Sort Alphabetically Reverse
-				</button>
-				<Spacer y={2} />
-				<DataGrid
-					rows={organisations}
-					columns={columns}
-					initialState={{
-						pagination: {
-							paginationModel: { page: 0, pageSize: 5 },
-						},
-					}}
-					pageSizeOptions={[5, 10]}
-					checkboxSelection
 				/>
 			</ContentWrapper>
 		</PageWrapper>
