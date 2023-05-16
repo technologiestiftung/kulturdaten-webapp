@@ -13,7 +13,7 @@
 		"build": "next build",
 		"format": "prettier --check src/**",
 		"run": "NODE_OPTIONS='--inspect' next start",
-		"start": "next dev",
+		"start": "next dev -p 3002",
 		"update": "ncu -t minor -u && ncu",
 		"generate": "openapi --input openAPI-specs.yml --output src/generated-api-client"
 	},

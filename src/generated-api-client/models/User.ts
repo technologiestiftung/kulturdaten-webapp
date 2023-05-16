@@ -3,6 +3,7 @@
 /* eslint-disable */
 
 export type User = {
+    '@type'?: User.'@type';
     identifier: string;
     email: string;
     password?: string;
@@ -12,4 +13,13 @@ export type User = {
     updatedAt?: string;
     permissionFlags: number;
 };
+
+export namespace User {
+
+    export enum '@type' {
+        USER = 'User',
+    }
+
+
+}
 

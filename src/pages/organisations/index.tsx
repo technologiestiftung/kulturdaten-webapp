@@ -264,8 +264,9 @@ const Organisations = () => {
 	) => {
 		const copiedArr = [...arr];
 		const sorted = copiedArr.sort((a, b) => {
-			let nameA = a[key].toUpperCase();
-			let nameB = b[key].toUpperCase();
+			const keyLow = key.toLowerCase();
+			let nameA = a[keyLow].toUpperCase();
+			let nameB = b[keyLow].toUpperCase();
 			if (nameA < nameB) {
 				return -1;
 			} else {
