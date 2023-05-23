@@ -2,7 +2,7 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export type ResourceNotFoundError = {
+export type NotFoundError = {
     error?: {
         msg?: string;
     };

@@ -1,6 +1,10 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import type { CreateOrganization } from '../models/CreateOrganization';
+import type { Organization } from '../models/Organization';
+import type { PatchOrganization } from '../models/PatchOrganization';
+
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
@@ -12,13 +16,7 @@ export class OrganizationsService {
      * @throws ApiError
      */
     public static getOrganizations(): CancelablePromise<{
-        organizations?: Array<{
-            identifier: string;
-            name: string;
-            description?: string | null;
-            createdAt?: string;
-            updatedAt?: string;
-        }>;
+        organizations?: Array<Organization>;
     }> {
         return __request(OpenAPI, {
             method: 'GET',
@@ -32,10 +30,7 @@ export class OrganizationsService {
      * @throws ApiError
      */
     public static postOrganizations(
-        requestBody?: {
-            name: string;
-            description?: string;
-        },
+        requestBody?: CreateOrganization,
     ): CancelablePromise<{
         identifier?: string;
     }> {
@@ -55,13 +50,7 @@ export class OrganizationsService {
     public static getOrganizations1(
         identifier: string,
     ): CancelablePromise<{
-        organization?: {
-            identifier: string;
-            name: string;
-            description?: string | null;
-            createdAt?: string;
-            updatedAt?: string;
-        };
+        organization?: Organization;
     }> {
         return __request(OpenAPI, {
             method: 'GET',
@@ -83,10 +72,7 @@ export class OrganizationsService {
      */
     public static patchOrganizations(
         identifier: string,
-        requestBody?: {
-            name?: string;
-            description?: string;
-        },
+        requestBody?: PatchOrganization,
     ): CancelablePromise<void> {
         return __request(OpenAPI, {
             method: 'PATCH',

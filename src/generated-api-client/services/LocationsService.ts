@@ -1,26 +1,26 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { CreateUser } from '../models/CreateUser';
-import type { PatchUser } from '../models/PatchUser';
-import type { User } from '../models/User';
+import type { CreateLocation } from '../models/CreateLocation';
+import type { Location } from '../models/Location';
+import type { PatchLocation } from '../models/PatchLocation';
 
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
 
-export class UsersService {
+export class LocationsService {
 
     /**
      * @returns any OK
      * @throws ApiError
      */
-    public static getUsers(): CancelablePromise<{
-        users?: Array<User>;
+    public static getLocations(): CancelablePromise<{
+        locations?: Array<Location>;
     }> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/users',
+            url: '/locations',
         });
     }
 
@@ -29,35 +29,32 @@ export class UsersService {
      * @returns any OK
      * @throws ApiError
      */
-    public static postUsers(
-        requestBody?: CreateUser,
+    public static postLocations(
+        requestBody?: CreateLocation,
     ): CancelablePromise<{
         identifier?: string;
     }> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/users',
+            url: '/locations',
             body: requestBody,
             mediaType: 'application/json',
-            errors: {
-                409: `Conflict`,
-            },
         });
     }
 
     /**
-     * @param identifier The user ID
+     * @param identifier The location ID
      * @returns any OK
      * @throws ApiError
      */
-    public static getUsers1(
+    public static getLocations1(
         identifier: string,
     ): CancelablePromise<{
-        user?: User;
+        location?: Location;
     }> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/users/{identifier}',
+            url: '/locations/{identifier}',
             path: {
                 'identifier': identifier,
             },
@@ -68,18 +65,18 @@ export class UsersService {
     }
 
     /**
-     * @param identifier The user ID
+     * @param identifier The location ID
      * @param requestBody
      * @returns void
      * @throws ApiError
      */
-    public static patchUsers(
+    public static patchLocations(
         identifier: string,
-        requestBody?: PatchUser,
+        requestBody?: PatchLocation,
     ): CancelablePromise<void> {
         return __request(OpenAPI, {
             method: 'PATCH',
-            url: '/users/{identifier}',
+            url: '/locations/{identifier}',
             path: {
                 'identifier': identifier,
             },
@@ -92,16 +89,16 @@ export class UsersService {
     }
 
     /**
-     * @param identifier The user ID
+     * @param identifier The location ID
      * @returns void
      * @throws ApiError
      */
-    public static deleteUsers(
+    public static deleteLocations(
         identifier: string,
     ): CancelablePromise<void> {
         return __request(OpenAPI, {
             method: 'DELETE',
-            url: '/users/{identifier}',
+            url: '/locations/{identifier}',
             path: {
                 'identifier': identifier,
             },

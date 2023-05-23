@@ -5,5 +5,6 @@
 export type Auth = {
     accessToken?: string;
     expiresIn?: string;
+    user?: Record<string, any>;
 };
 

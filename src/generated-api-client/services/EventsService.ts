@@ -1,26 +1,26 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { CreateUser } from '../models/CreateUser';
-import type { PatchUser } from '../models/PatchUser';
-import type { User } from '../models/User';
+import type { CreateEvent } from '../models/CreateEvent';
+import type { Event } from '../models/Event';
+import type { PatchEvent } from '../models/PatchEvent';
 
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
 
-export class UsersService {
+export class EventsService {
 
     /**
      * @returns any OK
      * @throws ApiError
      */
-    public static getUsers(): CancelablePromise<{
-        users?: Array<User>;
+    public static getEvents(): CancelablePromise<{
+        events?: Array<Event>;
     }> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/users',
+            url: '/events',
         });
     }
 
@@ -29,35 +29,32 @@ export class UsersService {
      * @returns any OK
      * @throws ApiError
      */
-    public static postUsers(
-        requestBody?: CreateUser,
+    public static postEvents(
+        requestBody?: CreateEvent,
     ): CancelablePromise<{
         identifier?: string;
     }> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/users',
+            url: '/events',
             body: requestBody,
             mediaType: 'application/json',
-            errors: {
-                409: `Conflict`,
-            },
         });
     }
 
     /**
-     * @param identifier The user ID
+     * @param identifier The event ID
      * @returns any OK
      * @throws ApiError
      */
-    public static getUsers1(
+    public static getEvents1(
         identifier: string,
     ): CancelablePromise<{
-        user?: User;
+        event?: Event;
     }> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/users/{identifier}',
+            url: '/events/{identifier}',
             path: {
                 'identifier': identifier,
             },
@@ -68,18 +65,18 @@ export class UsersService {
     }
 
     /**
-     * @param identifier The user ID
+     * @param identifier The event ID
      * @param requestBody
      * @returns void
      * @throws ApiError
      */
-    public static patchUsers(
+    public static patchEvents(
         identifier: string,
-        requestBody?: PatchUser,
+        requestBody?: PatchEvent,
     ): CancelablePromise<void> {
         return __request(OpenAPI, {
             method: 'PATCH',
-            url: '/users/{identifier}',
+            url: '/events/{identifier}',
             path: {
                 'identifier': identifier,
             },
@@ -92,16 +89,16 @@ export class UsersService {
     }
 
     /**
-     * @param identifier The user ID
+     * @param identifier The event ID
      * @returns void
      * @throws ApiError
      */
-    public static deleteUsers(
+    public static deleteEvents(
         identifier: string,
     ): CancelablePromise<void> {
         return __request(OpenAPI, {
             method: 'DELETE',
-            url: '/users/{identifier}',
+            url: '/events/{identifier}',
             path: {
                 'identifier': identifier,
             },
