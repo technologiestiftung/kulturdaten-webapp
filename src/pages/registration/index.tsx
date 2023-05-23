@@ -76,9 +76,9 @@ const Registration: FC = () => {
 			} catch (error: any) {
 				console.error('Error creating user:', error);
 				// Uncomment for complete error report
-				// Object.keys(error).map((key) => {
-				// 	console.log(key, error[key]);
-				// });
+				Object.keys(error).map((key) => {
+					console.log(key, error[key]);
+				});
 				if (error.status) {
 					console.log('server error', error.status);
 					switch (error.status) {

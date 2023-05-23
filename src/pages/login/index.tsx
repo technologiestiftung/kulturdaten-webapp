@@ -1,7 +1,7 @@
 import React, { FC, useState } from 'react';
 import PageWrapper from '@components/PageWrapper';
 import { Input } from '@components/InputField';
-import { AuthService } from '../../generated-api-client';
+import { Auth, AuthService } from '../../generated-api-client';
 import { Button } from '@components/Button';
 import { useRouter } from 'next/router';
 import { validateEmail } from '../registration/validation';
@@ -27,9 +27,16 @@ const LoginPage: FC = () => {
 		e.preventDefault();
 		errorSet('');
 		try {
-			const authToken = await AuthService.postAuthToken({ email: email.toLowerCase(), password });
+			const authToken: Auth = await AuthService.postAuthToken({
+				email: email.toLowerCase(),
+				password,
+			});
 			console.log('Login successful', authToken);
-			router.push('/');
+			if (authToken) {
+				localStorage.setItem('authToken', JSON.stringify(authToken));
+				console.log('authToken', authToken);
+				router.push('/');
+			}
 		} catch (error: any) {
 			console.error('Error logging in:', error);
 			// Object.keys(error).map((key) => {
