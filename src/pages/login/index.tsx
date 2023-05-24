@@ -5,6 +5,8 @@ import { Auth, AuthService } from '../../generated-api-client';
 import { Button } from '@components/Button';
 import { useRouter } from 'next/router';
 import { validateEmail } from '../registration/validation';
+import { UserContext } from '../../contexts/userContext';
+import { setCookie } from 'typescript-cookie';
 
 const LoginPage: FC = () => {
 	const [email, emailSet] = useState<string>('');
@@ -12,6 +14,7 @@ const LoginPage: FC = () => {
 	const [error, errorSet] = useState<string>('');
 
 	const router = useRouter();
+	const { saveAuthObject } = React.useContext(UserContext);
 
 	const onEmailChange = (value: string, pristine: boolean, error: string | null) => {
 		errorSet('');
@@ -27,14 +30,16 @@ const LoginPage: FC = () => {
 		e.preventDefault();
 		errorSet('');
 		try {
-			const authToken: Auth = await AuthService.postAuthToken({
+			const authObject: Auth = await AuthService.postAuthToken({
 				email: email.toLowerCase(),
 				password,
 			});
-			console.log('Login successful', authToken);
-			if (authToken) {
-				localStorage.setItem('authToken', JSON.stringify(authToken));
-				console.log('authToken', authToken);
+			console.log('Login successful');
+			if (authObject?.authToken) {
+				setCookie('authToken', authObject.authToken, {
+					expires: authObject.expiringDate ? new Date(authObject.expiringDate) : undefined,
+				});
+				saveAuthObject(authObject);
 				router.push('/');
 			}
 		} catch (error: any) {

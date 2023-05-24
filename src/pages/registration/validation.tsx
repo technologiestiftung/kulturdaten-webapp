@@ -5,7 +5,7 @@ export const validateEmail = (email: string): string => {
 };
 
 export const validatePassword = (password: string): string => {
-	return password.length >= 8 ? '' : 'Bitte gib ein Passwort mit mindestens 8 Zeichen ein';
+	return password.length >= 12 ? '' : 'Bitte gib ein Passwort mit mindestens 8 Zeichen ein';
 };
 
 export const validateRepeatPassword = (password: string, passwordRepeat: string): string => {

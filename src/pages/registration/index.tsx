@@ -1,8 +1,7 @@
 import React, { FC, FormEvent, useEffect } from 'react';
 import PageWrapper from '@components/PageWrapper';
-import { UserContext } from '@contexts/userContext';
 import { validateEmail, validatePassword, validateRepeatPassword } from './validation';
-import { UsersService } from '../../generated-api-client';
+import { CreateUser, UsersService } from '../../generated-api-client';
 import { Input } from '@components/InputField';
 import { Button } from '@components/Button';
 import { useRouter } from 'next/router';
@@ -10,7 +9,6 @@ import { useRouter } from 'next/router';
 // TODO: mobile screen hook -> https://github.com/technologiestiftung/energiekarte/blob/main/src/lib/hooks/useHasMobileSize/index.ts
 
 const Registration: FC = () => {
-	const { registered, register } = React.useContext(UserContext);
 	const router = useRouter();
 
 	interface ErrorState {
@@ -62,16 +60,17 @@ const Registration: FC = () => {
 	const handleRegistration = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		if (formValid) {
-			const body = {
+			const body: CreateUser = {
 				email: email.toLowerCase(),
 				password: mainPassword,
+				firstName: 'Kommissar',
+				lastName: 'Zufall',
 			};
 
 			try {
 				const identifier = await UsersService.postUsers(body);
 				console.log('User created successfully', identifier);
 				errorStateSet(initialErrorState);
-				register();
 				router.push('/');
 			} catch (error: any) {
 				console.error('Error creating user:', error);
@@ -124,7 +123,6 @@ const Registration: FC = () => {
 		<PageWrapper>
 			<div className="max-w-lg">
 				<h1>Registriere dich jetzt!</h1>
-				{registered ? <div>Registriert</div> : <div>Nicht registriert</div>}
 				<p className="mt-2 mb-8">
 					kulturdaten.berlin ist kostenlos - und macht deine Programminfos einfacher zugänglich!
 				</p>

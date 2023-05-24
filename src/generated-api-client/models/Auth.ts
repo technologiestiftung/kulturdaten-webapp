@@ -3,8 +3,9 @@
 /* eslint-disable */
 
 export type Auth = {
-    accessToken?: string;
+    authToken?: string;
     expiresIn?: string;
+    expiringDate?: string;
     user?: Record<string, any>;
 };
 

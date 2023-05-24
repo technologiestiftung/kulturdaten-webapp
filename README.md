@@ -7,7 +7,7 @@ The GUI of the Kulturdatenbank app.
 1. Clone this repository: `git clone git@github.com:username/repo.git`
 2. Install dependencies: `npm install` or `yarn install`
 3. Generate API client from OpenAPI spec: 
-    - OpenAPI provides a .yml file with its specs via `http://localhost:5000/v1/spec`
+    - OpenAPI provides a .yml file with its specs via `http://localhost:3000/api/v1/spec`
     - This file has to be named `openAPI-specs.yml` and placed in the root directory
     - Run `npm run generate` and the client will be built in `src/generated-api-client`
 

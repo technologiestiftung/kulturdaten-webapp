@@ -1,16 +1,17 @@
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
+import { getCookie } from 'typescript-cookie';
 
 const withAuth = (WrappedComponent: React.ComponentType<any>) => {
 	const Wrapper = (props: any) => {
 		const router = useRouter();
-		const authToken = typeof window !== 'undefined' ? localStorage.getItem('authToken') : null;
+		const authToken = getCookie('authToken');
+		console.log('cookies', authToken);
 
+		//Can I prevent the dashboard from rendering before reroute
 		useEffect(() => {
 			if (!authToken) {
 				router.push('/login');
-			} else {
-				console.log('TOKEN', JSON.parse(authToken).token);
 			}
 		}, [authToken, router]);
 
