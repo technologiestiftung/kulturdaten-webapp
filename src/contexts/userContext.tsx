@@ -1,5 +1,5 @@
-import React, { createContext, FC, ReactNode, useState } from 'react';
-import { Auth, User } from '../generated-api-client';
+import React, { createContext, FC, ReactNode, useEffect, useMemo, useState } from 'react';
+import { Auth } from '../generated-api-client';
 
 type AuthCredentials = {
 	[K in keyof Pick<Auth, 'authToken' | 'expiringDate' | 'expiresIn'>]: Auth[K];
@@ -26,26 +26,27 @@ type UserContextProviderProps = {
 export const UserContextProvider: FC<UserContextProviderProps> = ({
 	children,
 }: UserContextProviderProps) => {
-	const [authToken, authTokenSet] = useState<AuthCredentials | null>(null);
 	const [userObject, userObjectSet] = useState<any>(null);
 
-	const saveAuthObject = (authObject: Auth) => {
-		authTokenSet({
-			authToken: authObject.authToken,
-			expiresIn: authObject.expiresIn,
-			expiringDate: authObject.expiringDate,
-		});
-		userObjectSet(authObject.user);
-	};
+	const userContextValue = useMemo(() => {
+		const saveAuthObject = (authObject: Auth) => {
+			localStorage.setItem('userObject', JSON.stringify(authObject.user));
+			userObjectSet(authObject.user);
+		};
 
-	const clearUser = () => {
-		authTokenSet(null);
-		userObjectSet(null);
-	};
+		const clearUser = () => {
+			localStorage.removeItem('userObject');
+			userObjectSet(null);
+		};
+		return { saveAuthObject, userObject, clearUser };
+	}, [userObject]);
 
-	return (
-		<UserContext.Provider value={{ authToken, saveAuthObject, userObject, clearUser }}>
-			{children}
-		</UserContext.Provider>
-	);
+	useEffect(() => {
+		const user = localStorage.getItem('userObject');
+		if (user) {
+			userObjectSet(JSON.parse(user));
+		}
+	}, []);
+
+	return <UserContext.Provider value={userContextValue}>{children}</UserContext.Provider>;
 };
