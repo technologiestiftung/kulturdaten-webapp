@@ -3,10 +3,14 @@ import { CreateOrganization, OrganizationsService } from '../../generated-api-cl
 import { Input } from '../../components/InputField';
 import { Button } from '../../components/Button';
 import PageWrapper from '../../components/PageWrapper';
+import { useRouter } from 'next/router';
+import { isTextValidation } from '../../utils/validation';
 
 const CreateOrganisation: FC = () => {
 	const [organisationName, organisationNameSet] = useState<string>('');
 	const [organisationDescription, organisationDescriptionSet] = useState<string>('');
+
+	const router = useRouter();
 	const createOrganisationHandler = (e: Event) => {
 		e.preventDefault();
 		console.log('CREATE ORGANISATION');
@@ -15,7 +19,7 @@ const CreateOrganisation: FC = () => {
 			description: { de: organisationDescription },
 		};
 		OrganizationsService.postOrganizations(newOrganisationObject).then((res) => {
-			console.log('ORGANISATION', res);
+			router.push(`/organisations/${res.identifier}`);
 		});
 	};
 	return (
@@ -34,7 +38,6 @@ const CreateOrganisation: FC = () => {
 					type="text"
 					id="organisationDescription"
 					label={'Beschreibung'}
-					required
 					placeholder={'Hier bitte Beschreeibung eingeben … '}
 					onChange={(value) => organisationDescriptionSet(value)}
 				/>
