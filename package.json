@@ -13,7 +13,7 @@
 		"build": "next build",
 		"format": "prettier --check src/**",
 		"run": "NODE_OPTIONS='--inspect' next start",
-		"start": "next dev",
+		"start": "PORT=3001 next dev",
 		"update": "ncu -t minor -u && ncu",
 		"generate": "openapi --input openAPI-specs.yml --output src/generated-api-client"
 	},
@@ -22,20 +22,21 @@
 		"next": "13.3.1",
 		"postcss": "8.4.23",
 		"react": "18.2.0",
-		"react-dom": "18.2.0"
+		"react-dom": "18.2.0",
+		"typescript-cookie": "^1.0.6"
 	},
 	"devDependencies": {
-		"sass": "^1.62.0",
-		"tailwindcss": "3.3.1",
-		"typescript": "5.0.4",
-		"openapi-types": "^12.1.0",
-		"openapi-typescript-codegen": "^0.24.0",
 		"@types/node": "18.16.0",
 		"@types/react": "18.0.38",
 		"@types/react-dom": "18.0.11",
 		"classnames": "^2.3.2",
 		"eslint": "8.39.0",
-		"eslint-config-next": "13.3.1"
+		"eslint-config-next": "13.3.1",
+		"openapi-types": "^12.1.0",
+		"openapi-typescript-codegen": "^0.24.0",
+		"sass": "^1.62.0",
+		"tailwindcss": "3.3.1",
+		"typescript": "5.0.4"
 	},
 	"files": [
 		"dist"

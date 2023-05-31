@@ -1,10 +1,12 @@
 import React, { FC, useState } from 'react';
 import PageWrapper from '@components/PageWrapper';
 import { Input } from '@components/InputField';
-import { AuthService } from '../../generated-api-client';
+import { Auth, AuthService } from '../../generated-api-client';
 import { Button } from '@components/Button';
 import { useRouter } from 'next/router';
 import { validateEmail } from '../registration/validation';
+import { UserContext } from '../../contexts/userContext';
+import { setCookie } from 'typescript-cookie';
 
 const LoginPage: FC = () => {
 	const [email, emailSet] = useState<string>('');
@@ -12,6 +14,7 @@ const LoginPage: FC = () => {
 	const [error, errorSet] = useState<string>('');
 
 	const router = useRouter();
+	const { saveAuthObject } = React.useContext(UserContext);
 
 	const onEmailChange = (value: string, pristine: boolean, error: string | null) => {
 		errorSet('');
@@ -27,9 +30,18 @@ const LoginPage: FC = () => {
 		e.preventDefault();
 		errorSet('');
 		try {
-			const authToken = await AuthService.postAuthToken({ email: email.toLowerCase(), password });
-			console.log('Login successful', authToken);
-			router.push('/');
+			const authObject: Auth = await AuthService.postAuthToken({
+				email: email.toLowerCase(),
+				password,
+			});
+			console.log('Login successful');
+			if (authObject?.authToken) {
+				setCookie('authToken', authObject.authToken, {
+					expires: authObject.expiringDate ? new Date(authObject.expiringDate) : undefined,
+				});
+				saveAuthObject(authObject);
+				router.push('/');
+			}
 		} catch (error: any) {
 			console.error('Error logging in:', error);
 			// Object.keys(error).map((key) => {
