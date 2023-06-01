@@ -8,27 +8,40 @@ import { validateEmail } from '../registration/validation';
 import { UserContext } from '../../contexts/userContext';
 import { setCookie } from 'typescript-cookie';
 
+interface ErrorMessages {
+	general: string | undefined;
+	email: string | undefined;
+}
+
+const initialErrorMessages: ErrorMessages = {
+	general: undefined,
+	email: undefined,
+};
+
 const LoginPage: FC = () => {
 	const [email, emailSet] = useState<string>('');
 	const [password, passwordSet] = useState<string>('');
-	const [error, errorSet] = useState<string>('');
+	const [errorMessages, errorMessagesSet] = useState<ErrorMessages>(initialErrorMessages);
+	const [emailPristine, emailPristineSet] = useState<boolean>(true);
 
 	const router = useRouter();
 	const { saveAuthObject } = React.useContext(UserContext);
 
-	const onEmailChange = (value: string, pristine: boolean, error: string | null) => {
-		errorSet('');
+	const onEmailChange = (value: string) => {
+		const emailValid = validateEmail(value);
+		errorMessagesSet({ ...errorMessages, email: emailValid });
 		emailSet(value);
 	};
 
 	const onPasswordChange = (value: string) => {
-		errorSet('');
+		errorMessagesSet(initialErrorMessages);
 		passwordSet(value);
 	};
 
 	const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		errorSet('');
+		const emailValid = validateEmail(email);
+		errorMessagesSet({ ...initialErrorMessages, email: emailValid ? emailValid : undefined });
 		try {
 			const authObject: Auth = await AuthService.postAuthToken({
 				email: email.toLowerCase(),
@@ -49,9 +62,12 @@ const LoginPage: FC = () => {
 			// });
 			if (error.status) {
 				console.log('server error', error.status);
-				errorSet(`Login fehlgeschlagen, ${error.status}`);
+				errorMessagesSet({
+					...errorMessages,
+					general: `Login fehlgeschlagen, ${error.status}`,
+				});
 			} else {
-				errorSet('Verbindung fehlgeschlagen');
+				errorMessagesSet({ ...errorMessages, general: 'Verbindung fehlgeschlagen' });
 			}
 		}
 	};
@@ -70,8 +86,9 @@ const LoginPage: FC = () => {
 						label={'Email'}
 						required
 						placeholder={'Hier bitte Email eingeben … '}
-						validate={(value) => validateEmail(value)}
-						onChange={(value, pristine, error) => onEmailChange(value, pristine, error)}
+						errorMessage={!emailPristine ? errorMessages.email : undefined}
+						onChange={(value) => onEmailChange(value)}
+						setPristine={emailPristineSet}
 					/>
 					<Input
 						type="password"
@@ -83,7 +100,7 @@ const LoginPage: FC = () => {
 					/>
 					<Button type="submit" label="Login" />
 				</form>
-				{error && <p aria-live="assertive">{error}</p>}
+				{errorMessages.general && <p aria-live="assertive">{errorMessages.general}</p>}
 			</div>
 		</PageWrapper>
 	);
