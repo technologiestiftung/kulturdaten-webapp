@@ -6,6 +6,7 @@ const InputTypes = {
 	TEXT: 'text',
 	URL: 'url',
 	TEL: 'tel',
+	NUMBER: 'number',
 } as const;
 
 type InputType = (typeof InputTypes)[keyof typeof InputTypes];
