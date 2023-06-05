@@ -57,15 +57,14 @@ const CreateOrganisation: FC = () => {
 			try {
 				OrganizationsService.postOrganizations(newOrganisationObject).then((res) => {
 					console.log('User created successfully', res.identifier);
-					debugger;
 					router.push(`/organisations/${res.identifier}`);
 				});
 			} catch (error: any) {
 				console.error('Error creating user:', error);
 				// Uncomment for complete error report
-				Object.keys(error).map((key) => {
-					console.log(key, error[key]);
-				});
+				// Object.keys(error).map((key) => {
+				// 	console.log(key, error[key]);
+				// });
 				if (error.status) {
 					console.log('server error', error.status);
 					switch (error.status) {
