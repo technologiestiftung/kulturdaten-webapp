@@ -14,7 +14,7 @@ type InputType = (typeof InputTypes)[keyof typeof InputTypes];
 interface InputProps {
 	type: InputType;
 	label: string;
-	onChange: (value: string, id: string) => void;
+	onChange: (value: string, id: string, e: React.ChangeEvent<HTMLInputElement>) => void;
 	setPristine?: (pristine: boolean) => void;
 	required?: boolean;
 	placeholder: string;
@@ -38,12 +38,11 @@ export const Input: FC<InputProps> = ({
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const inputValue = e.target.value;
-		onChange(inputValue, id);
+		onChange(inputValue, id, e);
 		valueSet(inputValue);
 	};
 
 	const handleBlur = () => {
-		onChange(value, id);
 		if (setPristine) {
 			setPristine(false);
 		}

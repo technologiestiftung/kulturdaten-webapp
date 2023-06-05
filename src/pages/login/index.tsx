@@ -86,7 +86,7 @@ const LoginPage: FC = () => {
 						label={'Email'}
 						required
 						placeholder={'Hier bitte Email eingeben … '}
-						errorMessage={!emailPristine ? errorMessages.email : undefined}
+						errorMessage={emailPristine ? undefined : errorMessages.email}
 						onChange={(value) => onEmailChange(value)}
 						setPristine={emailPristineSet}
 					/>
