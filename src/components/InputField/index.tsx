@@ -20,6 +20,7 @@ interface InputProps {
 	placeholder: string;
 	id: string;
 	errorMessage?: string;
+	initialValue?: string;
 }
 
 export const Input: FC<InputProps> = ({
@@ -31,8 +32,9 @@ export const Input: FC<InputProps> = ({
 	setPristine,
 	id,
 	errorMessage,
+	initialValue,
 }: InputProps) => {
-	const [value, valueSet] = useState('');
+	const [value, valueSet] = useState(initialValue || '');
 
 	const idPrefix = useId();
 

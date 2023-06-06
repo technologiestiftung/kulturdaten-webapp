@@ -1,5 +1,5 @@
 import React, { useState, FC, FormEvent, useEffect } from 'react';
-import { CreateOrganization } from '../../generated-api-client';
+import { CreateOrganization, Organization } from '../../generated-api-client';
 import { Input } from '../../components/InputField';
 import { Button } from '../../components/Button';
 import _ from 'lodash';
@@ -16,14 +16,19 @@ const initialerrorMessages: ErrorMessages = {
 };
 
 interface OrganizationEditorProps {
-	organization?: CreateOrganization;
+	organization?: CreateOrganization | Organization;
 	submitHandler: (e: FormEvent<HTMLFormElement>, newOrganization: CreateOrganization) => void;
+	submitLabel: string;
 }
 
-const OrganizationEditor: FC<OrganizationEditorProps> = ({ organization, submitHandler }) => {
-	const [organizationObject, organizationObjectSet] = useState<CreateOrganization | undefined>(
-		organization || undefined
-	);
+const OrganizationEditor: FC<OrganizationEditorProps> = ({
+	organization,
+	submitHandler,
+	submitLabel,
+}) => {
+	const [organizationObject, organizationObjectSet] = useState<
+		CreateOrganization | Organization | undefined
+	>(organization || undefined);
 	const [errorMessages, errorMessagesSet] = React.useState<ErrorMessages>(initialerrorMessages);
 	const [formValid, formValidSet] = useState<boolean>(true);
 
@@ -48,6 +53,7 @@ const OrganizationEditor: FC<OrganizationEditorProps> = ({ organization, submitH
 		_.set(newOrganization, id, value);
 		console.log('newOrganization', newOrganization);
 		organizationObjectSet(newOrganization as CreateOrganization);
+		//VALIDATION???
 		// if (id === 'address.postalCode') {
 		//   const errorMessage = validatePostalCode(value);
 		//   errorMessagesSet((prev) => ({ ...prev, postalCode: errorMessage }));
@@ -64,6 +70,7 @@ const OrganizationEditor: FC<OrganizationEditorProps> = ({ organization, submitH
 			<Input
 				type="text"
 				id="name.de"
+				initialValue={organizationObject?.name?.de || ''}
 				label={'Name (Pflichtfeld)'}
 				required
 				// setPristine={organizationNamePristineSet}
@@ -73,6 +80,7 @@ const OrganizationEditor: FC<OrganizationEditorProps> = ({ organization, submitH
 			<Input
 				type="text"
 				id="description.de"
+				initialValue={organizationObject?.description?.de || ''}
 				label={'Beschreibung'}
 				placeholder={'Hier bitte Beschreeibung eingeben … '}
 				onChange={(value, id, e) => onChange(value, id, e)}
@@ -80,6 +88,7 @@ const OrganizationEditor: FC<OrganizationEditorProps> = ({ organization, submitH
 			<Input
 				type="text"
 				id="address.postalCode"
+				initialValue={organizationObject?.address?.postalCode || ''}
 				label={'Postleitzahl'}
 				placeholder={'Hier bitte PLZ eingeben … '}
 				onChange={(value, id, e) => onChange(value, id, e)}
@@ -88,11 +97,12 @@ const OrganizationEditor: FC<OrganizationEditorProps> = ({ organization, submitH
 			<Input
 				type="text"
 				id="address.addressLocality"
+				initialValue={organizationObject?.address?.addressLocality || ''}
 				label={'Ort'}
 				placeholder={'Hier bitte den Ort eingeben … '}
 				onChange={(value, id, e) => onChange(value, id, e)}
 			/>
-			<Button type="submit" label="Anlegen" />
+			<Button type="submit" label={submitLabel} />
 		</form>
 	);
 };

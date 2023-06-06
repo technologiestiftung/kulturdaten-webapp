@@ -49,7 +49,10 @@ const CreateNewOrganization: FC = () => {
 	return (
 		<PageWrapper>
 			<h1>Lege einen neue Organization an</h1>
-			<OrganizationEditor submitHandler={createOrganizationHandler} />
+			<OrganizationEditor
+				submitHandler={createOrganizationHandler}
+				submitLabel="Organisation anlegen"
+			/>
 			{errorMessage && <span aria-live="assertive">{errorMessage}</span>}
 		</PageWrapper>
 	);
