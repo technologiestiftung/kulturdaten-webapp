@@ -7,34 +7,26 @@ import withAuth from '../../utils/withAuth';
 
 const OrganizationDetails = () => {
 	const router = useRouter();
+	const [organization, organizationSet] = useState<Organization | null>(null);
 	const { identifier } = router.query;
-	const [organization, organizationSet] = useState<Organization | undefined>(undefined);
 
-	useEffect(() => {
-		if (identifier && !organization) {
+	const fetchOrganization = async () => {
+		if (identifier) {
 			try {
-				OrganizationsService.getOrganizations1(identifier as string).then((res) => {
-					console.log('Organization', res);
-					const organizationObject = res?.organization;
-					organizationSet(organizationObject || undefined);
-				});
+				const res = await OrganizationsService.getOrganizations1(identifier as string);
+				const organizationObject = res?.organization;
+				organizationSet(organizationObject || null);
 			} catch (error) {
 				console.log('ERROR', error);
 			}
 		}
-	}, [identifier, organization]);
+	};
 
 	useEffect(() => {
-		try {
-			OrganizationsService.getOrganizations1(identifier as string).then((res) => {
-				console.log('Organization', res);
-				const organizationObject = res?.organization;
-				organizationSet(organizationObject || undefined);
-			});
-		} catch (error) {
-			console.log('ERROR', error);
+		if (identifier !== undefined) {
+			fetchOrganization();
 		}
-	}, []);
+	}, [identifier]);
 
 	const editOrganization = (
 		e: React.FormEvent<HTMLFormElement>,
@@ -47,6 +39,7 @@ const OrganizationDetails = () => {
 		)
 			.then(() => {
 				console.log('Organization edited successfully');
+				fetchOrganization();
 				router.push(`/organizations/${identifier}`);
 			})
 			.catch((error) => {
@@ -54,7 +47,7 @@ const OrganizationDetails = () => {
 			});
 	};
 
-	if (!organization) {
+	if (organization === null) {
 		return <div>Loading...</div>;
 	} else {
 		return (
@@ -77,5 +70,4 @@ const OrganizationDetails = () => {
 		);
 	}
 };
-//TODO: how to reuse the component from create.tsx?
 export default withAuth(OrganizationDetails);

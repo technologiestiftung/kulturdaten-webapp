@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 import { UserContext } from '../contexts/userContext';
 import { removeCookie } from 'typescript-cookie';
 
-const Index = () => {
+const Dashboard = () => {
 	const router = useRouter();
 	const { userObject, clearUser } = React.useContext(UserContext);
 	const logout = () => {
@@ -31,4 +31,4 @@ const Index = () => {
 	);
 };
 
-export default withAuth(Index);
+export default withAuth(Dashboard);

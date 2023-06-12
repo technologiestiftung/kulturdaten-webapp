@@ -30,6 +30,7 @@ const OrganizationEditor: FC<OrganizationEditorProps> = ({
 		CreateOrganization | Organization | undefined
 	>(organization || undefined);
 	const [errorMessages, errorMessagesSet] = React.useState<ErrorMessages>(initialerrorMessages);
+	const [postalCodePristine, postalCodePristineSet] = useState<boolean>(true);
 	const [formValid, formValidSet] = useState<boolean>(true);
 
 	useEffect(() => {
@@ -43,6 +44,7 @@ const OrganizationEditor: FC<OrganizationEditorProps> = ({
 				.reduce((acc, curr) => acc + curr, '').length === 0
 		) {
 			formValidSet(true);
+			errorMessagesSet((prev) => initialerrorMessages);
 		} else {
 			formValidSet(false);
 		}
@@ -53,16 +55,22 @@ const OrganizationEditor: FC<OrganizationEditorProps> = ({
 		_.set(newOrganization, id, value);
 		console.log('newOrganization', newOrganization);
 		organizationObjectSet(newOrganization as CreateOrganization);
-		//VALIDATION???
-		// if (id === 'address.postalCode') {
-		//   const errorMessage = validatePostalCode(value);
-		//   errorMessagesSet((prev) => ({ ...prev, postalCode: errorMessage }));
-		// }
+		if (id === 'address.postalCode') {
+			const errorMessage = validatePostalCode(value);
+			errorMessagesSet((prev) => ({ ...prev, postalCode: errorMessage }));
+		}
 	};
 
 	const onSubmit = (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		submitHandler(e, organizationObject as CreateOrganization);
+		if (formValid) {
+			submitHandler(e, organizationObject as CreateOrganization);
+		} else {
+			errorMessagesSet((prev) => ({
+				...prev,
+				general: 'Bitte alle Pflichtfelder korrekt ausfüllen',
+			}));
+		}
 	};
 
 	return (
@@ -73,7 +81,6 @@ const OrganizationEditor: FC<OrganizationEditorProps> = ({
 				initialValue={organizationObject?.name?.de || ''}
 				label={'Name (Pflichtfeld)'}
 				required
-				// setPristine={organizationNamePristineSet}
 				placeholder={'Hier bitte Name eingeben … '}
 				onChange={(value, id, e) => onChange(value, id, e)}
 			/>
@@ -82,7 +89,7 @@ const OrganizationEditor: FC<OrganizationEditorProps> = ({
 				id="description.de"
 				initialValue={organizationObject?.description?.de || ''}
 				label={'Beschreibung'}
-				placeholder={'Hier bitte Beschreeibung eingeben … '}
+				placeholder={'Hier bitte Beschreibung eingeben … '}
 				onChange={(value, id, e) => onChange(value, id, e)}
 			/>
 			<Input
@@ -92,7 +99,12 @@ const OrganizationEditor: FC<OrganizationEditorProps> = ({
 				label={'Postleitzahl'}
 				placeholder={'Hier bitte PLZ eingeben … '}
 				onChange={(value, id, e) => onChange(value, id, e)}
-				// errorMessage={postalCode ? errorMessages.postalCode : undefined}
+				setPristine={postalCodePristineSet}
+				errorMessage={
+					!postalCodePristine && organizationObject?.address?.postalCode
+						? errorMessages.postalCode
+						: undefined
+				}
 			/>
 			<Input
 				type="text"
@@ -103,6 +115,7 @@ const OrganizationEditor: FC<OrganizationEditorProps> = ({
 				onChange={(value, id, e) => onChange(value, id, e)}
 			/>
 			<Button type="submit" label={submitLabel} />
+			{errorMessages.general && <span aria-live="assertive">{errorMessages.general}</span>}
 		</form>
 	);
 };
