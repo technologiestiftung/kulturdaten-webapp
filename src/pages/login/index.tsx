@@ -51,6 +51,7 @@ const LoginPage: FC = () => {
 			if (authObject?.authToken) {
 				setCookie('authToken', authObject.authToken, {
 					expires: authObject.expiringDate ? new Date(authObject.expiringDate) : undefined,
+					path: '/',
 				});
 				saveAuthObject(authObject);
 				router.push('/');
