@@ -7,28 +7,42 @@ import { useRouter } from 'next/router';
 import { validateEmail } from '../registration/validation';
 import { UserContext } from '../../contexts/userContext';
 import { setCookie } from 'typescript-cookie';
+import FormWrapper from '../../components/FormWrapper';
+
+interface ErrorMessages {
+	general: string | undefined;
+	email: string | undefined;
+}
+
+const initialErrorMessages: ErrorMessages = {
+	general: undefined,
+	email: undefined,
+};
 
 const LoginPage: FC = () => {
 	const [email, emailSet] = useState<string>('');
 	const [password, passwordSet] = useState<string>('');
-	const [error, errorSet] = useState<string>('');
+	const [errorMessages, errorMessagesSet] = useState<ErrorMessages>(initialErrorMessages);
+	const [emailPristine, emailPristineSet] = useState<boolean>(true);
 
 	const router = useRouter();
 	const { saveAuthObject } = React.useContext(UserContext);
 
-	const onEmailChange = (value: string, pristine: boolean, error: string | null) => {
-		errorSet('');
+	const onEmailChange = (value: string) => {
+		const emailValid = validateEmail(value);
+		errorMessagesSet({ ...errorMessages, email: emailValid });
 		emailSet(value);
 	};
 
 	const onPasswordChange = (value: string) => {
-		errorSet('');
+		errorMessagesSet(initialErrorMessages);
 		passwordSet(value);
 	};
 
 	const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		errorSet('');
+		const emailValid = validateEmail(email);
+		errorMessagesSet({ ...initialErrorMessages, email: emailValid ? emailValid : undefined });
 		try {
 			const authObject: Auth = await AuthService.postAuthToken({
 				email: email.toLowerCase(),
@@ -38,6 +52,7 @@ const LoginPage: FC = () => {
 			if (authObject?.authToken) {
 				setCookie('authToken', authObject.authToken, {
 					expires: authObject.expiringDate ? new Date(authObject.expiringDate) : undefined,
+					path: '/',
 				});
 				saveAuthObject(authObject);
 				router.push('/');
@@ -49,16 +64,19 @@ const LoginPage: FC = () => {
 			// });
 			if (error.status) {
 				console.log('server error', error.status);
-				errorSet(`Login fehlgeschlagen, ${error.status}`);
+				errorMessagesSet({
+					...errorMessages,
+					general: `Login fehlgeschlagen, ${error.status}`,
+				});
 			} else {
-				errorSet('Verbindung fehlgeschlagen');
+				errorMessagesSet({ ...errorMessages, general: 'Verbindung fehlgeschlagen' });
 			}
 		}
 	};
 
 	return (
 		<PageWrapper>
-			<div className="w-full max-w-110 desktop:max-w-130">
+			<FormWrapper>
 				<h1>Bei kulturdaten.berlin einloggen</h1>
 				<p className="mt-2 mb-8">
 					kulturdaten.berlin ist kostenlos - und macht deine Programminfos einfacher zugänglich!
@@ -70,8 +88,9 @@ const LoginPage: FC = () => {
 						label={'Email'}
 						required
 						placeholder={'Hier bitte Email eingeben … '}
-						validate={(value) => validateEmail(value)}
-						onChange={(value, pristine, error) => onEmailChange(value, pristine, error)}
+						errorMessage={emailPristine ? undefined : errorMessages.email}
+						onChange={(value) => onEmailChange(value)}
+						setPristine={emailPristineSet}
 					/>
 					<Input
 						type="password"
@@ -83,8 +102,8 @@ const LoginPage: FC = () => {
 					/>
 					<Button type="submit" label="Login" />
 				</form>
-				{error && <p aria-live="assertive">{error}</p>}
-			</div>
+				{errorMessages.general && <p aria-live="assertive">{errorMessages.general}</p>}
+			</FormWrapper>
 		</PageWrapper>
 	);
 };
