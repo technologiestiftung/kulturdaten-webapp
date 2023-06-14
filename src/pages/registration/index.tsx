@@ -5,6 +5,7 @@ import { CreateUser, UsersService } from '../../generated-api-client';
 import { Input } from '@components/InputField';
 import { Button } from '@components/Button';
 import { useRouter } from 'next/router';
+import FormWrapper from '../../components/FormWrapper';
 
 // TODO: mobile screen hook -> https://github.com/technologiestiftung/energiekarte/blob/main/src/lib/hooks/useHasMobileSize/index.ts
 
@@ -136,7 +137,7 @@ const Registration: FC = () => {
 
 	return (
 		<PageWrapper>
-			<div className="max-w-lg">
+			<FormWrapper>
 				<h1>Registriere dich jetzt!</h1>
 				<p className="mt-2 mb-8">
 					kulturdaten.berlin ist kostenlos - und macht deine Programminfos einfacher zugänglich!
@@ -174,8 +175,8 @@ const Registration: FC = () => {
 					/>
 					<Button label="Registrieren" type="submit" />
 				</form>
-			</div>
-			{errorMessages.general && <span aria-live="assertive">{errorMessages.general}</span>}
+				{errorMessages.general && <span aria-live="assertive">{errorMessages.general}</span>}
+			</FormWrapper>
 		</PageWrapper>
 	);
 };

@@ -7,6 +7,7 @@ import { useRouter } from 'next/router';
 import { validateEmail } from '../registration/validation';
 import { UserContext } from '../../contexts/userContext';
 import { setCookie } from 'typescript-cookie';
+import FormWrapper from '../../components/FormWrapper';
 
 interface ErrorMessages {
 	general: string | undefined;
@@ -75,7 +76,7 @@ const LoginPage: FC = () => {
 
 	return (
 		<PageWrapper>
-			<div className="w-full max-w-110 desktop:max-w-130">
+			<FormWrapper>
 				<h1>Bei kulturdaten.berlin einloggen</h1>
 				<p className="mt-2 mb-8">
 					kulturdaten.berlin ist kostenlos - und macht deine Programminfos einfacher zugänglich!
@@ -102,7 +103,7 @@ const LoginPage: FC = () => {
 					<Button type="submit" label="Login" />
 				</form>
 				{errorMessages.general && <p aria-live="assertive">{errorMessages.general}</p>}
-			</div>
+			</FormWrapper>
 		</PageWrapper>
 	);
 };

@@ -7,6 +7,7 @@ import { useRouter } from 'next/router';
 import withAuth from '../../utils/withAuth';
 import { validatePostalCode } from '../../utils/validation';
 import OrganizationEditor from '../../components/OrganisationEditor';
+import FormWrapper from '../../components/FormWrapper';
 
 const CreateNewOrganization: FC = () => {
 	const [errorMessage, errorMessageSet] = useState<string | undefined>(undefined);
@@ -48,12 +49,14 @@ const CreateNewOrganization: FC = () => {
 
 	return (
 		<PageWrapper>
-			<h1>Lege einen neue Organization an</h1>
-			<OrganizationEditor
-				submitHandler={createOrganizationHandler}
-				submitLabel="Organisation anlegen"
-			/>
-			{errorMessage && <span aria-live="assertive">{errorMessage}</span>}
+			<FormWrapper>
+				<h1>Lege einen neue Organization an</h1>
+				<OrganizationEditor
+					submitHandler={createOrganizationHandler}
+					submitLabel="Organisation anlegen"
+				/>
+				{errorMessage && <span aria-live="assertive">{errorMessage}</span>}
+			</FormWrapper>
 		</PageWrapper>
 	);
 };

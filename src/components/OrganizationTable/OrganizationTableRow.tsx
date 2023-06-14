@@ -1,6 +1,5 @@
 import React, { FC, FormEvent } from 'react';
 import { Organization, OrganizationsService } from '../../generated-api-client';
-import { useRouter } from 'next/router';
 
 interface OrganizationTableRowProps {
 	organization: Organization;
@@ -10,8 +9,6 @@ const OrganizationTableRow: FC<OrganizationTableRowProps> = ({
 	organization,
 	fetchOrganizations,
 }: OrganizationTableRowProps) => {
-	const router = useRouter();
-
 	const deleteOrganization = (
 		e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
 		identifier: string
@@ -21,7 +18,6 @@ const OrganizationTableRow: FC<OrganizationTableRowProps> = ({
 			.then(() => {
 				console.log('Organization deleted successfully');
 				fetchOrganizations();
-				router.push(`/organizations`);
 			})
 			.catch((error) => {
 				console.log('ERROR', error);

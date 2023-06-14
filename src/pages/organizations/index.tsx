@@ -24,6 +24,7 @@ const OrganizationList = () => {
 
 	return (
 		<PageWrapper>
+			<div className="w-full"></div>
 			{organizations ? (
 				<OrganizationTable organizations={organizations} fetchOrganizations={fetchOrganizations} />
 			) : (
