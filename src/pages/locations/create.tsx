@@ -20,8 +20,8 @@ const CreateNewLocation = () => {
 
 		LocationsService.postLocations(newLocation as CreateLocation)
 			.then((res) => {
-				console.log('User created successfully', res.identifier);
-				router.push(`/Locations/${res.identifier}`);
+				console.log('Location created successfully', res.identifier);
+				router.push(`/locations/${res.identifier}`);
 			})
 			.catch((error: any) => {
 				console.error('Error creating user:', error);

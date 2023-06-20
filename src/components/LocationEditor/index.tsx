@@ -51,17 +51,21 @@ const LocationEditor: FC<LocationEditorProps> = ({ location, submitHandler, subm
 		}
 	}, [locationObject, errorMessages]);
 
-	const onChange = (value: string, id: string, e: React.ChangeEvent<HTMLInputElement>) => {
+	const onChange = (
+		value: string,
+		id: string,
+		e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>
+	) => {
 		const newLocation = { ...locationObject };
 		_.set(newLocation, id, value);
 		console.log('newLocation', newLocation);
 		locationObjectSet(newLocation);
 	};
 
-	const onSubmit = (e: FormEvent<HTMLFormElement>) => {
+	const onSubmit = (e: FormEvent<HTMLFormElement> | React.ChangeEvent<HTMLSelectElement>) => {
 		e.preventDefault();
 		if (formValid) {
-			submitHandler(e, locationObject as CreateLocation | Location);
+			submitHandler(e as FormEvent<HTMLFormElement>, locationObject as CreateLocation | Location);
 		} else {
 			errorMessagesSet((prev) => ({
 				...prev,
@@ -89,7 +93,13 @@ const LocationEditor: FC<LocationEditorProps> = ({ location, submitHandler, subm
 				placeholder={'www.my-location.com'}
 				onChange={(value, id, e) => onChange(value, id, e)}
 			/>
-			<Dropdown label="Bezirk" options={barrios} />
+			<Dropdown
+				label="Bezirk"
+				id="borough"
+				options={barrios}
+				value={locationObject?.borough || ''}
+				onChange={(value, id, e) => onChange(value, id, e)}
+			/>
 			<Button type="submit" label={submitLabel} />
 			{errorMessages.general && <span aria-live="assertive">{errorMessages.general}</span>}
 		</form>
