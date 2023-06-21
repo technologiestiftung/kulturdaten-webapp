@@ -80,7 +80,7 @@ const LocationEditor: FC<LocationEditorProps> = ({ location, submitHandler, subm
 				type="text"
 				id="name.de"
 				initialValue={locationObject?.name?.de || ''}
-				label={'Name (Pflichtfeld)'}
+				label="Name (Pflichtfeld)"
 				required
 				placeholder={'Hier bitte Name eingeben … '}
 				onChange={(value, id, e) => onChange(value, id, e)}
@@ -89,7 +89,7 @@ const LocationEditor: FC<LocationEditorProps> = ({ location, submitHandler, subm
 				type="text"
 				id="website"
 				initialValue={locationObject?.website || ''}
-				label={'Webseite'}
+				label="Webseite"
 				placeholder={'www.my-location.com'}
 				onChange={(value, id, e) => onChange(value, id, e)}
 			/>

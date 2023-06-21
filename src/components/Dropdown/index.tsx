@@ -30,11 +30,13 @@ const Dropdown = ({ label, options, onChange, id, value }: DropdownProps) => {
 				onChange={(e) => handleChange(e)}
 				value={value || undefined}
 			>
-				{options.map((option) => (
-					<option key={option.label} value={option.label || undefined}>
-						{option.label}
-					</option>
-				))}
+				{options
+					.sort((a, b) => a.label.localeCompare(b.label))
+					.map((option) => (
+						<option key={option.label} value={option.label || undefined}>
+							{option.label}
+						</option>
+					))}
 			</select>
 		</div>
 	);

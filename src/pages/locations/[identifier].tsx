@@ -50,7 +50,7 @@ const LocationDetails = () => {
 		return (
 			<PageWrapper>
 				<FormWrapper>
-					<h1>Organisationsüberblick</h1>
+					<h1>Ort bearbeiten</h1>
 					<p>Hier kannst du alle hinterlegten Infos einsehen und bearbeiten</p>
 					<h2>{location.name?.de}</h2>
 					<p>{location.website}</p>
@@ -59,7 +59,7 @@ const LocationDetails = () => {
 					<LocationEditor
 						location={location}
 						submitHandler={(e, locationObject) => editLocation(e, locationObject as Location)}
-						submitLabel="Organisation bearbeiten"
+						submitLabel="Ort bearbeiten"
 					/>
 				</FormWrapper>
 			</PageWrapper>
