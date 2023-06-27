@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Organization, OrganizationsService, PatchOrganization } from '../../generated-api-client';
 import PageWrapper from '../../components/PageWrapper';
 import OrganizationEditor from '../../components/OrganisationEditor';
@@ -11,7 +11,7 @@ const OrganizationDetails = () => {
 	const [organization, organizationSet] = useState<Organization | null>(null);
 	const { identifier } = router.query;
 
-	const fetchOrganization = async () => {
+	const fetchOrganization = useCallback(async () => {
 		if (identifier) {
 			try {
 				const res = await OrganizationsService.getOrganizations1(identifier as string);
@@ -21,13 +21,13 @@ const OrganizationDetails = () => {
 				console.log('ERROR', error);
 			}
 		}
-	};
+	}, [identifier]);
 
 	useEffect(() => {
 		if (identifier !== undefined) {
 			fetchOrganization();
 		}
-	}, [identifier]);
+	}, [identifier, fetchOrganization]);
 
 	const editOrganization = (
 		e: React.FormEvent<HTMLFormElement>,
