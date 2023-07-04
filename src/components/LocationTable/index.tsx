@@ -1,22 +1,22 @@
 import React, { FC } from 'react';
-import { Organization } from '../../generated-api-client';
+import { Location } from '../../generated-api-client';
 import Link from 'next/link';
-import OrganizationTableRow from './OrganizationTableRow';
-interface OrganizationTableProps {
-	organizations?: Organization[];
-	fetchOrganizations: () => void;
+import LocationTableRow from './LocationTableRow';
+interface LocationTableProps {
+	locations?: Location[];
+	fetchLocations: () => void;
 }
 
-const OrganizationTable: FC<OrganizationTableProps> = ({
-	organizations,
-	fetchOrganizations,
-}: OrganizationTableProps) => {
+const LocationTable: FC<LocationTableProps> = ({
+	locations,
+	fetchLocations,
+}: LocationTableProps) => {
 	return (
 		<div className="w-full">
-			<h1 className="text-base font-semibold leading-6 text-gray-900">Organizations</h1>
-			<p className="mt-2 text-sm text-gray-700">A list of all the registered organizations</p>
-			<Link className="leading-10" href={'/organizations/create'}>
-				Add Organization
+			<h1 className="text-base font-semibold leading-6 text-gray-900">Locations</h1>
+			<p className="mt-2 text-sm text-gray-700">A list of all the registered locations</p>
+			<Link className="leading-10" href={'/locations/create'}>
+				Add Location
 			</Link>
 			<div className="w-full overflow-x-scroll">
 				<table className="divide-y divide-gray-300 min-w-full">
@@ -29,10 +29,10 @@ const OrganizationTable: FC<OrganizationTableProps> = ({
 								Name
 							</th>
 							<th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-								PLZ
+								Website
 							</th>
 							<th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-								Ort
+								Stadtteil
 							</th>
 
 							<th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-0">
@@ -45,13 +45,9 @@ const OrganizationTable: FC<OrganizationTableProps> = ({
 						</tr>
 					</thead>
 					<tbody className="divide-y divide-gray-200">
-						{organizations &&
-							organizations.map((organization, key) => (
-								<OrganizationTableRow
-									key={key}
-									organization={organization}
-									fetchOrganizations={fetchOrganizations}
-								/>
+						{locations &&
+							locations.map((location, key) => (
+								<LocationTableRow key={key} location={location} fetchLocations={fetchLocations} />
 							))}
 					</tbody>
 				</table>
@@ -60,4 +56,4 @@ const OrganizationTable: FC<OrganizationTableProps> = ({
 	);
 };
 
-export default OrganizationTable;
+export default LocationTable;

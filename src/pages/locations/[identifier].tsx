@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import PageWrapper from '../../components/PageWrapper';
 import LocationEditor from '../../components/LocationEditor';
@@ -12,7 +12,7 @@ const LocationDetails = () => {
 	const [location, locationSet] = useState<Location | null>(null);
 	const { identifier } = router.query;
 
-	const fetchLocation = async () => {
+	const fetchLocation = useCallback(async () => {
 		if (identifier) {
 			try {
 				const res = await LocationsService.getLocations1(identifier as string);
@@ -23,13 +23,13 @@ const LocationDetails = () => {
 				console.log('ERROR', error);
 			}
 		}
-	};
+	}, [identifier]);
 
 	useEffect(() => {
 		if (identifier !== undefined) {
 			fetchLocation();
 		}
-	}, [identifier]);
+	}, [identifier, fetchLocation]);
 
 	const editLocation = (e: React.FormEvent<HTMLFormElement>, locationObject: Location) => {
 		console.log('EDIT Location', locationObject);
