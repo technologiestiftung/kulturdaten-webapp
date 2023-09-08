@@ -1,7 +1,9 @@
+> [!NOTE]
+> This webapp is currently under development and not yet ready to be used by the public.
+
 # About
 
 The kulturdaten.berlin webapp that enables cultural actors to input and manage cultural data such as cultural offerings, events, locations.
-This webapp is currently under development and not yet ready to be used by the public.
 
 ## Installation
 
