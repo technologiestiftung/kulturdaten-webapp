@@ -5,12 +5,13 @@
 	"author": "Technologiestiftung Berlin",
 	"license": "MIT",
 	"scripts": {
-		"build": "next build",
-		"format": "prettier --check src/**",
 		"run": "NODE_OPTIONS='--inspect' next start",
 		"start": "PORT=3001 next dev",
 		"turbo": "PORT=3002 next dev --turbo",
-		"update": "ncu -t minor -u && ncu",
+		"format": "prettier --write .",
+		"lint": "eslint .",
+		"typecheck": "tsc --noEmit",
+		"build": "next build",
 		"generate": "openapi --input openAPI-specs.yml --output src/generated-api-client"
 	},
 	"dependencies": {

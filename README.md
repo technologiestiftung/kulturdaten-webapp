@@ -21,12 +21,13 @@ The kulturdaten.berlin webapp that enables cultural actors to input and manage c
 
 In the project directory, you can run:
 
-- `npm run build`: Builds the Next.js application for production usage.
 - `npm run format`: Runs Prettier to format source code.
+- `npm run lint`: Runs ESLint to check for linting errors.
 - `npm run run`: Runs the Next.js application with Node.js debugging enabled.
-- `npm run start`: Runs the Next.js development server.
-- `npm run update`: Updates dependencies with the `ncu` tool.
+- `npm run typecheck`: Runs TypeScript to check for type errors.
+- `npm start`: Runs the Next.js development server.
 - `npm run generate`: Generates an API client from an OpenAPI specification file.
+- `npm run build`: Builds the Next.js application for production usage.
 
 ## Contributors ✨
 
