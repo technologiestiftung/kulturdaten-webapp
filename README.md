@@ -7,7 +7,7 @@ The kulturdaten.berlin webapp that enables cultural actors to input and manage c
 
 ## Installation
 
-1. Clone this repository: `git clone git@github.com:username/repo.git`
+1. Clone this repository.
 2. Install dependencies: `npm install`
 3. Generate API client from OpenAPI spec:
    - OpenAPI provides a .yml file with its specs via `http://localhost:3000/api/v1/spec`
