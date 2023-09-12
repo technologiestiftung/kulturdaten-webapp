@@ -5,14 +5,15 @@
 	"author": "Technologiestiftung Berlin",
 	"license": "MIT",
 	"scripts": {
+		"postinstall": "next telemetry disable",
+		"generate-api": "openapi --input openAPI-specs.yml --output src/api/client --name APIClient --useUnionTypes",
 		"run": "NODE_OPTIONS='--inspect' next start",
 		"start": "PORT=3001 next dev",
 		"turbo": "PORT=3002 next dev --turbo",
 		"format": "prettier --write .",
 		"lint": "eslint .",
 		"typecheck": "tsc --noEmit",
-		"build": "next build",
-		"generate": "openapi --input openAPI-specs.yml --output src/generated-api-client"
+		"build": "next build"
 	},
 	"dependencies": {
 		"@types/lodash": "^4.14.198",

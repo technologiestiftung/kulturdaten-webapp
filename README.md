@@ -7,12 +7,16 @@ The kulturdaten.berlin webapp that enables cultural actors to input and manage c
 
 ## Installation
 
-1. Clone this repository.
-2. Install dependencies: `npm install`
-3. Generate API client from OpenAPI spec:
-   - OpenAPI provides a .yml file with its specs via `http://localhost:3000/api/v1/spec`
-   - This file has to be named `openAPI-specs.yml` and placed in the root directory
-   - Run `npm run generate` and the client will be built in `src/generated-api-client`
+1. Install a node version that matches the version defined in `.nvmrc` (if you’re using [nvm](https://github.com/nvm-sh/nvm), run `nvm install` and/or `nvm use` to switch to that version).
+2. Install dependencies:
+   ```shell
+   npm install
+   ```
+3. Create a `.env` file and add all values (see `.env.example` for inspiration).
+4. Generate the OpenAPI client:
+   ```shell
+   npm run generate-api
+   ```
 
 > [!NOTE]
 > Make sure you have an instance of the [kulturdaten-api](https://github.com/technologiestiftung/kulturdaten-api) running locally. Alternatively, you can use a deployed API by adjusting `NEXT_PUBLIC_API_BASE_URL` in `.env`.
@@ -26,7 +30,7 @@ In the project directory, you can run:
 - `npm run run`: Runs the Next.js application with Node.js debugging enabled.
 - `npm run typecheck`: Runs TypeScript to check for type errors.
 - `npm start`: Runs the Next.js development server.
-- `npm run generate`: Generates an API client from an OpenAPI specification file.
+- `npm run generate-api`: Generates an API client from an OpenAPI specification file (`openAPI-specs.yml`).
 - `npm run build`: Builds the Next.js application for production usage.
 
 ## Contributors ✨

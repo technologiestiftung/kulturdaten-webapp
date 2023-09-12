@@ -1,8 +1,12 @@
 # Next
 .next
+.turbo
 
-# GraphQL
-src/__generated__
+# Environment
+.env
+
+# OpenAPI code generation
+/src/api/client
 
 # IDE's
 .idea
@@ -41,10 +45,5 @@ Thumbs.db
 
 notes/*
 
-.turbo
-
 # TypeScript
 *.tsbuildinfo
-
-# This folder can be generated via scripts
-src/generated-api-client
