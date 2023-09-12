@@ -1,7 +1,6 @@
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { getCookie } from 'typescript-cookie';
-import Cookies from 'universal-cookie';
 
 const withAuth = (WrappedComponent: React.ComponentType<any>) => {
 	const Wrapper = (props: any) => {
