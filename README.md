@@ -8,11 +8,14 @@ The kulturdaten.berlin webapp that enables cultural actors to input and manage c
 ## Installation
 
 1. Clone this repository: `git clone git@github.com:username/repo.git`
-2. Install dependencies: `npm install` or `yarn install`
+2. Install dependencies: `npm install`
 3. Generate API client from OpenAPI spec:
    - OpenAPI provides a .yml file with its specs via `http://localhost:3000/api/v1/spec`
    - This file has to be named `openAPI-specs.yml` and placed in the root directory
    - Run `npm run generate` and the client will be built in `src/generated-api-client`
+
+> [!NOTE]
+> Make sure you have an instance of the [kulturdaten-api](https://github.com/technologiestiftung/kulturdaten-api) running locally. Alternatively, you can use a deployed API by adjusting `NEXT_PUBLIC_API_BASE_URL` in `.env`.
 
 ## Available Scripts
 
@@ -24,25 +27,6 @@ In the project directory, you can run:
 - `npm run start`: Runs the Next.js development server.
 - `npm run update`: Updates dependencies with the `ncu` tool.
 - `npm run generate`: Generates an API client from an OpenAPI specification file.
-
-## Dependencies
-
-- "@types/node": "18.16.0"
-- "@types/react": "18.0.38"
-- "@types/react-dom": "18.0.11"
-- "autoprefixer": "10.4.14"
-- "classnames": "^2.3.2"
-- "eslint": "8.39.0"
-- "eslint-config-next": "13.3.1"
-- "next": "13.3.1"
-- "openapi-types": "^12.1.0"
-- "openapi-typescript-codegen": "^0.24.0"
-- "postcss": "8.4.23"
-- "react": "18.2.0"
-- "react-dom": "18.2.0"
-- "sass": "^1.62.0"
-- "tailwindcss": "3.3.1"
-- "typescript": "5.0.4"
 
 ## Contributors ✨
 
