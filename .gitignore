@@ -41,7 +41,7 @@ Thumbs.db
 
 notes/*
 
-+ .turbo
+.turbo
 
 # This folder can be generated via scripts
-src/generated-api-client/*
+src/generated-api-client
