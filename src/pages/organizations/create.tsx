@@ -1,10 +1,11 @@
-import React, { useState, FC, FormEvent, useEffect } from 'react';
-import { CreateOrganization, Organization, OrganizationsService } from '../../generated-api-client';
-import PageWrapper from '../../components/PageWrapper';
 import { useRouter } from 'next/router';
-import withAuth from '../../utils/withAuth';
-import OrganizationEditor from '../../components/OrganisationEditor';
+import { FC, FormEvent, useState } from 'react';
+import { CreateOrganizationRequest } from '../../api/client/models/CreateOrganizationRequest';
 import FormWrapper from '../../components/FormWrapper';
+import OrganizationEditor from '../../components/OrganisationEditor';
+import PageWrapper from '../../components/PageWrapper';
+import withAuth from '../../utils/withAuth';
+import apiClient from '@/src/api/client';
 
 const CreateNewOrganization: FC = () => {
 	const [errorMessage, errorMessageSet] = useState<string | undefined>(undefined);
@@ -13,15 +14,17 @@ const CreateNewOrganization: FC = () => {
 
 	const createOrganizationHandler = (
 		e: FormEvent<HTMLFormElement>,
-		newOrganization: CreateOrganization
+		newOrganization: CreateOrganizationRequest
 	) => {
 		e.preventDefault();
 		console.log('CREATE Organization');
 
-		OrganizationsService.postOrganizations(newOrganization as CreateOrganization)
+		apiClient.maintainCulturalData
+			.postOrganizations(newOrganization)
 			.then((res) => {
-				console.log('User created successfully', res.identifier);
-				router.push(`/organizations/${res.identifier}`);
+				console.log('Organization created successfully');
+				// TODO: Navigate to created organization.
+				// router.push(`/organizations/${res.identifier}`);
 			})
 			.catch((error: any) => {
 				console.error('Error creating user:', error);

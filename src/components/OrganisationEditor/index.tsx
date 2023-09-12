@@ -1,8 +1,9 @@
-import React, { useState, FC, FormEvent, useEffect } from 'react';
-import { CreateOrganization, Organization } from '../../generated-api-client';
-import { Input } from '../../components/InputField';
-import { Button } from '../../components/Button';
 import _ from 'lodash';
+import React, { FC, FormEvent, useEffect, useState } from 'react';
+import { CreateOrganizationRequest } from '../../api/client/models/CreateOrganizationRequest';
+import { Organization } from '../../api/client/models/Organization';
+import { Button } from '../../components/Button';
+import { Input } from '../../components/InputField';
 import { validatePostalCode } from '../../utils/validation';
 
 interface ErrorMessages {
@@ -16,8 +17,11 @@ const initialerrorMessages: ErrorMessages = {
 };
 
 interface OrganizationEditorProps {
-	organization?: CreateOrganization | Organization;
-	submitHandler: (e: FormEvent<HTMLFormElement>, newOrganization: CreateOrganization) => void;
+	organization?: CreateOrganizationRequest | Organization;
+	submitHandler: (
+		e: FormEvent<HTMLFormElement>,
+		newOrganization: CreateOrganizationRequest
+	) => void;
 	submitLabel: string;
 }
 
@@ -27,7 +31,7 @@ const OrganizationEditor: FC<OrganizationEditorProps> = ({
 	submitLabel,
 }) => {
 	const [organizationObject, organizationObjectSet] = useState<
-		CreateOrganization | Organization | undefined
+		CreateOrganizationRequest | Organization | undefined
 	>(organization || undefined);
 	const [errorMessages, errorMessagesSet] = React.useState<ErrorMessages>(initialerrorMessages);
 	const [postalCodePristine, postalCodePristineSet] = useState<boolean>(true);
@@ -35,7 +39,7 @@ const OrganizationEditor: FC<OrganizationEditorProps> = ({
 
 	useEffect(() => {
 		// check for error messages and required fields
-		const organizationName = organizationObject?.name?.de || '';
+		const organizationName = organizationObject?.displayName?.de || '';
 		if (
 			organizationName.length > 0 &&
 			Object.values(errorMessages)
@@ -54,7 +58,7 @@ const OrganizationEditor: FC<OrganizationEditorProps> = ({
 		const newOrganization = { ...organizationObject };
 		_.set(newOrganization, id, value);
 		console.log('newOrganization', newOrganization);
-		organizationObjectSet(newOrganization as CreateOrganization);
+		organizationObjectSet(newOrganization as CreateOrganizationRequest);
 		if (id === 'address.postalCode') {
 			const errorMessage = validatePostalCode(value);
 			errorMessagesSet((prev) => ({ ...prev, postalCode: errorMessage }));
@@ -64,7 +68,7 @@ const OrganizationEditor: FC<OrganizationEditorProps> = ({
 	const onSubmit = (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		if (formValid) {
-			submitHandler(e, organizationObject as CreateOrganization);
+			submitHandler(e, organizationObject as CreateOrganizationRequest);
 		} else {
 			errorMessagesSet((prev) => ({
 				...prev,
@@ -77,8 +81,8 @@ const OrganizationEditor: FC<OrganizationEditorProps> = ({
 		<form onSubmit={(e) => onSubmit(e)}>
 			<Input
 				type="text"
-				id="name.de"
-				initialValue={organizationObject?.name?.de || ''}
+				id="displayName.de"
+				initialValue={organizationObject?.displayName?.de || ''}
 				label={'Name (Pflichtfeld)'}
 				required
 				placeholder={'Hier bitte Name eingeben … '}

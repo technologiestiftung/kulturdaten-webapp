@@ -1,10 +1,12 @@
 import { useRouter } from 'next/router';
 import { useCallback, useEffect, useState } from 'react';
-import { Organization, OrganizationsService, PatchOrganization } from '../../generated-api-client';
-import PageWrapper from '../../components/PageWrapper';
-import OrganizationEditor from '../../components/OrganisationEditor';
-import withAuth from '../../utils/withAuth';
+import apiClient from '../../api/client';
+import { Organization } from '../../api/client/models/Organization';
+import { UpdateOrganizationRequest } from '../../api/client/models/UpdateOrganizationRequest';
 import FormWrapper from '../../components/FormWrapper';
+import OrganizationEditor from '../../components/OrganisationEditor';
+import PageWrapper from '../../components/PageWrapper';
+import withAuth from '../../utils/withAuth';
 
 const OrganizationDetails = () => {
 	const router = useRouter();
@@ -14,8 +16,8 @@ const OrganizationDetails = () => {
 	const fetchOrganization = useCallback(async () => {
 		if (identifier) {
 			try {
-				const res = await OrganizationsService.getOrganizations1(identifier as string);
-				const organizationObject = res?.organization;
+				const res = await apiClient.discoverCulturalData.getOrganizations1(identifier as string);
+				const organizationObject = res?.data?.organization;
 				organizationSet(organizationObject || null);
 			} catch (error) {
 				console.log('ERROR', error);
@@ -34,10 +36,9 @@ const OrganizationDetails = () => {
 		organizationObject: Organization
 	) => {
 		console.log('EDIT Organization', organizationObject);
-		OrganizationsService.patchOrganizations(
-			identifier as string,
-			organizationObject as PatchOrganization
-		)
+
+		apiClient.maintainCulturalData
+			.patchOrganizations(identifier as string, organizationObject as UpdateOrganizationRequest)
 			.then(() => {
 				console.log('Organization edited successfully');
 				fetchOrganization();
@@ -56,7 +57,7 @@ const OrganizationDetails = () => {
 				<FormWrapper>
 					<h1>Organisationsüberblick</h1>
 					<p>Hier kannst du alle hinterlegten Infos einsehen und bearbeiten</p>
-					<h2>{organization.name?.de}</h2>
+					<h2>{organization.displayName?.de}</h2>
 					<p>{organization.description?.de}</p>
 					{organization.address?.postalCode && <p>{organization.address?.postalCode}</p>}
 					{organization.address?.addressLocality && <p>{organization.address?.addressLocality}</p>}

@@ -1,7 +1,8 @@
-import React, { FC } from 'react';
-import { Organization } from '../../generated-api-client';
 import Link from 'next/link';
+import { FC } from 'react';
+import { Organization } from '../../api/client/models/Organization';
 import OrganizationTableRow from './OrganizationTableRow';
+
 interface OrganizationTableProps {
 	organizations?: Organization[];
 	fetchOrganizations: () => void;

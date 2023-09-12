@@ -1,5 +1,6 @@
 import React, { FC, FormEvent } from 'react';
-import { Organization, OrganizationsService } from '../../generated-api-client';
+import { Organization } from '../../api/client/models/Organization';
+import apiClient from '@/src/api/client';
 
 interface OrganizationTableRowProps {
 	organization: Organization;
@@ -14,20 +15,22 @@ const OrganizationTableRow: FC<OrganizationTableRowProps> = ({
 		identifier: string
 	) => {
 		console.log('DELETE Organization', identifier);
-		OrganizationsService.deleteOrganizations(identifier)
-			.then(() => {
-				console.log('Organization deleted successfully');
-				fetchOrganizations();
-			})
-			.catch((error) => {
-				console.log('ERROR', error);
-			});
+		// TODO: Deleting organizations is not yet implemented on API side.
+		// apiClient.maintainCulturalData
+		// 	.deleteOrganizations(identifier)
+		// 	.then(() => {
+		// 		console.log('Organization deleted successfully');
+		// 		fetchOrganizations();
+		// 	})
+		// 	.catch((error) => {
+		// 		console.log('ERROR', error);
+		// 	});
 	};
 
 	return (
 		<tr>
 			<td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">
-				{organization.name?.de || 'no name'}
+				{organization.displayName?.de || 'no name'}
 			</td>
 			<td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
 				{organization.address?.postalCode || 'no PLZ'}
@@ -37,14 +40,14 @@ const OrganizationTableRow: FC<OrganizationTableRowProps> = ({
 			</td>
 			<td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
 				<button onClick={(e) => deleteOrganization(e, organization.identifier)}>Delete</button>
-				<span className="sr-only">, {organization.name?.de || 'no name'}</span>
+				<span className="sr-only">, {organization.displayName?.de || 'no name'}</span>
 			</td>
 			<td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
 				<a
 					href={`/organizations/${organization.identifier}`}
 					className="text-indigo-600 hover:text-indigo-900"
 				>
-					Edit<span className="sr-only">, {organization.name?.de || 'no name'}</span>
+					Edit<span className="sr-only">, {organization.displayName?.de || 'no name'}</span>
 				</a>
 			</td>
 		</tr>

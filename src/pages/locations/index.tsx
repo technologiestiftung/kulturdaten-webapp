@@ -1,15 +1,17 @@
-import React, { useEffect, useState } from 'react';
-import PageWrapper from '../../components/PageWrapper';
-import { Location, LocationsService } from '../../generated-api-client';
+import apiClient from '@/src/api/client';
+import { useEffect, useState } from 'react';
+import { Location } from '../../api/client/models/Location';
 import LocationTable from '../../components/LocationTable';
+import PageWrapper from '../../components/PageWrapper';
 
 const LocationList = () => {
 	const [locations, setLocations] = useState<Location[] | undefined>(undefined);
 
 	const fetchLocations = () => {
-		LocationsService.getLocations()
+		apiClient.discoverCulturalData
+			.getLocations()
 			.then((res) => {
-				const locationsObject = res?.locations;
+				const locationsObject = res?.data?.locations;
 				setLocations(locationsObject || undefined);
 			})
 			.catch((error) => {

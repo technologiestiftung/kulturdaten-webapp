@@ -1,21 +1,18 @@
-import React, { createContext, FC, ReactNode, useEffect, useMemo, useState } from 'react';
-import { Auth } from '../generated-api-client';
+import { createContext, FC, ReactNode, useEffect, useMemo, useState } from 'react';
+import { LoginResponse } from '../api/client/models/LoginResponse';
 
-type AuthCredentials = {
-	[K in keyof Pick<Auth, 'authToken' | 'expiringDate' | 'expiresIn'>]: Auth[K];
-};
+type Auth = Required<Required<LoginResponse>['data']>;
+type User = Auth['user'];
 
 type UserContextType = {
-	authToken?: AuthCredentials | null;
-	userObject?: any;
-	saveAuthObject: (authToken: Auth) => void;
+	userObject: User | null;
+	saveAuthObject: (authObject: LoginResponse['data']) => void;
 	clearUser: () => void;
 };
 
 export const UserContext = createContext<UserContextType>({
-	authToken: null,
 	userObject: null,
-	saveAuthObject: (authObject: Auth) => {},
+	saveAuthObject: () => {},
 	clearUser: () => {},
 });
 
@@ -26,12 +23,12 @@ type UserContextProviderProps = {
 export const UserContextProvider: FC<UserContextProviderProps> = ({
 	children,
 }: UserContextProviderProps) => {
-	const [userObject, userObjectSet] = useState<any>(null);
+	const [userObject, userObjectSet] = useState<User | null>(null);
 
 	const userContextValue = useMemo(() => {
-		const saveAuthObject = (authObject: Auth) => {
-			localStorage.setItem('userObject', JSON.stringify(authObject.user));
-			userObjectSet(authObject.user);
+		const saveAuthObject = (authObject: LoginResponse['data']) => {
+			localStorage.setItem('userObject', JSON.stringify(authObject?.user));
+			userObjectSet(authObject?.user || null);
 		};
 
 		const clearUser = () => {

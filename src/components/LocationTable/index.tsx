@@ -1,6 +1,6 @@
-import React, { FC } from 'react';
-import { Location } from '../../generated-api-client';
 import Link from 'next/link';
+import { FC } from 'react';
+import { Location } from '../../api/client/models/Location';
 import LocationTableRow from './LocationTableRow';
 interface LocationTableProps {
 	locations?: Location[];

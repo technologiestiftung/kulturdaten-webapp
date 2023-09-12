@@ -1,11 +1,12 @@
-import React, { FC, FormEvent, useEffect } from 'react';
-import PageWrapper from '@components/PageWrapper';
-import { validateEmail, validatePassword, validateRepeatPassword } from './validation';
-import { CreateUser, UsersService } from '../../generated-api-client';
-import { Input } from '@components/InputField';
 import { Button } from '@components/Button';
+import { Input } from '@components/InputField';
+import PageWrapper from '@components/PageWrapper';
 import { useRouter } from 'next/router';
+import React, { FC, FormEvent, useEffect } from 'react';
+import { CreateUserRequest } from '../../api/client/models/CreateUserRequest';
 import FormWrapper from '../../components/FormWrapper';
+import { validateEmail, validatePassword, validateRepeatPassword } from './validation';
+import apiClient from '../../api/client';
 
 // TODO: mobile screen hook -> https://github.com/technologiestiftung/energiekarte/blob/main/src/lib/hooks/useHasMobileSize/index.ts
 
@@ -55,7 +56,7 @@ const Registration: FC = () => {
 	const handleRegistration = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		if (formValid) {
-			const body: CreateUser = {
+			const body: CreateUserRequest = {
 				email: email.toLowerCase(),
 				password: mainPassword,
 				firstName: 'Kommissar',
@@ -63,8 +64,8 @@ const Registration: FC = () => {
 			};
 
 			try {
-				const identifier = await UsersService.postUsers(body);
-				console.log('User created successfully', identifier);
+				await apiClient.users.postUsers(body);
+				console.log('User created successfully');
 				errorMessagesSet(initialerrorMessages);
 				router.push('/');
 			} catch (error: any) {
