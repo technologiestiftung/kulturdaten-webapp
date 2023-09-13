@@ -3,10 +3,11 @@ import { Input } from "@components/InputField";
 import PageWrapper from "@components/PageWrapper";
 import { useRouter } from "next/router";
 import React, { FC, FormEvent, useEffect } from "react";
+import apiClient from "../../api/client";
+import { ApiError } from "../../api/client/core/ApiError";
 import { CreateUserRequest } from "../../api/client/models/CreateUserRequest";
 import FormWrapper from "../../components/FormWrapper";
 import { validateEmail, validatePassword, validateRepeatPassword } from "./validation";
-import apiClient from "../../api/client";
 
 // TODO: mobile screen hook -> https://github.com/technologiestiftung/energiekarte/blob/main/src/lib/hooks/useHasMobileSize/index.ts
 
@@ -29,7 +30,7 @@ const Registration: FC = () => {
 
 	const [email, emailSet] = React.useState<string>("");
 	const [mainPassword, mainPasswordSet] = React.useState<string>("");
-	const [repeatPassword, repeatPasswordSet] = React.useState<string>("");
+	const [, repeatPasswordSet] = React.useState<string>("");
 	const [emailPristine, emailPristineSet] = React.useState<boolean>(true);
 	const [mainPasswordPristine, mainPasswordPristineSet] = React.useState<boolean>(true);
 	const [repeatPasswordPristine, repeatPasswordPristineSet] = React.useState<boolean>(true);
@@ -65,41 +66,34 @@ const Registration: FC = () => {
 
 			try {
 				await apiClient.users.postUsers(body);
-				console.log("User created successfully");
 				errorMessagesSet(initialerrorMessages);
 				router.push("/");
-			} catch (error: any) {
-				console.error("Error creating user:", error);
-				// Uncomment for complete error report
-				Object.keys(error).map((key) => {
-					console.log(key, error[key]);
-				});
-				if (error.status) {
-					console.log("server error", error.status);
-					switch (error.status) {
+			} catch (error) {
+				const apiError = error as ApiError;
+				if (apiError.status) {
+					switch (apiError.status) {
 						case 409:
 							errorMessagesSet({
 								...errorMessages,
-								general: `Email bereits vergeben ${error.status}`,
+								general: `Email bereits vergeben ${apiError.status}`,
 							});
 							break;
 						default:
 							errorMessagesSet({
 								...errorMessages,
-								general: `Unbekannter Fehler ${error.status}`,
+								general: `Unbekannter Fehler ${apiError.status}`,
 							});
 					}
 				} else {
 					errorMessagesSet({
 						...errorMessages,
-						general: `Verbindung fehlgeschlagen ${error.status}`,
+						general: `Verbindung fehlgeschlagen ${apiError.status}`,
 					});
 				}
 			}
 		} else if (emailPristine || mainPasswordPristine || repeatPasswordPristine) {
 			errorMessagesSet({ ...errorMessages, general: "Mindestens ein Feld ist noch leer" });
 		} else {
-			console.log("Eingabe fehlerhaft");
 		}
 	};
 
@@ -132,7 +126,6 @@ const Registration: FC = () => {
 				repeatPasswordSet(value);
 				break;
 			default:
-				console.log("no id", id);
 		}
 	};
 

@@ -1,10 +1,10 @@
-import React, { useEffect } from "react";
-import PageWrapper from "../components/PageWrapper";
-import withAuth from "../utils/withAuth";
-import { Button } from "../components/Button";
 import { useRouter } from "next/router";
-import { UserContext } from "../contexts/userContext";
+import React from "react";
 import { removeCookie } from "typescript-cookie";
+import { Button } from "../components/Button";
+import PageWrapper from "../components/PageWrapper";
+import { UserContext } from "../contexts/userContext";
+import withAuth from "../utils/withAuth";
 
 const Dashboard = () => {
 	const router = useRouter();
@@ -14,10 +14,7 @@ const Dashboard = () => {
 		router.push("login").then(() => {
 			clearUser();
 		});
-		console.log("logout");
 	};
-
-	console.log("USER", userObject);
 	return (
 		<div className="container mx-auto my-10 max-w-800px">
 			<PageWrapper>

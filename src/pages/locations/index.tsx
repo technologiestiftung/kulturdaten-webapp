@@ -8,20 +8,14 @@ const LocationList = () => {
 	const [locations, setLocations] = useState<Location[] | undefined>(undefined);
 
 	const fetchLocations = () => {
-		apiClient.discoverCulturalData
-			.getLocations()
-			.then((res) => {
-				const locationsObject = res?.data?.locations;
-				setLocations(locationsObject || undefined);
-			})
-			.catch((error) => {
-				console.log("Error fetching locations:", error);
-			});
+		apiClient.discoverCulturalData.getLocations().then((res) => {
+			const locationsObject = res?.data?.locations;
+			setLocations(locationsObject || undefined);
+		});
 	};
 
 	useEffect(() => {
 		fetchLocations();
-		console.log("LocationList");
 	}, []);
 
 	return (

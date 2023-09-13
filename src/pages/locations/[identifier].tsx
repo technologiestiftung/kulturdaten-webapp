@@ -15,14 +15,9 @@ const LocationDetails = () => {
 
 	const fetchLocation = useCallback(async () => {
 		if (identifier) {
-			try {
-				const res = await apiClient.discoverCulturalData.getLocations1(identifier);
-				const locationObject = res?.data?.location;
-				console.log("locationObject", locationObject);
-				locationSet(locationObject || null);
-			} catch (error) {
-				console.log("ERROR", error);
-			}
+			const res = await apiClient.discoverCulturalData.getLocations1(identifier);
+			const locationObject = res?.data?.location;
+			locationSet(locationObject || null);
 		}
 	}, [identifier]);
 
@@ -32,18 +27,10 @@ const LocationDetails = () => {
 		}
 	}, [identifier, fetchLocation]);
 
-	const editLocation = (e: React.FormEvent<HTMLFormElement>, locationObject: Location) => {
-		console.log("EDIT Location", locationObject);
-		apiClient.maintainCulturalData
-			.patchLocations(identifier as string, locationObject as UpdateLocationRequest)
-			.then(() => {
-				console.log("Location edited successfully");
-				fetchLocation();
-				router.push(`/locations/${identifier}`);
-			})
-			.catch((error) => {
-				console.log("ERROR", error);
-			});
+	const editLocation = async (locationObject: Location) => {
+		await apiClient.maintainCulturalData.patchLocations(identifier as string, locationObject as UpdateLocationRequest);
+		fetchLocation();
+		router.push(`/locations/${identifier}`);
 	};
 
 	if (location === null) {
@@ -60,7 +47,7 @@ const LocationDetails = () => {
 					<div className="mb-4"></div>
 					<LocationEditor
 						location={location}
-						submitHandler={(e, locationObject) => editLocation(e, locationObject as Location)}
+						submitHandler={(e, locationObject) => editLocation(locationObject as Location)}
 						submitLabel="Ort bearbeiten"
 					/>
 				</FormWrapper>

@@ -1,17 +1,12 @@
-import React, { FC, FormEvent } from "react";
+import React, { FC } from "react";
 import { Organization } from "../../api/client/models/Organization";
-import apiClient from "@/src/api/client";
 
 interface OrganizationTableRowProps {
 	organization: Organization;
 	fetchOrganizations: () => void;
 }
-const OrganizationTableRow: FC<OrganizationTableRowProps> = ({
-	organization,
-	fetchOrganizations,
-}: OrganizationTableRowProps) => {
-	const deleteOrganization = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, identifier: string) => {
-		console.log("DELETE Organization", identifier);
+const OrganizationTableRow: FC<OrganizationTableRowProps> = ({ organization }: OrganizationTableRowProps) => {
+	const deleteOrganization = (/* identifier: string */) => {
 		// TODO: Deleting organizations is not yet implemented on API side.
 		// apiClient.maintainCulturalData
 		// 	.deleteOrganizations(identifier)
@@ -36,7 +31,7 @@ const OrganizationTableRow: FC<OrganizationTableRowProps> = ({
 				{organization.address?.addressLocality || "no location"}
 			</td>
 			<td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-				<button onClick={(e) => deleteOrganization(e, organization.identifier)}>Delete</button>
+				<button onClick={() => deleteOrganization(/* organization.identifier */)}>Delete</button>
 				<span className="sr-only">, {organization.title?.de || "no name"}</span>
 			</td>
 			<td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">

@@ -15,13 +15,9 @@ const OrganizationDetails = () => {
 
 	const fetchOrganization = useCallback(async () => {
 		if (identifier) {
-			try {
-				const res = await apiClient.discoverCulturalData.getOrganizations1(identifier as string);
-				const organizationObject = res?.data?.organization;
-				organizationSet(organizationObject || null);
-			} catch (error) {
-				console.log("ERROR", error);
-			}
+			const res = await apiClient.discoverCulturalData.getOrganizations1(identifier as string);
+			const organizationObject = res?.data?.organization;
+			organizationSet(organizationObject || null);
 		}
 	}, [identifier]);
 
@@ -31,18 +27,12 @@ const OrganizationDetails = () => {
 		}
 	}, [identifier, fetchOrganization]);
 
-	const editOrganization = (e: React.FormEvent<HTMLFormElement>, organizationObject: Organization) => {
-		console.log("EDIT Organization", organizationObject);
-
+	const editOrganization = (organizationObject: Organization) => {
 		apiClient.maintainCulturalData
 			.patchOrganizations(identifier as string, organizationObject as UpdateOrganizationRequest)
 			.then(() => {
-				console.log("Organization edited successfully");
 				fetchOrganization();
 				router.push(`/organizations/${identifier}`);
-			})
-			.catch((error) => {
-				console.log("ERROR", error);
 			});
 	};
 
@@ -61,7 +51,7 @@ const OrganizationDetails = () => {
 					<div className="mb-4"></div>
 					<OrganizationEditor
 						organization={organization}
-						submitHandler={(e, organizationObject) => editOrganization(e, organizationObject as Organization)}
+						submitHandler={(e, organizationObject) => editOrganization(organizationObject as Organization)}
 						submitLabel="Organisation bearbeiten"
 					/>
 				</FormWrapper>

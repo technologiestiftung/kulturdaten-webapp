@@ -41,16 +41,15 @@ const OrganizationEditor: FC<OrganizationEditorProps> = ({ organization, submitH
 				.reduce((acc, curr) => acc + curr, "").length === 0
 		) {
 			formValidSet(true);
-			errorMessagesSet((prev) => initialerrorMessages);
+			errorMessagesSet(initialerrorMessages);
 		} else {
 			formValidSet(false);
 		}
 	}, [organizationObject, errorMessages]);
 
-	const onChange = (value: string, id: string, e: React.ChangeEvent<HTMLInputElement>) => {
+	const onChange = (value: string, id: string /* e: React.ChangeEvent<HTMLInputElement> */) => {
 		const newOrganization = { ...organizationObject };
 		_.set(newOrganization, id, value);
-		console.log("newOrganization", newOrganization);
 		organizationObjectSet(newOrganization as CreateOrganizationRequest);
 		if (id === "address.postalCode") {
 			const errorMessage = validatePostalCode(value);
@@ -79,7 +78,7 @@ const OrganizationEditor: FC<OrganizationEditorProps> = ({ organization, submitH
 				label={"Name (Pflichtfeld)"}
 				required
 				placeholder={"Hier bitte Name eingeben … "}
-				onChange={(value, id, e) => onChange(value, id, e)}
+				onChange={onChange}
 			/>
 			<Input
 				type="text"
@@ -87,7 +86,7 @@ const OrganizationEditor: FC<OrganizationEditorProps> = ({ organization, submitH
 				initialValue={organizationObject?.description?.de || ""}
 				label={"Beschreibung"}
 				placeholder={"Hier bitte Beschreibung eingeben … "}
-				onChange={(value, id, e) => onChange(value, id, e)}
+				onChange={onChange}
 			/>
 			<Input
 				type="text"
@@ -95,7 +94,7 @@ const OrganizationEditor: FC<OrganizationEditorProps> = ({ organization, submitH
 				initialValue={organizationObject?.address?.postalCode || ""}
 				label={"Postleitzahl"}
 				placeholder={"Hier bitte PLZ eingeben … "}
-				onChange={(value, id, e) => onChange(value, id, e)}
+				onChange={onChange}
 				setPristine={postalCodePristineSet}
 				errorMessage={
 					!postalCodePristine && organizationObject?.address?.postalCode ? errorMessages.postalCode : undefined
@@ -107,7 +106,7 @@ const OrganizationEditor: FC<OrganizationEditorProps> = ({ organization, submitH
 				initialValue={organizationObject?.address?.addressLocality || ""}
 				label={"Ort"}
 				placeholder={"Hier bitte den Ort eingeben … "}
-				onChange={(value, id, e) => onChange(value, id, e)}
+				onChange={onChange}
 			/>
 			<Button type="submit" label={submitLabel} />
 			{errorMessages.general && <span aria-live="assertive">{errorMessages.general}</span>}

@@ -15,7 +15,6 @@ interface DropdownProps {
 const Dropdown = ({ label, options, onChange, id, value }: DropdownProps) => {
 	const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
 		const inputValue = e.target.value;
-		console.log(inputValue);
 		onChange(inputValue, id, e);
 	};
 

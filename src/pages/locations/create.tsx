@@ -15,25 +15,14 @@ const CreateNewLocation = () => {
 
 	const createLocationHandler = (e: FormEvent<HTMLFormElement>, newLocation: Location) => {
 		e.preventDefault();
-		console.log("CREATE Location");
 		apiClient.maintainCulturalData
 			.postLocations(newLocation as CreateLocationRequest)
 			.then((res) => {
 				const id = res.data!.locationReference!.referenceId!;
-				console.log("Location created successfully", id);
 				router.push(`/locations/${id}`);
 			})
-			.catch((error: any) => {
-				console.error("Error creating user:", error);
-				// Uncomment for complete error report
-				// Object.keys(error).map((key) => {
-				// 	console.log(key, error[key]);
-				// });
-				if (error.status) {
-					console.log("server error", error.status);
-				} else {
-					errorMessageSet(`Verbindung fehlgeschlagen ${error.status}`);
-				}
+			.catch((error) => {
+				errorMessageSet(`Verbindung fehlgeschlagen: ${error.status}`);
 			});
 	};
 

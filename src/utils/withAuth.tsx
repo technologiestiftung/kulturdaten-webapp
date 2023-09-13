@@ -2,8 +2,9 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { getCookie } from "typescript-cookie";
 
-const withAuth = (WrappedComponent: React.ComponentType<any>) => {
-	const Wrapper = (props: any) => {
+export default function withAuth<Props extends JSX.IntrinsicAttributes>(wrappedComponent: React.ComponentType<Props>) {
+	const WrappedComponent = wrappedComponent;
+	const Wrapper = (props: Props) => {
 		const router = useRouter();
 		const [loading, setLoading] = useState<boolean>(true);
 
@@ -25,6 +26,4 @@ const withAuth = (WrappedComponent: React.ComponentType<any>) => {
 	};
 
 	return Wrapper;
-};
-
-export default withAuth;
+}

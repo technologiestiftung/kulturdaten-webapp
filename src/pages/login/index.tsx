@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import React, { FC, useState } from "react";
 import { setCookie } from "typescript-cookie";
 import apiClient from "../../api/client";
+import { ApiError } from "../../api/client/core/ApiError";
 import FormWrapper from "../../components/FormWrapper";
 import { UserContext } from "../../contexts/userContext";
 import { validateEmail } from "../registration/validation";
@@ -48,10 +49,7 @@ const LoginPage: FC = () => {
 				email: email.toLowerCase(),
 				password,
 			});
-			console.log("loginResponse: ", loginResponse);
 			const loginResponseData = loginResponse.data;
-			console.log("loginResponseData: ", loginResponseData);
-			console.log("Login successful");
 			if (loginResponseData?.accessToken) {
 				setCookie("accessToken", loginResponseData.accessToken, {
 					// TODO: Calculate expiry date via loginResponseData.expiresIn.
@@ -61,16 +59,12 @@ const LoginPage: FC = () => {
 				saveAuthObject(loginResponseData);
 				router.push("/");
 			}
-		} catch (error: any) {
-			console.error("Error logging in:", error);
-			// Object.keys(error).map((key) => {
-			// 	console.log(key, error[key]);
-			// });
-			if (error?.status) {
-				console.log("server error", error.status);
+		} catch (error) {
+			const apiError = error as ApiError;
+			if (apiError?.status) {
 				errorMessagesSet({
 					...errorMessages,
-					general: `Login fehlgeschlagen, ${error.status}`,
+					general: `Login fehlgeschlagen, ${apiError.status}`,
 				});
 			} else {
 				errorMessagesSet({ ...errorMessages, general: "Verbindung fehlgeschlagen" });

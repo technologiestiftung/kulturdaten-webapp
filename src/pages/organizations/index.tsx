@@ -8,20 +8,14 @@ const OrganizationList = () => {
 	const [organizations, setOrganizations] = useState<Organization[] | undefined>(undefined);
 
 	const fetchOrganizations = () => {
-		apiClient.discoverCulturalData
-			.getOrganizations()
-			.then((res) => {
-				const organizations = res?.data?.organizations;
-				setOrganizations(organizations);
-			})
-			.catch((error) => {
-				console.log("Error fetching organizations:", error);
-			});
+		apiClient.discoverCulturalData.getOrganizations().then((res) => {
+			const organizations = res?.data?.organizations;
+			setOrganizations(organizations);
+		});
 	};
 
 	useEffect(() => {
 		fetchOrganizations();
-		console.log("OrganizationList");
 	}, []);
 
 	return (

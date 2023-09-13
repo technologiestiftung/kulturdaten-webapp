@@ -61,20 +61,15 @@ const LocationEditor: FC<LocationEditorProps> = ({ location, submitHandler, subm
 				.reduce((acc, curr) => acc + curr, "").length === 0
 		) {
 			formValidSet(true);
-			errorMessagesSet((prev) => initialerrorMessages);
+			errorMessagesSet(initialerrorMessages);
 		} else {
 			formValidSet(false);
 		}
 	}, [locationObject, errorMessages]);
 
-	const onChange = (
-		value: string,
-		id: string,
-		e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>,
-	) => {
+	const onChange = (value: string, id: string) => {
 		const newLocation = { ...locationObject } as CreateLocationRequest | Location;
 		_.set(newLocation, id, value);
-		console.log("newLocation", newLocation);
 		locationObjectSet(newLocation);
 	};
 
@@ -99,7 +94,7 @@ const LocationEditor: FC<LocationEditorProps> = ({ location, submitHandler, subm
 				label="Name (Pflichtfeld)"
 				required
 				placeholder={"Hier bitte Name eingeben … "}
-				onChange={(value, id, e) => onChange(value, id, e)}
+				onChange={onChange}
 			/>
 			<Input
 				type="text"
@@ -107,14 +102,14 @@ const LocationEditor: FC<LocationEditorProps> = ({ location, submitHandler, subm
 				initialValue={locationObject?.website || ""}
 				label="Webseite"
 				placeholder={"www.my-location.com"}
-				onChange={(value, id, e) => onChange(value, id, e)}
+				onChange={onChange}
 			/>
 			<Dropdown
 				label="Bezirk"
 				id="borough"
 				options={districtOptions}
 				value={locationObject?.borough || ""}
-				onChange={(value, id, e) => onChange(value, id, e)}
+				onChange={onChange}
 			/>
 			<Button type="submit" label={submitLabel} />
 			{errorMessages.general && <span aria-live="assertive">{errorMessages.general}</span>}
