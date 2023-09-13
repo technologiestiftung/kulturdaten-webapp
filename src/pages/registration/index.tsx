@@ -1,3 +1,4 @@
+import { validateEmail, validatePassword, validateRepeatPassword } from "@/src/utils/validation";
 import { Button } from "@components/Button";
 import { Input } from "@components/InputField";
 import PageWrapper from "@components/PageWrapper";
@@ -7,7 +8,6 @@ import apiClient from "../../api/client";
 import { ApiError } from "../../api/client/core/ApiError";
 import { CreateUserRequest } from "../../api/client/models/CreateUserRequest";
 import FormWrapper from "../../components/FormWrapper";
-import { validateEmail, validatePassword, validateRepeatPassword } from "./validation";
 
 // TODO: mobile screen hook -> https://github.com/technologiestiftung/energiekarte/blob/main/src/lib/hooks/useHasMobileSize/index.ts
 

@@ -1,3 +1,4 @@
+import { validateEmail } from "@/src/utils/validation";
 import { Button } from "@components/Button";
 import { Input } from "@components/InputField";
 import PageWrapper from "@components/PageWrapper";
@@ -8,7 +9,6 @@ import apiClient from "../../api/client";
 import { ApiError } from "../../api/client/core/ApiError";
 import FormWrapper from "../../components/FormWrapper";
 import { UserContext } from "../../contexts/userContext";
-import { validateEmail } from "../registration/validation";
 
 interface ErrorMessages {
 	general: string | undefined;
