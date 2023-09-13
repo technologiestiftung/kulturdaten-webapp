@@ -1,1 +1,8 @@
+.next
+node_modules
+out
+next.config.js
+.storybook
+storybook-static
+/src/api/client
 **/assets/**
