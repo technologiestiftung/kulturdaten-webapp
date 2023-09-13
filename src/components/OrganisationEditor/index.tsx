@@ -1,10 +1,10 @@
-import _ from 'lodash';
-import { FC, FormEvent, useEffect, useState } from 'react';
-import { CreateOrganizationRequest } from '../../api/client/models/CreateOrganizationRequest';
-import { Organization } from '../../api/client/models/Organization';
-import { Button } from '../../components/Button';
-import { Input } from '../../components/InputField';
-import { validatePostalCode } from '../../utils/validation';
+import _ from "lodash";
+import { FC, FormEvent, useEffect, useState } from "react";
+import { CreateOrganizationRequest } from "../../api/client/models/CreateOrganizationRequest";
+import { Organization } from "../../api/client/models/Organization";
+import { Button } from "../../components/Button";
+import { Input } from "../../components/InputField";
+import { validatePostalCode } from "../../utils/validation";
 
 interface ErrorMessages {
 	postalCode: string | undefined;
@@ -18,34 +18,27 @@ const initialerrorMessages: ErrorMessages = {
 
 interface OrganizationEditorProps {
 	organization?: CreateOrganizationRequest | Organization;
-	submitHandler: (
-		e: FormEvent<HTMLFormElement>,
-		newOrganization: CreateOrganizationRequest,
-	) => void;
+	submitHandler: (e: FormEvent<HTMLFormElement>, newOrganization: CreateOrganizationRequest) => void;
 	submitLabel: string;
 }
 
-const OrganizationEditor: FC<OrganizationEditorProps> = ({
-	organization,
-	submitHandler,
-	submitLabel,
-}) => {
-	const [organizationObject, organizationObjectSet] = useState<
-		CreateOrganizationRequest | Organization | undefined
-	>(organization || undefined);
+const OrganizationEditor: FC<OrganizationEditorProps> = ({ organization, submitHandler, submitLabel }) => {
+	const [organizationObject, organizationObjectSet] = useState<CreateOrganizationRequest | Organization | undefined>(
+		organization || undefined,
+	);
 	const [errorMessages, errorMessagesSet] = useState<ErrorMessages>(initialerrorMessages);
 	const [postalCodePristine, postalCodePristineSet] = useState<boolean>(true);
 	const [formValid, formValidSet] = useState<boolean>(true);
 
 	useEffect(() => {
 		// check for error messages and required fields
-		const organizationName = organizationObject?.title?.de || '';
+		const organizationName = organizationObject?.title?.de || "";
 		if (
 			organizationName.length > 0 &&
 			Object.values(errorMessages)
 				//exclude the general error from the check
 				.filter((error) => error !== errorMessages.general)
-				.reduce((acc, curr) => acc + curr, '').length === 0
+				.reduce((acc, curr) => acc + curr, "").length === 0
 		) {
 			formValidSet(true);
 			errorMessagesSet((prev) => initialerrorMessages);
@@ -57,9 +50,9 @@ const OrganizationEditor: FC<OrganizationEditorProps> = ({
 	const onChange = (value: string, id: string, e: React.ChangeEvent<HTMLInputElement>) => {
 		const newOrganization = { ...organizationObject };
 		_.set(newOrganization, id, value);
-		console.log('newOrganization', newOrganization);
+		console.log("newOrganization", newOrganization);
 		organizationObjectSet(newOrganization as CreateOrganizationRequest);
-		if (id === 'address.postalCode') {
+		if (id === "address.postalCode") {
 			const errorMessage = validatePostalCode(value);
 			errorMessagesSet((prev) => ({ ...prev, postalCode: errorMessage }));
 		}
@@ -72,7 +65,7 @@ const OrganizationEditor: FC<OrganizationEditorProps> = ({
 		} else {
 			errorMessagesSet((prev) => ({
 				...prev,
-				general: 'Bitte alle Pflichtfelder korrekt ausfüllen',
+				general: "Bitte alle Pflichtfelder korrekt ausfüllen",
 			}));
 		}
 	};
@@ -82,40 +75,38 @@ const OrganizationEditor: FC<OrganizationEditorProps> = ({
 			<Input
 				type="text"
 				id="title.de"
-				initialValue={organizationObject?.title?.de || ''}
-				label={'Name (Pflichtfeld)'}
+				initialValue={organizationObject?.title?.de || ""}
+				label={"Name (Pflichtfeld)"}
 				required
-				placeholder={'Hier bitte Name eingeben … '}
+				placeholder={"Hier bitte Name eingeben … "}
 				onChange={(value, id, e) => onChange(value, id, e)}
 			/>
 			<Input
 				type="text"
 				id="description.de"
-				initialValue={organizationObject?.description?.de || ''}
-				label={'Beschreibung'}
-				placeholder={'Hier bitte Beschreibung eingeben … '}
+				initialValue={organizationObject?.description?.de || ""}
+				label={"Beschreibung"}
+				placeholder={"Hier bitte Beschreibung eingeben … "}
 				onChange={(value, id, e) => onChange(value, id, e)}
 			/>
 			<Input
 				type="text"
 				id="address.postalCode"
-				initialValue={organizationObject?.address?.postalCode || ''}
-				label={'Postleitzahl'}
-				placeholder={'Hier bitte PLZ eingeben … '}
+				initialValue={organizationObject?.address?.postalCode || ""}
+				label={"Postleitzahl"}
+				placeholder={"Hier bitte PLZ eingeben … "}
 				onChange={(value, id, e) => onChange(value, id, e)}
 				setPristine={postalCodePristineSet}
 				errorMessage={
-					!postalCodePristine && organizationObject?.address?.postalCode
-						? errorMessages.postalCode
-						: undefined
+					!postalCodePristine && organizationObject?.address?.postalCode ? errorMessages.postalCode : undefined
 				}
 			/>
 			<Input
 				type="text"
 				id="address.addressLocality"
-				initialValue={organizationObject?.address?.addressLocality || ''}
-				label={'Ort'}
-				placeholder={'Hier bitte den Ort eingeben … '}
+				initialValue={organizationObject?.address?.addressLocality || ""}
+				label={"Ort"}
+				placeholder={"Hier bitte den Ort eingeben … "}
 				onChange={(value, id, e) => onChange(value, id, e)}
 			/>
 			<Button type="submit" label={submitLabel} />

@@ -1,12 +1,12 @@
-import React, { useState, useId, FC } from 'react';
+import React, { useState, useId, FC } from "react";
 
 const InputTypes = {
-	EMAIL: 'email',
-	PASSWORD: 'password',
-	TEXT: 'text',
-	URL: 'url',
-	TEL: 'tel',
-	NUMBER: 'number',
+	EMAIL: "email",
+	PASSWORD: "password",
+	TEXT: "text",
+	URL: "url",
+	TEL: "tel",
+	NUMBER: "number",
 } as const;
 
 type InputType = (typeof InputTypes)[keyof typeof InputTypes];
@@ -34,7 +34,7 @@ export const Input: FC<InputProps> = ({
 	errorMessage,
 	initialValue,
 }: InputProps) => {
-	const [value, valueSet] = useState(initialValue || '');
+	const [value, valueSet] = useState(initialValue || "");
 
 	const idPrefix = useId();
 
@@ -64,7 +64,7 @@ export const Input: FC<InputProps> = ({
 				onChange={handleChange}
 				onBlur={handleBlur}
 				required={required}
-				aria-invalid={errorMessage ? 'true' : 'false'}
+				aria-invalid={errorMessage ? "true" : "false"}
 				aria-describedby="errorMessage"
 				id={id}
 			/>

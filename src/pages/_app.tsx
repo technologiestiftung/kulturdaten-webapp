@@ -1,8 +1,8 @@
-import React from 'react';
-import App from 'next/app';
-import '../style.css';
-import '../style.scss';
-import { UserContextProvider } from '../contexts/userContext';
+import React from "react";
+import App from "next/app";
+import "../style.css";
+import "../style.scss";
+import { UserContextProvider } from "../contexts/userContext";
 
 class RootApp extends App {
 	render() {

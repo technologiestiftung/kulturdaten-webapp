@@ -1,12 +1,12 @@
-import { useRouter } from 'next/router';
-import { useCallback, useEffect, useState } from 'react';
-import apiClient from '../../api/client';
-import { Location } from '../../api/client/models/Location';
-import { UpdateLocationRequest } from '../../api/client/models/UpdateLocationRequest';
-import FormWrapper from '../../components/FormWrapper';
-import LocationEditor from '../../components/LocationEditor';
-import PageWrapper from '../../components/PageWrapper';
-import withAuth from '../../utils/withAuth';
+import { useRouter } from "next/router";
+import { useCallback, useEffect, useState } from "react";
+import apiClient from "../../api/client";
+import { Location } from "../../api/client/models/Location";
+import { UpdateLocationRequest } from "../../api/client/models/UpdateLocationRequest";
+import FormWrapper from "../../components/FormWrapper";
+import LocationEditor from "../../components/LocationEditor";
+import PageWrapper from "../../components/PageWrapper";
+import withAuth from "../../utils/withAuth";
 
 const LocationDetails = () => {
 	const router = useRouter();
@@ -18,10 +18,10 @@ const LocationDetails = () => {
 			try {
 				const res = await apiClient.discoverCulturalData.getLocations1(identifier);
 				const locationObject = res?.data?.location;
-				console.log('locationObject', locationObject);
+				console.log("locationObject", locationObject);
 				locationSet(locationObject || null);
 			} catch (error) {
-				console.log('ERROR', error);
+				console.log("ERROR", error);
 			}
 		}
 	}, [identifier]);
@@ -33,16 +33,16 @@ const LocationDetails = () => {
 	}, [identifier, fetchLocation]);
 
 	const editLocation = (e: React.FormEvent<HTMLFormElement>, locationObject: Location) => {
-		console.log('EDIT Location', locationObject);
+		console.log("EDIT Location", locationObject);
 		apiClient.maintainCulturalData
 			.patchLocations(identifier as string, locationObject as UpdateLocationRequest)
 			.then(() => {
-				console.log('Location edited successfully');
+				console.log("Location edited successfully");
 				fetchLocation();
 				router.push(`/locations/${identifier}`);
 			})
 			.catch((error) => {
-				console.log('ERROR', error);
+				console.log("ERROR", error);
 			});
 	};
 

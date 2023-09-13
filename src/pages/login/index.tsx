@@ -1,13 +1,13 @@
-import { Button } from '@components/Button';
-import { Input } from '@components/InputField';
-import PageWrapper from '@components/PageWrapper';
-import { useRouter } from 'next/router';
-import React, { FC, useState } from 'react';
-import { setCookie } from 'typescript-cookie';
-import apiClient from '../../api/client';
-import FormWrapper from '../../components/FormWrapper';
-import { UserContext } from '../../contexts/userContext';
-import { validateEmail } from '../registration/validation';
+import { Button } from "@components/Button";
+import { Input } from "@components/InputField";
+import PageWrapper from "@components/PageWrapper";
+import { useRouter } from "next/router";
+import React, { FC, useState } from "react";
+import { setCookie } from "typescript-cookie";
+import apiClient from "../../api/client";
+import FormWrapper from "../../components/FormWrapper";
+import { UserContext } from "../../contexts/userContext";
+import { validateEmail } from "../registration/validation";
 
 interface ErrorMessages {
 	general: string | undefined;
@@ -20,8 +20,8 @@ const initialErrorMessages: ErrorMessages = {
 };
 
 const LoginPage: FC = () => {
-	const [email, emailSet] = useState<string>('');
-	const [password, passwordSet] = useState<string>('');
+	const [email, emailSet] = useState<string>("");
+	const [password, passwordSet] = useState<string>("");
 	const [errorMessages, errorMessagesSet] = useState<ErrorMessages>(initialErrorMessages);
 	const [emailPristine, emailPristineSet] = useState<boolean>(true);
 
@@ -48,32 +48,32 @@ const LoginPage: FC = () => {
 				email: email.toLowerCase(),
 				password,
 			});
-			console.log('loginResponse: ', loginResponse);
+			console.log("loginResponse: ", loginResponse);
 			const loginResponseData = loginResponse.data;
-			console.log('loginResponseData: ', loginResponseData);
-			console.log('Login successful');
+			console.log("loginResponseData: ", loginResponseData);
+			console.log("Login successful");
 			if (loginResponseData?.accessToken) {
-				setCookie('accessToken', loginResponseData.accessToken, {
+				setCookie("accessToken", loginResponseData.accessToken, {
 					// TODO: Calculate expiry date via loginResponseData.expiresIn.
 					// expires: loginResponseData.expiresIn ? new Date(loginResponseData.expiresIn) : undefined,
-					path: '/',
+					path: "/",
 				});
 				saveAuthObject(loginResponseData);
-				router.push('/');
+				router.push("/");
 			}
 		} catch (error: any) {
-			console.error('Error logging in:', error);
+			console.error("Error logging in:", error);
 			// Object.keys(error).map((key) => {
 			// 	console.log(key, error[key]);
 			// });
 			if (error?.status) {
-				console.log('server error', error.status);
+				console.log("server error", error.status);
 				errorMessagesSet({
 					...errorMessages,
 					general: `Login fehlgeschlagen, ${error.status}`,
 				});
 			} else {
-				errorMessagesSet({ ...errorMessages, general: 'Verbindung fehlgeschlagen' });
+				errorMessagesSet({ ...errorMessages, general: "Verbindung fehlgeschlagen" });
 			}
 		}
 	};
@@ -89,9 +89,9 @@ const LoginPage: FC = () => {
 					<Input
 						type="email"
 						id="email"
-						label={'Email'}
+						label={"Email"}
 						required
-						placeholder={'Hier bitte Email eingeben … '}
+						placeholder={"Hier bitte Email eingeben … "}
 						errorMessage={emailPristine ? undefined : errorMessages.email}
 						onChange={(value) => onEmailChange(value)}
 						setPristine={emailPristineSet}
@@ -99,9 +99,9 @@ const LoginPage: FC = () => {
 					<Input
 						type="password"
 						id="password"
-						label={'Password'}
+						label={"Password"}
 						required
-						placeholder={'Hier bitte Passwort eingeben … '}
+						placeholder={"Hier bitte Passwort eingeben … "}
 						onChange={(value) => onPasswordChange(value)}
 					/>
 					<Button type="submit" label="Login" />

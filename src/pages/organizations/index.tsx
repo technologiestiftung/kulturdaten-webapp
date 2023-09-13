@@ -1,8 +1,8 @@
-import { useEffect, useState } from 'react';
-import apiClient from '../../api/client';
-import { Organization } from '../../api/client/models/Organization';
-import OrganizationTable from '../../components/OrganizationTable';
-import PageWrapper from '../../components/PageWrapper';
+import { useEffect, useState } from "react";
+import apiClient from "../../api/client";
+import { Organization } from "../../api/client/models/Organization";
+import OrganizationTable from "../../components/OrganizationTable";
+import PageWrapper from "../../components/PageWrapper";
 
 const OrganizationList = () => {
 	const [organizations, setOrganizations] = useState<Organization[] | undefined>(undefined);
@@ -15,13 +15,13 @@ const OrganizationList = () => {
 				setOrganizations(organizations);
 			})
 			.catch((error) => {
-				console.log('Error fetching organizations:', error);
+				console.log("Error fetching organizations:", error);
 			});
 	};
 
 	useEffect(() => {
 		fetchOrganizations();
-		console.log('OrganizationList');
+		console.log("OrganizationList");
 	}, []);
 
 	return (
