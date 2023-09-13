@@ -23,7 +23,7 @@ const Dashboard = () => {
 			<PageWrapper>
 				DASHBOARD
 				<h2>
-					You are logged in as <span>{`${userObject?.firstName} ${userObject?.lastName}`}</span>
+					You are logged in{userObject ? ` as ${userObject.firstName} ${userObject.lastName}` : ''}
 				</h2>
 				<Button onClick={logout} label="Logout" />
 			</PageWrapper>
