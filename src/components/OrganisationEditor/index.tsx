@@ -39,7 +39,7 @@ const OrganizationEditor: FC<OrganizationEditorProps> = ({
 
 	useEffect(() => {
 		// check for error messages and required fields
-		const organizationName = organizationObject?.displayName?.de || '';
+		const organizationName = organizationObject?.title?.de || '';
 		if (
 			organizationName.length > 0 &&
 			Object.values(errorMessages)
@@ -81,8 +81,8 @@ const OrganizationEditor: FC<OrganizationEditorProps> = ({
 		<form onSubmit={(e) => onSubmit(e)}>
 			<Input
 				type="text"
-				id="displayName.de"
-				initialValue={organizationObject?.displayName?.de || ''}
+				id="title.de"
+				initialValue={organizationObject?.title?.de || ''}
 				label={'Name (Pflichtfeld)'}
 				required
 				placeholder={'Hier bitte Name eingeben … '}

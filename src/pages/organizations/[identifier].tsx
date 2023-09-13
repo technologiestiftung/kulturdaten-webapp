@@ -57,7 +57,7 @@ const OrganizationDetails = () => {
 				<FormWrapper>
 					<h1>Organisationsüberblick</h1>
 					<p>Hier kannst du alle hinterlegten Infos einsehen und bearbeiten</p>
-					<h2>{organization.displayName?.de}</h2>
+					<h2>{organization.title?.de}</h2>
 					<p>{organization.description?.de}</p>
 					{organization.address?.postalCode && <p>{organization.address?.postalCode}</p>}
 					{organization.address?.addressLocality && <p>{organization.address?.addressLocality}</p>}

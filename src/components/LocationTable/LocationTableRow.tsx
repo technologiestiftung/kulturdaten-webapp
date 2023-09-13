@@ -11,7 +11,7 @@ const LocationTableRow: FC<LocationTableRowProps> = ({
 }: LocationTableRowProps) => {
 	const deleteLocation = (
 		e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-		identifier: string
+		identifier: string,
 	) => {
 		console.log('DELETE Location', identifier);
 		// TODO: Deleting locations is not yet implemented on API side.
@@ -29,7 +29,7 @@ const LocationTableRow: FC<LocationTableRowProps> = ({
 	return (
 		<tr>
 			<td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">
-				{location.displayName?.de || 'no name'}
+				{location.title?.de || 'no name'}
 			</td>
 			<td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
 				{location.website || 'no URL'}
@@ -39,14 +39,14 @@ const LocationTableRow: FC<LocationTableRowProps> = ({
 			</td>
 			<td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
 				<button onClick={(e) => deleteLocation(e, location.identifier)}>Delete</button>
-				<span className="sr-only">, {location.displayName?.de || 'no name'}</span>
+				<span className="sr-only">, {location.title?.de || 'no name'}</span>
 			</td>
 			<td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
 				<a
 					href={`/locations/${location.identifier}`}
 					className="text-indigo-600 hover:text-indigo-900"
 				>
-					Edit<span className="sr-only">, {location.displayName?.de || 'no name'}</span>
+					Edit<span className="sr-only">, {location.title?.de || 'no name'}</span>
 				</a>
 			</td>
 		</tr>

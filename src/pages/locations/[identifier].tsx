@@ -54,7 +54,7 @@ const LocationDetails = () => {
 				<FormWrapper>
 					<h1>Ort bearbeiten</h1>
 					<p>Hier kannst du alle hinterlegten Infos einsehen und bearbeiten</p>
-					<h2>{location.displayName?.de}</h2>
+					<h2>{location.title?.de}</h2>
 					<p>{location.website}</p>
 					{location.borough && <p>{location.borough}</p>}
 					<div className="mb-4"></div>

@@ -55,7 +55,7 @@ const LocationEditor: FC<LocationEditorProps> = ({ location, submitHandler, subm
 
 	useEffect(() => {
 		// check for error messages and required fields
-		const locationName = locationObject?.displayName?.de || '';
+		const locationName = locationObject?.title?.de || '';
 		if (
 			locationName.length > 0 &&
 			Object.values(errorMessages)
@@ -100,8 +100,8 @@ const LocationEditor: FC<LocationEditorProps> = ({ location, submitHandler, subm
 		<form onSubmit={(e) => onSubmit(e)}>
 			<Input
 				type="text"
-				id="displayName.de"
-				initialValue={locationObject?.displayName?.de || ''}
+				id="title.de"
+				initialValue={locationObject?.title?.de || ''}
 				label="Name (Pflichtfeld)"
 				required
 				placeholder={'Hier bitte Name eingeben … '}

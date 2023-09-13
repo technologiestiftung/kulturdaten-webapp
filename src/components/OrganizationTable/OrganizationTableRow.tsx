@@ -30,7 +30,7 @@ const OrganizationTableRow: FC<OrganizationTableRowProps> = ({
 	return (
 		<tr>
 			<td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">
-				{organization.displayName?.de || 'no name'}
+				{organization.title?.de || 'no name'}
 			</td>
 			<td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
 				{organization.address?.postalCode || 'no PLZ'}
@@ -40,14 +40,14 @@ const OrganizationTableRow: FC<OrganizationTableRowProps> = ({
 			</td>
 			<td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
 				<button onClick={(e) => deleteOrganization(e, organization.identifier)}>Delete</button>
-				<span className="sr-only">, {organization.displayName?.de || 'no name'}</span>
+				<span className="sr-only">, {organization.title?.de || 'no name'}</span>
 			</td>
 			<td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
 				<a
 					href={`/organizations/${organization.identifier}`}
 					className="text-indigo-600 hover:text-indigo-900"
 				>
-					Edit<span className="sr-only">, {organization.displayName?.de || 'no name'}</span>
+					Edit<span className="sr-only">, {organization.title?.de || 'no name'}</span>
 				</a>
 			</td>
 		</tr>
