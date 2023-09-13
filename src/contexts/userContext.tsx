@@ -26,9 +26,11 @@ export const UserContextProvider: FC<UserContextProviderProps> = ({
 	const [userObject, userObjectSet] = useState<User | null>(null);
 
 	const userContextValue = useMemo(() => {
-		const saveAuthObject = (authObject: LoginResponse['data']) => {
-			localStorage.setItem('userObject', JSON.stringify(authObject?.user));
-			userObjectSet(authObject?.user || null);
+		const saveAuthObject = (loginResponse: LoginResponse['data']) => {
+			if (loginResponse?.user) {
+				localStorage.setItem('userObject', JSON.stringify(loginResponse.user));
+				userObjectSet(loginResponse.user || null);
+			}
 		};
 
 		const clearUser = () => {
