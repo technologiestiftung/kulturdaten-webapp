@@ -1,4 +1,10 @@
 **/assets/**
-*.feature
 *.sass
 *.scss
+node_modules
+package.json
+package-lock.json
+.next
+out
+storybook-static
+/src/api/client

@@ -1,12 +1,12 @@
-import { useRouter } from 'next/router';
-import { useCallback, useEffect, useState } from 'react';
-import apiClient from '../../api/client';
-import { Organization } from '../../api/client/models/Organization';
-import { UpdateOrganizationRequest } from '../../api/client/models/UpdateOrganizationRequest';
-import FormWrapper from '../../components/FormWrapper';
-import OrganizationEditor from '../../components/OrganisationEditor';
-import PageWrapper from '../../components/PageWrapper';
-import withAuth from '../../utils/withAuth';
+import apiClient from "@api/client";
+import { Organization } from "@api/client/models/Organization";
+import { UpdateOrganizationRequest } from "@api/client/models/UpdateOrganizationRequest";
+import withAuth from "@utils/withAuth";
+import { useRouter } from "next/router";
+import { useCallback, useEffect, useState } from "react";
+import FormWrapper from "../../components/FormWrapper";
+import OrganizationEditor from "../../components/OrganisationEditor";
+import PageWrapper from "../../components/PageWrapper";
 
 const OrganizationDetails = () => {
 	const router = useRouter();
@@ -15,13 +15,9 @@ const OrganizationDetails = () => {
 
 	const fetchOrganization = useCallback(async () => {
 		if (identifier) {
-			try {
-				const res = await apiClient.discoverCulturalData.getOrganizations1(identifier as string);
-				const organizationObject = res?.data?.organization;
-				organizationSet(organizationObject || null);
-			} catch (error) {
-				console.log('ERROR', error);
-			}
+			const res = await apiClient.discoverCulturalData.getOrganizations1(identifier as string);
+			const organizationObject = res?.data?.organization;
+			organizationSet(organizationObject || null);
 		}
 	}, [identifier]);
 
@@ -31,21 +27,12 @@ const OrganizationDetails = () => {
 		}
 	}, [identifier, fetchOrganization]);
 
-	const editOrganization = (
-		e: React.FormEvent<HTMLFormElement>,
-		organizationObject: Organization
-	) => {
-		console.log('EDIT Organization', organizationObject);
-
+	const editOrganization = (organizationObject: Organization) => {
 		apiClient.maintainCulturalData
 			.patchOrganizations(identifier as string, organizationObject as UpdateOrganizationRequest)
 			.then(() => {
-				console.log('Organization edited successfully');
 				fetchOrganization();
 				router.push(`/organizations/${identifier}`);
-			})
-			.catch((error) => {
-				console.log('ERROR', error);
 			});
 	};
 
@@ -64,9 +51,7 @@ const OrganizationDetails = () => {
 					<div className="mb-4"></div>
 					<OrganizationEditor
 						organization={organization}
-						submitHandler={(e, organizationObject) =>
-							editOrganization(e, organizationObject as Organization)
-						}
+						submitHandler={(e, organizationObject) => editOrganization(organizationObject as Organization)}
 						submitLabel="Organisation bearbeiten"
 					/>
 				</FormWrapper>

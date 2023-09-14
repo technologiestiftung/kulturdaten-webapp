@@ -1,5 +1,5 @@
-import { APIClient } from './client/APIClient';
-import { OpenAPI } from './client/core/OpenAPI';
+import { APIClient } from "./client/APIClient";
+import { OpenAPI } from "./client/core/OpenAPI";
 
 /**
  * Use this client for all API requests.

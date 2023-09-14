@@ -1,19 +1,20 @@
-import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
-import { getCookie } from 'typescript-cookie';
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import { getCookie } from "typescript-cookie";
 
-const withAuth = (WrappedComponent: React.ComponentType<any>) => {
-	const Wrapper = (props: any) => {
+export default function withAuth<Props extends JSX.IntrinsicAttributes>(wrappedComponent: React.ComponentType<Props>) {
+	const WrappedComponent = wrappedComponent;
+	const Wrapper = (props: Props) => {
 		const router = useRouter();
 		const [loading, setLoading] = useState<boolean>(true);
 
 		useEffect(() => {
-			const accessToken = getCookie('accessToken');
+			const accessToken = getCookie("accessToken");
 			if (!accessToken) {
-				console.log('No accessToken found, redirecting to login'); // debug statement
-				router.push('/login');
+				console.log("No accessToken found, redirecting to login"); // debug statement
+				router.push("/login");
 			} else {
-				console.log('accessToken:', accessToken); // debug statement
+				console.log("accessToken:", accessToken); // debug statement
 				setLoading(false);
 			}
 		}, [router]);
@@ -25,6 +26,4 @@ const withAuth = (WrappedComponent: React.ComponentType<any>) => {
 	};
 
 	return Wrapper;
-};
-
-export default withAuth;
+}
