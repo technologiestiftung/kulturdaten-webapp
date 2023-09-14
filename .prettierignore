@@ -1,6 +1,4 @@
 **/assets/**
-*.sass
-*.scss
 node_modules
 package.json
 package-lock.json

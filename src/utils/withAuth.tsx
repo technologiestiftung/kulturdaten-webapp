@@ -11,10 +11,8 @@ export default function withAuth<Props extends JSX.IntrinsicAttributes>(wrappedC
 		useEffect(() => {
 			const accessToken = getCookie("accessToken");
 			if (!accessToken) {
-				console.log("No accessToken found, redirecting to login"); // debug statement
 				router.push("/login");
 			} else {
-				console.log("accessToken:", accessToken); // debug statement
 				setLoading(false);
 			}
 		}, [router]);

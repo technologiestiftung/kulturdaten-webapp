@@ -1,7 +1,6 @@
 import App from "next/app";
+import GlobalStyles from "../components/GlobalStyles";
 import { UserContextProvider } from "../contexts/userContext";
-import "../style.css";
-import "../style.scss";
 
 class RootApp extends App {
 	render() {
@@ -9,6 +8,7 @@ class RootApp extends App {
 		return (
 			<>
 				<UserContextProvider>
+					<GlobalStyles />
 					<Component {...pageProps} />
 				</UserContextProvider>
 			</>
