@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import React, { FC, FormEvent, useEffect, useState } from 'react';
+import { FC, FormEvent, useEffect, useState } from 'react';
 import { CreateOrganizationRequest } from '../../api/client/models/CreateOrganizationRequest';
 import { Organization } from '../../api/client/models/Organization';
 import { Button } from '../../components/Button';
@@ -20,7 +20,7 @@ interface OrganizationEditorProps {
 	organization?: CreateOrganizationRequest | Organization;
 	submitHandler: (
 		e: FormEvent<HTMLFormElement>,
-		newOrganization: CreateOrganizationRequest
+		newOrganization: CreateOrganizationRequest,
 	) => void;
 	submitLabel: string;
 }
@@ -33,7 +33,7 @@ const OrganizationEditor: FC<OrganizationEditorProps> = ({
 	const [organizationObject, organizationObjectSet] = useState<
 		CreateOrganizationRequest | Organization | undefined
 	>(organization || undefined);
-	const [errorMessages, errorMessagesSet] = React.useState<ErrorMessages>(initialerrorMessages);
+	const [errorMessages, errorMessagesSet] = useState<ErrorMessages>(initialerrorMessages);
 	const [postalCodePristine, postalCodePristineSet] = useState<boolean>(true);
 	const [formValid, formValidSet] = useState<boolean>(true);
 
