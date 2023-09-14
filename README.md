@@ -29,10 +29,9 @@ In the project directory, you can run:
 - `npm run generate-api`: Generates an API client from an OpenAPI specification file (`openAPI-specs.yml`).
 - `npm run format`: Runs Prettier to format source code.
 - `npm run lint`: Runs ESLint to check for linting errors.
-- `npm run run`: Runs the Next.js application with Node.js debugging enabled.
 - `npm run typecheck`: Runs TypeScript to check for type errors.
 - `npm run build`: Builds the Next.js application for production usage.
-- `npm run start`: Starts the Next.js server for production usage.
+- `npm start`: Starts the Next.js server for production usage.
 
 ## Contributors ✨
 
