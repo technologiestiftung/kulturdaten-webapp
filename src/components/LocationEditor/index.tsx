@@ -20,12 +20,12 @@ interface LocationEditorProps {
 	location?: Location;
 	submitHandler: (
 		e: FormEvent<HTMLFormElement>,
-		newLocation: CreateLocationRequest | Location
+		newLocation: CreateLocationRequest | Location,
 	) => void;
 	submitLabel: string;
 }
 
-const boroughs: Array<CreateLocationRequest['borough']> = [
+const berlinDistricts: Array<CreateLocationRequest['borough']> = [
 	'Mitte',
 	'Friedrichshain-Kreuzberg',
 	'Pankow',
@@ -48,9 +48,9 @@ const LocationEditor: FC<LocationEditorProps> = ({ location, submitHandler, subm
 	const [errorMessages, errorMessagesSet] = React.useState<ErrorMessages>(initialerrorMessages);
 	const [formValid, formValidSet] = useState<boolean>(true);
 
-	const barrios = boroughs.map((borough) => ({
-		value: borough as string,
-		label: borough as string,
+	const districtOptions = berlinDistricts.map((berlinDistrict) => ({
+		value: berlinDistrict as string,
+		label: berlinDistrict as string,
 	}));
 
 	useEffect(() => {
@@ -73,7 +73,7 @@ const LocationEditor: FC<LocationEditorProps> = ({ location, submitHandler, subm
 	const onChange = (
 		value: string,
 		id: string,
-		e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>
+		e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>,
 	) => {
 		const newLocation = { ...locationObject } as CreateLocationRequest | Location;
 		_.set(newLocation, id, value);
@@ -86,7 +86,7 @@ const LocationEditor: FC<LocationEditorProps> = ({ location, submitHandler, subm
 		if (formValid) {
 			submitHandler(
 				e as FormEvent<HTMLFormElement>,
-				locationObject as CreateLocationRequest | Location
+				locationObject as CreateLocationRequest | Location,
 			);
 		} else {
 			errorMessagesSet((prev) => ({
@@ -118,7 +118,7 @@ const LocationEditor: FC<LocationEditorProps> = ({ location, submitHandler, subm
 			<Dropdown
 				label="Bezirk"
 				id="borough"
-				options={barrios}
+				options={districtOptions}
 				value={locationObject?.borough || ''}
 				onChange={(value, id, e) => onChange(value, id, e)}
 			/>
