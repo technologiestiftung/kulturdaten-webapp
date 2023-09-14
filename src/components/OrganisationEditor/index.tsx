@@ -1,8 +1,8 @@
 import { validatePostalCode } from "@/src/utils/validation";
+import { CreateOrganizationRequest } from "@api/client/models/CreateOrganizationRequest";
+import { Organization } from "@api/client/models/Organization";
 import _ from "lodash";
 import { FC, FormEvent, useEffect, useState } from "react";
-import { CreateOrganizationRequest } from "../../api/client/models/CreateOrganizationRequest";
-import { Organization } from "../../api/client/models/Organization";
 import { Button } from "../../components/Button";
 import { Input } from "../../components/InputField";
 

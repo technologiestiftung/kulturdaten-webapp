@@ -1,4 +1,4 @@
-import React, { useState, useId, FC } from "react";
+import React, { FC, useId, useState } from "react";
 
 const InputTypes = {
 	EMAIL: "email",

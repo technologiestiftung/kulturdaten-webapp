@@ -1,7 +1,8 @@
+import { Location } from "@api/client/models/Location";
 import Link from "next/link";
 import { FC } from "react";
-import { Location } from "../../api/client/models/Location";
 import LocationTableRow from "./LocationTableRow";
+
 interface LocationTableProps {
 	locations?: Location[];
 	fetchLocations: () => void;

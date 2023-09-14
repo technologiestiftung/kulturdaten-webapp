@@ -17,6 +17,7 @@
 		"incremental": true,
 		"paths": {
 			"@/*": ["./*"],
+			"@api/*": ["./src/api/*"],
 			"@components/*": ["./src/components/*"],
 			"@contexts/*": ["./src/contexts/*"]
 		}

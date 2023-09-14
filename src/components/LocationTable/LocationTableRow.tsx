@@ -1,5 +1,5 @@
+import { Location } from "@api/client/models/Location";
 import { FC } from "react";
-import { Location } from "../../api/client/models/Location";
 
 interface LocationTableRowProps {
 	location: Location;

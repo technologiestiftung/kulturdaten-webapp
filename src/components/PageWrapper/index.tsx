@@ -1,4 +1,3 @@
-import React from "react";
 import { FC, ReactNode } from "react";
 
 interface PageWrapperProps {

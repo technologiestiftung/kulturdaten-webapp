@@ -1,6 +1,6 @@
-import apiClient from "@/src/api/client";
+import apiClient from "@api/client";
+import { Location } from "@api/client/models/Location";
 import { useEffect, useState } from "react";
-import { Location } from "../../api/client/models/Location";
 import LocationTable from "../../components/LocationTable";
 import PageWrapper from "../../components/PageWrapper";
 

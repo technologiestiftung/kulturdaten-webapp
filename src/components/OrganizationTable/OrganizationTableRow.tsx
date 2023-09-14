@@ -1,5 +1,5 @@
-import React, { FC } from "react";
-import { Organization } from "../../api/client/models/Organization";
+import { Organization } from "@api/client/models/Organization";
+import { FC } from "react";
 
 interface OrganizationTableRowProps {
 	organization: Organization;

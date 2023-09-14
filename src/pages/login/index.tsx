@@ -1,12 +1,12 @@
 import { validateEmail } from "@/src/utils/validation";
+import apiClient from "@api/client";
+import { ApiError } from "@api/client/core/ApiError";
 import { Button } from "@components/Button";
 import { Input } from "@components/InputField";
 import PageWrapper from "@components/PageWrapper";
 import { useRouter } from "next/router";
 import React, { FC, useState } from "react";
 import { setCookie } from "typescript-cookie";
-import apiClient from "../../api/client";
-import { ApiError } from "../../api/client/core/ApiError";
 import FormWrapper from "../../components/FormWrapper";
 import { UserContext } from "../../contexts/userContext";
 

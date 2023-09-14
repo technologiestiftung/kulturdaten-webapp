@@ -1,8 +1,8 @@
+import apiClient from "@api/client";
+import { Organization } from "@api/client/models/Organization";
+import { UpdateOrganizationRequest } from "@api/client/models/UpdateOrganizationRequest";
 import { useRouter } from "next/router";
 import { useCallback, useEffect, useState } from "react";
-import apiClient from "../../api/client";
-import { Organization } from "../../api/client/models/Organization";
-import { UpdateOrganizationRequest } from "../../api/client/models/UpdateOrganizationRequest";
 import FormWrapper from "../../components/FormWrapper";
 import OrganizationEditor from "../../components/OrganisationEditor";
 import PageWrapper from "../../components/PageWrapper";

@@ -1,5 +1,5 @@
+import { LoginResponse } from "@api/client/models/LoginResponse";
 import { createContext, FC, ReactNode, useEffect, useMemo, useState } from "react";
-import { LoginResponse } from "../api/client/models/LoginResponse";
 
 type Auth = Required<Required<LoginResponse>["data"]>;
 type User = Auth["user"];

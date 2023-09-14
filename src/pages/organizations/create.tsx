@@ -1,6 +1,6 @@
-import apiClient from "@/src/api/client";
+import apiClient from "@api/client";
+import { CreateOrganizationRequest } from "@api/client/models/CreateOrganizationRequest";
 import { FC, FormEvent, useState } from "react";
-import { CreateOrganizationRequest } from "../../api/client/models/CreateOrganizationRequest";
 import FormWrapper from "../../components/FormWrapper";
 import OrganizationEditor from "../../components/OrganisationEditor";
 import PageWrapper from "../../components/PageWrapper";

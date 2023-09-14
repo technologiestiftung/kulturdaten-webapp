@@ -1,6 +1,6 @@
+import { Organization } from "@api/client/models/Organization";
 import Link from "next/link";
 import { FC } from "react";
-import { Organization } from "../../api/client/models/Organization";
 import OrganizationTableRow from "./OrganizationTableRow";
 
 interface OrganizationTableProps {

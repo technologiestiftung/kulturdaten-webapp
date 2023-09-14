@@ -1,6 +1,6 @@
+import apiClient from "@api/client";
+import { Organization } from "@api/client/models/Organization";
 import { useEffect, useState } from "react";
-import apiClient from "../../api/client";
-import { Organization } from "../../api/client/models/Organization";
 import OrganizationTable from "../../components/OrganizationTable";
 import PageWrapper from "../../components/PageWrapper";
 
