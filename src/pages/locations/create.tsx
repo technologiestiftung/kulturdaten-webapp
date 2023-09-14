@@ -1,12 +1,12 @@
 import apiClient from "@api/client";
 import { CreateLocationRequest } from "@api/client/models/CreateLocationRequest";
 import { Location } from "@api/client/models/Location";
+import withAuth from "@utils/withAuth";
 import { useRouter } from "next/router";
 import { FormEvent, useState } from "react";
 import FormWrapper from "../../components/FormWrapper";
 import LocationEditor from "../../components/LocationEditor";
 import PageWrapper from "../../components/PageWrapper";
-import withAuth from "../../utils/withAuth";
 
 const CreateNewLocation = () => {
 	const [errorMessage, errorMessageSet] = useState<string | undefined>(undefined);

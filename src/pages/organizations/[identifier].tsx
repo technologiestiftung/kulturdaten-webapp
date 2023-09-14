@@ -1,12 +1,12 @@
 import apiClient from "@api/client";
 import { Organization } from "@api/client/models/Organization";
 import { UpdateOrganizationRequest } from "@api/client/models/UpdateOrganizationRequest";
+import withAuth from "@utils/withAuth";
 import { useRouter } from "next/router";
 import { useCallback, useEffect, useState } from "react";
 import FormWrapper from "../../components/FormWrapper";
 import OrganizationEditor from "../../components/OrganisationEditor";
 import PageWrapper from "../../components/PageWrapper";
-import withAuth from "../../utils/withAuth";
 
 const OrganizationDetails = () => {
 	const router = useRouter();

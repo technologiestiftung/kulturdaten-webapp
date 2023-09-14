@@ -1,9 +1,9 @@
-import { validateEmail } from "@/src/utils/validation";
 import apiClient from "@api/client";
 import { ApiError } from "@api/client/core/ApiError";
 import { Button } from "@components/Button";
 import { Input } from "@components/InputField";
 import PageWrapper from "@components/PageWrapper";
+import { validateEmail } from "@utils/validation";
 import { useRouter } from "next/router";
 import React, { FC, useState } from "react";
 import { setCookie } from "typescript-cookie";

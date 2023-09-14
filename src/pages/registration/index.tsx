@@ -1,13 +1,13 @@
-import { validateEmail, validatePassword, validateRepeatPassword } from "@/src/utils/validation";
 import apiClient from "@api/client";
 import { ApiError } from "@api/client/core/ApiError";
 import { CreateUserRequest } from "@api/client/models/CreateUserRequest";
 import { Button } from "@components/Button";
+import FormWrapper from "@components/FormWrapper";
 import { Input } from "@components/InputField";
 import PageWrapper from "@components/PageWrapper";
+import { validateEmail, validatePassword, validateRepeatPassword } from "@utils/validation";
 import { useRouter } from "next/router";
 import React, { FC, FormEvent, useEffect } from "react";
-import FormWrapper from "../../components/FormWrapper";
 
 // TODO: mobile screen hook -> https://github.com/technologiestiftung/energiekarte/blob/main/src/lib/hooks/useHasMobileSize/index.ts
 

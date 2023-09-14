@@ -1,10 +1,10 @@
 import apiClient from "@api/client";
 import { CreateOrganizationRequest } from "@api/client/models/CreateOrganizationRequest";
+import withAuth from "@utils/withAuth";
 import { FC, FormEvent, useState } from "react";
 import FormWrapper from "../../components/FormWrapper";
 import OrganizationEditor from "../../components/OrganisationEditor";
 import PageWrapper from "../../components/PageWrapper";
-import withAuth from "../../utils/withAuth";
 
 const CreateNewOrganization: FC = () => {
 	const [errorMessage, errorMessageSet] = useState<string | undefined>(undefined);

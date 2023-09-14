@@ -1,10 +1,10 @@
+import withAuth from "@utils/withAuth";
 import { useRouter } from "next/router";
 import React from "react";
 import { removeCookie } from "typescript-cookie";
 import { Button } from "../components/Button";
 import PageWrapper from "../components/PageWrapper";
 import { UserContext } from "../contexts/userContext";
-import withAuth from "../utils/withAuth";
 
 const Dashboard = () => {
 	const router = useRouter();
