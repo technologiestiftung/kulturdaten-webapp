@@ -1,13 +1,12 @@
-import React, { useState, FC, FormEvent, useEffect } from 'react';
-import { CreateLocation, Location, LocationsService } from '../../generated-api-client';
-import { Input } from '../../components/InputField';
-import { Button } from '../../components/Button';
-import PageWrapper from '../../components/PageWrapper';
 import { useRouter } from 'next/router';
-import withAuth from '../../utils/withAuth';
-import { validatePostalCode } from '../../utils/validation';
-import LocationEditor from '../../components/LocationEditor';
+import { FormEvent, useState } from 'react';
+import apiClient from '../../api/client';
+import { CreateLocationRequest } from '../../api/client/models/CreateLocationRequest';
+import { Location } from '../../api/client/models/Location';
 import FormWrapper from '../../components/FormWrapper';
+import LocationEditor from '../../components/LocationEditor';
+import PageWrapper from '../../components/PageWrapper';
+import withAuth from '../../utils/withAuth';
 
 const CreateNewLocation = () => {
 	const [errorMessage, errorMessageSet] = useState<string | undefined>(undefined);
@@ -17,11 +16,12 @@ const CreateNewLocation = () => {
 	const createLocationHandler = (e: FormEvent<HTMLFormElement>, newLocation: Location) => {
 		e.preventDefault();
 		console.log('CREATE Location');
-
-		LocationsService.postLocations(newLocation as CreateLocation)
+		apiClient.maintainCulturalData
+			.postLocations(newLocation as CreateLocationRequest)
 			.then((res) => {
-				console.log('Location created successfully', res.identifier);
-				router.push(`/locations/${res.identifier}`);
+				const id = res.data!.locationReference!.referenceId!;
+				console.log('Location created successfully', id);
+				router.push(`/locations/${id}`);
 			})
 			.catch((error: any) => {
 				console.error('Error creating user:', error);

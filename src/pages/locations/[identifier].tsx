@@ -1,22 +1,23 @@
 import { useRouter } from 'next/router';
 import { useCallback, useEffect, useState } from 'react';
-
-import PageWrapper from '../../components/PageWrapper';
-import LocationEditor from '../../components/LocationEditor';
-import withAuth from '../../utils/withAuth';
+import apiClient from '../../api/client';
+import { Location } from '../../api/client/models/Location';
+import { UpdateLocationRequest } from '../../api/client/models/UpdateLocationRequest';
 import FormWrapper from '../../components/FormWrapper';
-import { LocationsService, PatchLocation, Location } from '../../generated-api-client';
+import LocationEditor from '../../components/LocationEditor';
+import PageWrapper from '../../components/PageWrapper';
+import withAuth from '../../utils/withAuth';
 
 const LocationDetails = () => {
 	const router = useRouter();
 	const [location, locationSet] = useState<Location | null>(null);
-	const { identifier } = router.query;
+	const identifier = router.query.identifier as string | undefined;
 
 	const fetchLocation = useCallback(async () => {
 		if (identifier) {
 			try {
-				const res = await LocationsService.getLocations1(identifier as string);
-				const locationObject = res?.location;
+				const res = await apiClient.discoverCulturalData.getLocations1(identifier);
+				const locationObject = res?.data?.location;
 				console.log('locationObject', locationObject);
 				locationSet(locationObject || null);
 			} catch (error) {
@@ -33,7 +34,8 @@ const LocationDetails = () => {
 
 	const editLocation = (e: React.FormEvent<HTMLFormElement>, locationObject: Location) => {
 		console.log('EDIT Location', locationObject);
-		LocationsService.patchLocations(identifier as string, locationObject as PatchLocation)
+		apiClient.maintainCulturalData
+			.patchLocations(identifier as string, locationObject as UpdateLocationRequest)
 			.then(() => {
 				console.log('Location edited successfully');
 				fetchLocation();
@@ -52,7 +54,7 @@ const LocationDetails = () => {
 				<FormWrapper>
 					<h1>Ort bearbeiten</h1>
 					<p>Hier kannst du alle hinterlegten Infos einsehen und bearbeiten</p>
-					<h2>{location.name?.de}</h2>
+					<h2>{location.title?.de}</h2>
 					<p>{location.website}</p>
 					{location.borough && <p>{location.borough}</p>}
 					<div className="mb-4"></div>

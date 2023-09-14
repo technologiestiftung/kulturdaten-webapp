@@ -1,16 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
+import apiClient from '../../api/client';
+import { Organization } from '../../api/client/models/Organization';
 import OrganizationTable from '../../components/OrganizationTable';
 import PageWrapper from '../../components/PageWrapper';
-import { Organization, OrganizationsService } from '../../generated-api-client';
 
 const OrganizationList = () => {
 	const [organizations, setOrganizations] = useState<Organization[] | undefined>(undefined);
 
 	const fetchOrganizations = () => {
-		OrganizationsService.getOrganizations()
+		apiClient.discoverCulturalData
+			.getOrganizations()
 			.then((res) => {
-				const organizationsObject = res?.organizations;
-				setOrganizations(organizationsObject || undefined);
+				const organizations = res?.data?.organizations;
+				setOrganizations(organizations);
 			})
 			.catch((error) => {
 				console.log('Error fetching organizations:', error);

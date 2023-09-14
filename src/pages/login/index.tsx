@@ -1,13 +1,13 @@
-import React, { FC, useState } from 'react';
-import PageWrapper from '@components/PageWrapper';
-import { Input } from '@components/InputField';
-import { Auth, AuthService } from '../../generated-api-client';
 import { Button } from '@components/Button';
+import { Input } from '@components/InputField';
+import PageWrapper from '@components/PageWrapper';
 import { useRouter } from 'next/router';
-import { validateEmail } from '../registration/validation';
-import { UserContext } from '../../contexts/userContext';
+import React, { FC, useState } from 'react';
 import { setCookie } from 'typescript-cookie';
+import apiClient from '../../api/client';
 import FormWrapper from '../../components/FormWrapper';
+import { UserContext } from '../../contexts/userContext';
+import { validateEmail } from '../registration/validation';
 
 interface ErrorMessages {
 	general: string | undefined;
@@ -44,17 +44,21 @@ const LoginPage: FC = () => {
 		const emailValid = validateEmail(email);
 		errorMessagesSet({ ...initialErrorMessages, email: emailValid ? emailValid : undefined });
 		try {
-			const authObject: Auth = await AuthService.postAuthToken({
+			const loginResponse = await apiClient.authentication.postAuthenticationLogin({
 				email: email.toLowerCase(),
 				password,
 			});
+			console.log('loginResponse: ', loginResponse);
+			const loginResponseData = loginResponse.data;
+			console.log('loginResponseData: ', loginResponseData);
 			console.log('Login successful');
-			if (authObject?.authToken) {
-				setCookie('authToken', authObject.authToken, {
-					expires: authObject.expiringDate ? new Date(authObject.expiringDate) : undefined,
+			if (loginResponseData?.accessToken) {
+				setCookie('accessToken', loginResponseData.accessToken, {
+					// TODO: Calculate expiry date via loginResponseData.expiresIn.
+					// expires: loginResponseData.expiresIn ? new Date(loginResponseData.expiresIn) : undefined,
 					path: '/',
 				});
-				saveAuthObject(authObject);
+				saveAuthObject(loginResponseData);
 				router.push('/');
 			}
 		} catch (error: any) {
@@ -62,7 +66,7 @@ const LoginPage: FC = () => {
 			// Object.keys(error).map((key) => {
 			// 	console.log(key, error[key]);
 			// });
-			if (error.status) {
+			if (error?.status) {
 				console.log('server error', error.status);
 				errorMessagesSet({
 					...errorMessages,

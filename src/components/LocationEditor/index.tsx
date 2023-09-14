@@ -1,9 +1,9 @@
-import React, { useState, FC, FormEvent, useEffect } from 'react';
-import { CreateLocation, Location } from '../../generated-api-client';
-import { Input } from '../../components/InputField';
-import { Button } from '../../components/Button';
 import _ from 'lodash';
-import { validatePostalCode } from '../../utils/validation';
+import React, { FC, FormEvent, useEffect, useState } from 'react';
+import { CreateLocationRequest } from '../../api/client/models/CreateLocationRequest';
+import { Location } from '../../api/client/models/Location';
+import { Button } from '../../components/Button';
+import { Input } from '../../components/InputField';
 import Dropdown from '../Dropdown';
 
 interface ErrorMessages {
@@ -18,25 +18,44 @@ const initialerrorMessages: ErrorMessages = {
 
 interface LocationEditorProps {
 	location?: Location;
-	submitHandler: (e: FormEvent<HTMLFormElement>, newLocation: CreateLocation | Location) => void;
+	submitHandler: (
+		e: FormEvent<HTMLFormElement>,
+		newLocation: CreateLocationRequest | Location,
+	) => void;
 	submitLabel: string;
 }
 
+const berlinDistricts: Array<CreateLocationRequest['borough']> = [
+	'Mitte',
+	'Friedrichshain-Kreuzberg',
+	'Pankow',
+	'Charlottenburg-Wilmersdorf',
+	'Spandau',
+	'Steglitz-Zehlendorf',
+	'Tempelhof-Schöneberg',
+	'Neukölln',
+	'Treptow-Köpenick',
+	'Marzahn-Hellersdorf',
+	'Lichtenberg',
+	'Reinickendorf',
+	'außerhalb',
+];
+
 const LocationEditor: FC<LocationEditorProps> = ({ location, submitHandler, submitLabel }) => {
-	const [locationObject, locationObjectSet] = useState<CreateLocation | Location | undefined>(
-		location || undefined
-	);
+	const [locationObject, locationObjectSet] = useState<
+		CreateLocationRequest | Location | undefined
+	>(location || undefined);
 	const [errorMessages, errorMessagesSet] = React.useState<ErrorMessages>(initialerrorMessages);
 	const [formValid, formValidSet] = useState<boolean>(true);
 
-	const barrios = Object.entries(CreateLocation.borough).map(([key, value]) => ({
-		value: key,
-		label: value,
+	const districtOptions = berlinDistricts.map((berlinDistrict) => ({
+		value: berlinDistrict as string,
+		label: berlinDistrict as string,
 	}));
 
 	useEffect(() => {
 		// check for error messages and required fields
-		const locationName = locationObject?.name?.de || '';
+		const locationName = locationObject?.title?.de || '';
 		if (
 			locationName.length > 0 &&
 			Object.values(errorMessages)
@@ -54,9 +73,9 @@ const LocationEditor: FC<LocationEditorProps> = ({ location, submitHandler, subm
 	const onChange = (
 		value: string,
 		id: string,
-		e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>
+		e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>,
 	) => {
-		const newLocation = { ...locationObject };
+		const newLocation = { ...locationObject } as CreateLocationRequest | Location;
 		_.set(newLocation, id, value);
 		console.log('newLocation', newLocation);
 		locationObjectSet(newLocation);
@@ -65,7 +84,10 @@ const LocationEditor: FC<LocationEditorProps> = ({ location, submitHandler, subm
 	const onSubmit = (e: FormEvent<HTMLFormElement> | React.ChangeEvent<HTMLSelectElement>) => {
 		e.preventDefault();
 		if (formValid) {
-			submitHandler(e as FormEvent<HTMLFormElement>, locationObject as CreateLocation | Location);
+			submitHandler(
+				e as FormEvent<HTMLFormElement>,
+				locationObject as CreateLocationRequest | Location,
+			);
 		} else {
 			errorMessagesSet((prev) => ({
 				...prev,
@@ -78,8 +100,8 @@ const LocationEditor: FC<LocationEditorProps> = ({ location, submitHandler, subm
 		<form onSubmit={(e) => onSubmit(e)}>
 			<Input
 				type="text"
-				id="name.de"
-				initialValue={locationObject?.name?.de || ''}
+				id="title.de"
+				initialValue={locationObject?.title?.de || ''}
 				label="Name (Pflichtfeld)"
 				required
 				placeholder={'Hier bitte Name eingeben … '}
@@ -96,7 +118,7 @@ const LocationEditor: FC<LocationEditorProps> = ({ location, submitHandler, subm
 			<Dropdown
 				label="Bezirk"
 				id="borough"
-				options={barrios}
+				options={districtOptions}
 				value={locationObject?.borough || ''}
 				onChange={(value, id, e) => onChange(value, id, e)}
 			/>
