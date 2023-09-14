@@ -53,7 +53,7 @@ const LoginPage: FC = () => {
 			console.log('loginResponseData: ', loginResponseData);
 			console.log('Login successful');
 			if (loginResponseData?.accessToken) {
-				setCookie('authToken', loginResponseData.accessToken, {
+				setCookie('accessToken', loginResponseData.accessToken, {
 					// TODO: Calculate expiry date via loginResponseData.expiresIn.
 					// expires: loginResponseData.expiresIn ? new Date(loginResponseData.expiresIn) : undefined,
 					path: '/',

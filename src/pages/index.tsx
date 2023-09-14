@@ -10,7 +10,7 @@ const Dashboard = () => {
 	const router = useRouter();
 	const { userObject, clearUser } = React.useContext(UserContext);
 	const logout = () => {
-		removeCookie('authToken');
+		removeCookie('accessToken');
 		router.push('login').then(() => {
 			clearUser();
 		});

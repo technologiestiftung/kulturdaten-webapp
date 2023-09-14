@@ -8,12 +8,12 @@ const withAuth = (WrappedComponent: React.ComponentType<any>) => {
 		const [loading, setLoading] = useState<boolean>(true);
 
 		useEffect(() => {
-			const authToken = getCookie('authToken');
-			if (!authToken) {
-				console.log('No authToken found, redirecting to login'); // debug statement
+			const accessToken = getCookie('accessToken');
+			if (!accessToken) {
+				console.log('No accessToken found, redirecting to login'); // debug statement
 				router.push('/login');
 			} else {
-				console.log('authToken:', authToken); // debug statement
+				console.log('accessToken:', accessToken); // debug statement
 				setLoading(false);
 			}
 		}, [router]);
