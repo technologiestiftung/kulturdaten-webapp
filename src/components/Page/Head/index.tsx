@@ -9,12 +9,11 @@ interface Props {
 
 export default function Head({ metadata }: Props) {
 	const t = useTranslations("Common");
+	const title = `${metadata.title} | ${t("site-name")}`;
 	return (
 		<>
 			<NextHead>
-				<title>
-					{metadata.title} | {t("site-name")}
-				</title>
+				<title>{title}</title>
 				<meta charSet="UTF-8" />
 				<meta name="description" content={metadata.description} />
 				<meta name="viewport" content="width=device-width, initial-scale=1" />
