@@ -57,7 +57,7 @@ export const mediaQueries = {
 };
 
 export const widths = {
-	sidebar: "300px",
+	sidebar: "270px",
 	maxContentWidth: "1400px",
 };
 
