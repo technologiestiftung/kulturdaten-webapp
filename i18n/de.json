@@ -11,6 +11,12 @@
 		"link-organizations": "Anbieter:innen",
 		"link-logout": "Ausloggen"
 	},
+	"Registration": {
+		"page-title": "Registrierung"
+	},
+	"Login": {
+		"page-title": "Login"
+	},
 	"Attractions": {
 		"page-title": "Angebote"
 	},

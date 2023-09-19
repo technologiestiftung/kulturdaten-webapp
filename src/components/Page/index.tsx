@@ -27,14 +27,15 @@ export interface Metadata {
 interface Props {
 	children: ReactNode;
 	metadata: Metadata;
+	showNavigation?: boolean;
 }
 
-export default function Page({ children, metadata }: Props) {
+export default function Page({ children, metadata, showNavigation = true }: Props) {
 	return (
 		<>
 			<Head metadata={metadata} />
 			<PageContainer>
-				<Navigation />
+				{showNavigation && <Navigation />}
 				<Main>{children}</Main>
 			</PageContainer>
 		</>

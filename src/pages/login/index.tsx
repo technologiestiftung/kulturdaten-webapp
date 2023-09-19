@@ -2,10 +2,18 @@ import { ApiError } from "@api/client/core/ApiError";
 import { Button } from "@components/Button";
 import FormWrapper from "@components/FormWrapper";
 import { Input } from "@components/InputField";
-import PageWrapper from "@components/PageWrapper";
+import Page from "@components/Page";
 import useUser from "@hooks/useUser";
 import { validateEmail } from "@utils/validation";
+import { GetStaticProps } from "next";
 import React, { FC, useState } from "react";
+import { useTranslations } from "use-intl";
+
+export const getStaticProps: GetStaticProps = async (context) => ({
+	props: {
+		messages: (await import(`../../../i18n/${context.locale}.json`)).default,
+	},
+});
 
 interface ErrorMessages {
 	general: string | undefined;
@@ -18,6 +26,7 @@ const initialErrorMessages: ErrorMessages = {
 };
 
 const LoginPage: FC = () => {
+	const t = useTranslations("Login");
 	const [email, emailSet] = useState<string>("");
 	const [password, passwordSet] = useState<string>("");
 	const [errorMessages, errorMessagesSet] = useState<ErrorMessages>(initialErrorMessages);
@@ -55,7 +64,7 @@ const LoginPage: FC = () => {
 	};
 
 	return (
-		<PageWrapper>
+		<Page metadata={{ title: t("page-title") }} showNavigation={false}>
 			<FormWrapper>
 				<h1>Bei kulturdaten.berlin einloggen</h1>
 				<p className="mt-2 mb-8">
@@ -84,7 +93,7 @@ const LoginPage: FC = () => {
 				</form>
 				{errorMessages.general && <p aria-live="assertive">{errorMessages.general}</p>}
 			</FormWrapper>
-		</PageWrapper>
+		</Page>
 	);
 };
 
