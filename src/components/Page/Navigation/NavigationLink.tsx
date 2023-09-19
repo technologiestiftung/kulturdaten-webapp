@@ -13,6 +13,7 @@ const getStyles = (isActive: boolean): CSSObject => ({
 	backgroundColor: isActive ? colors.blueLight : "transparent",
 	borderRadius: borderRadiuses.medium,
 	textDecoration: "none",
+	wordBreak: "break-word",
 	"&:hover": {
 		backgroundColor: isActive ? colors.blueLight : colors.white,
 	},
@@ -29,6 +30,12 @@ const StyledButton = styled.button(() => ({
 	cursor: "pointer",
 }));
 
+const ICON_SIZE = "15px";
+
+const IconContainer = styled.div({
+	flex: `0 0 ${ICON_SIZE}`,
+});
+
 type CommonProps = {
 	icon: IconName;
 	children: ReactNode;
@@ -43,13 +50,13 @@ type ButtonProps = CommonProps & {
 	onClick(): void;
 };
 
-const ICON_SIZE = 15;
-
 export default function NavigationLink(props: LinkProps) {
 	const { href, icon, children, isActive } = props;
 	return (
 		<StyledLink href={href} isActive={isActive}>
-			<Icon name={icon} size={15} />
+			<IconContainer>
+				<Icon name={icon} size={15} />
+			</IconContainer>
 			{children}
 		</StyledLink>
 	);
@@ -59,7 +66,9 @@ export function NavigationButton(props: ButtonProps) {
 	const { onClick, icon, children } = props;
 	return (
 		<StyledButton onClick={onClick}>
-			<Icon name={icon} size={ICON_SIZE} />
+			<IconContainer>
+				<Icon name={icon} size={ICON_SIZE} />
+			</IconContainer>
 			{children}
 		</StyledButton>
 	);

@@ -40,7 +40,7 @@ function getNavigationGroups(isAdmin: boolean): Array<NavigationGroup> {
 }
 
 const Container = styled.div({
-	width: widths.sidebar,
+	width: `min(100%, ${widths.sidebar})`,
 	height: "100vh",
 	position: "fixed",
 	top: 0,
