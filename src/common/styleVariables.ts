@@ -27,11 +27,9 @@ export const lineHeights = {
 
 export const colors = {
 	black: "#3b3b3a",
+	blueLight: "#e2e9ff",
 	blueDark: "#1e3791",
 	blueDarkHover: "#152666",
-	green: "#8fff8f",
-	magenta: "#ff8fff",
-	turquoise: "#8fffff",
 	grayLight: "#fafafa",
 	white: "#ffffff",
 };
@@ -59,7 +57,8 @@ export const mediaQueries = {
 };
 
 export const widths = {
-	maxContentWidth: `${breakpoints.m}px`,
+	sidebar: "300px",
+	maxContentWidth: "1400px",
 };
 
 export const borderRadiuses = {

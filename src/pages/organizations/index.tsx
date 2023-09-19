@@ -1,10 +1,20 @@
 import apiClient from "@api/client";
 import { Organization } from "@api/client/models/Organization";
+import OrganizationTable from "@components/OrganizationTable";
+import Page from "@components/Page";
+import withAuth from "@utils/withAuth";
+import { GetStaticProps } from "next";
 import { useEffect, useState } from "react";
-import OrganizationTable from "../../components/OrganizationTable";
-import PageWrapper from "../../components/PageWrapper";
+import { useTranslations } from "use-intl";
+
+export const getStaticProps: GetStaticProps = async (context) => ({
+	props: {
+		messages: (await import(`../../../i18n/${context.locale}.json`)).default,
+	},
+});
 
 const OrganizationList = () => {
+	const t = useTranslations("Organizations");
 	const [organizations, setOrganizations] = useState<Organization[] | undefined>(undefined);
 
 	const fetchOrganizations = () => {
@@ -19,15 +29,14 @@ const OrganizationList = () => {
 	}, []);
 
 	return (
-		<PageWrapper>
-			<div className="w-full"></div>
+		<Page metadata={{ title: t("page-title") }}>
 			{organizations ? (
 				<OrganizationTable organizations={organizations} fetchOrganizations={fetchOrganizations} />
 			) : (
 				<div>Loading...</div>
 			)}
-		</PageWrapper>
+		</Page>
 	);
 };
 
-export default OrganizationList;
+export default withAuth(OrganizationList);

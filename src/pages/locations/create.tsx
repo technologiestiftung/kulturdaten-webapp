@@ -1,14 +1,23 @@
 import apiClient from "@api/client";
 import { CreateLocationRequest } from "@api/client/models/CreateLocationRequest";
 import { Location } from "@api/client/models/Location";
+import FormWrapper from "@components/FormWrapper";
+import LocationEditor from "@components/LocationEditor";
+import Page from "@components/Page";
 import withAuth from "@utils/withAuth";
+import { GetStaticProps } from "next";
 import { useRouter } from "next/router";
 import { FormEvent, useState } from "react";
-import FormWrapper from "../../components/FormWrapper";
-import LocationEditor from "../../components/LocationEditor";
-import PageWrapper from "../../components/PageWrapper";
+import { useTranslations } from "use-intl";
+
+export const getStaticProps: GetStaticProps = async (context) => ({
+	props: {
+		messages: (await import(`../../../i18n/${context.locale}.json`)).default,
+	},
+});
 
 const CreateNewLocation = () => {
+	const t = useTranslations("Locations");
 	const [errorMessage, errorMessageSet] = useState<string | undefined>(undefined);
 
 	const router = useRouter();
@@ -27,7 +36,7 @@ const CreateNewLocation = () => {
 	};
 
 	return (
-		<PageWrapper>
+		<Page metadata={{ title: t("create-location") }}>
 			<FormWrapper>
 				<h1>Lege einen neue Location an</h1>
 				<LocationEditor
@@ -36,7 +45,7 @@ const CreateNewLocation = () => {
 				/>
 				{errorMessage && <span aria-live="assertive">{errorMessage}</span>}
 			</FormWrapper>
-		</PageWrapper>
+		</Page>
 	);
 };
 

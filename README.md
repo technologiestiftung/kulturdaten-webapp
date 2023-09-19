@@ -41,7 +41,7 @@ Internationalization (i18n) is implemented via [next-intl](https://next-intl-doc
 - The supported languages is only German (`de`) for now. The message strings are stored in `/i18n/de.json`.
 - Messages are grouped with [namespaces](https://next-intl-docs.vercel.app/docs/usage/messages#structuring-messages) (ideally, we’ll end up with ~1 namespace per page).
 - TypeScript integration is implemented within `global.d.ts`, which only uses the German translations (`/i18n/de.json`) to build the types.
-- New pages should have a `getStaticProps` function that returns the `messages` prop (see [docs](https://next-intl-docs.vercel.app/docs/getting-started/pages-router)).
+- New pages should have a `getStaticProps` or `getServerSideProps` function that returns the `messages` prop (see [docs](https://next-intl-docs.vercel.app/docs/getting-started/pages-router)).
 
 ## Contributors ✨
 

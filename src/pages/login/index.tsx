@@ -1,14 +1,11 @@
-import apiClient from "@api/client";
 import { ApiError } from "@api/client/core/ApiError";
 import { Button } from "@components/Button";
+import FormWrapper from "@components/FormWrapper";
 import { Input } from "@components/InputField";
 import PageWrapper from "@components/PageWrapper";
+import useUser from "@hooks/useUser";
 import { validateEmail } from "@utils/validation";
-import { useRouter } from "next/router";
 import React, { FC, useState } from "react";
-import { setCookie } from "typescript-cookie";
-import FormWrapper from "../../components/FormWrapper";
-import { UserContext } from "../../contexts/userContext";
 
 interface ErrorMessages {
 	general: string | undefined;
@@ -25,9 +22,7 @@ const LoginPage: FC = () => {
 	const [password, passwordSet] = useState<string>("");
 	const [errorMessages, errorMessagesSet] = useState<ErrorMessages>(initialErrorMessages);
 	const [emailPristine, emailPristineSet] = useState<boolean>(true);
-
-	const router = useRouter();
-	const { saveAuthObject } = React.useContext(UserContext);
+	const { logIn } = useUser();
 
 	const onEmailChange = (value: string) => {
 		const emailValid = validateEmail(value);
@@ -45,20 +40,7 @@ const LoginPage: FC = () => {
 		const emailValid = validateEmail(email);
 		errorMessagesSet({ ...initialErrorMessages, email: emailValid ? emailValid : undefined });
 		try {
-			const loginResponse = await apiClient.authentication.postAuthenticationLogin({
-				email: email.toLowerCase(),
-				password,
-			});
-			const loginResponseData = loginResponse.data;
-			if (loginResponseData?.accessToken) {
-				setCookie("accessToken", loginResponseData.accessToken, {
-					// TODO: Calculate expiry date via loginResponseData.expiresIn.
-					// expires: loginResponseData.expiresIn ? new Date(loginResponseData.expiresIn) : undefined,
-					path: "/",
-				});
-				saveAuthObject(loginResponseData);
-				router.push("/");
-			}
+			await logIn(email, password);
 		} catch (error) {
 			const apiError = error as ApiError;
 			if (apiError?.status) {

@@ -1,12 +1,21 @@
 import apiClient from "@api/client";
 import { CreateOrganizationRequest } from "@api/client/models/CreateOrganizationRequest";
+import FormWrapper from "@components/FormWrapper";
+import OrganizationEditor from "@components/OrganisationEditor";
+import Page from "@components/Page";
 import withAuth from "@utils/withAuth";
+import { GetStaticProps } from "next";
 import { FC, FormEvent, useState } from "react";
-import FormWrapper from "../../components/FormWrapper";
-import OrganizationEditor from "../../components/OrganisationEditor";
-import PageWrapper from "../../components/PageWrapper";
+import { useTranslations } from "use-intl";
+
+export const getStaticProps: GetStaticProps = async (context) => ({
+	props: {
+		messages: (await import(`../../../i18n/${context.locale}.json`)).default,
+	},
+});
 
 const CreateNewOrganization: FC = () => {
+	const t = useTranslations("Organizations");
 	const [errorMessage, errorMessageSet] = useState<string | undefined>(undefined);
 	const createOrganizationHandler = (e: FormEvent<HTMLFormElement>, newOrganization: CreateOrganizationRequest) => {
 		e.preventDefault();
@@ -22,13 +31,13 @@ const CreateNewOrganization: FC = () => {
 	};
 
 	return (
-		<PageWrapper>
+		<Page metadata={{ title: t("create-organization") }}>
 			<FormWrapper>
 				<h1>Lege einen neue Organization an</h1>
 				<OrganizationEditor submitHandler={createOrganizationHandler} submitLabel="Organisation anlegen" />
 				{errorMessage && <span aria-live="assertive">{errorMessage}</span>}
 			</FormWrapper>
-		</PageWrapper>
+		</Page>
 	);
 };
 
