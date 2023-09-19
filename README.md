@@ -34,6 +34,15 @@ In the project directory, you can run:
 - `npm run build`: Builds the Next.js application for production usage.
 - `npm start`: Starts the Next.js server for production usage.
 
+## Internationalization
+
+Internationalization (i18n) is implemented via [next-intl](https://next-intl-docs.vercel.app/) and Next.js’ [i18n routing](https://nextjs.org/docs/pages/building-your-application/routing/internationalization).
+
+- The supported languages is only German (`de`) for now. The message strings are stored in `/i18n/de.json`.
+- Messages are grouped with [namespaces](https://next-intl-docs.vercel.app/docs/usage/messages#structuring-messages) (ideally, we’ll end up with ~1 namespace per page).
+- TypeScript integration is implemented within `global.d.ts`, which only uses the German translations (`/i18n/de.json`) to build the types.
+- New pages should have a `getStaticProps` function that returns the `messages` prop (see [docs](https://next-intl-docs.vercel.app/docs/getting-started/pages-router)).
+
 ## Contributors ✨
 
 Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
