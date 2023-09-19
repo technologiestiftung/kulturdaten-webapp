@@ -15,9 +15,9 @@ export default function Head({ metadata }: Props) {
 			<NextHead>
 				<title>{title}</title>
 				<meta charSet="UTF-8" />
-				<meta name="description" content={metadata.description} />
 				<meta name="viewport" content="width=device-width, initial-scale=1" />
-				<link rel="canonical" href={metadata.url} />
+				{metadata.description && <meta name="description" content={metadata.description} />}
+				{metadata.url && <link rel="canonical" href={metadata.url} />}
 				{/* TODO: Add favicons. */}
 				{/* <link rel="icon" href="/favicon.ico" />
 				<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
