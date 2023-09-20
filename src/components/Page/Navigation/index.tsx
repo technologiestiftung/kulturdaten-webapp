@@ -4,7 +4,7 @@ import Spacer from "@components/Spacer";
 import styled from "@emotion/styled";
 import useUser from "@hooks/useUser";
 import { useRouter } from "next/router";
-import { useMemo } from "react";
+import { useCallback, useMemo } from "react";
 import { useTranslations } from "use-intl";
 import NavigationLink, { NavigationButton } from "./NavigationLink";
 
@@ -79,13 +79,17 @@ export default function Navigation() {
 	const router = useRouter();
 	const isAdmin = true;
 	const navigationGroups = useMemo(() => getNavigationGroups(isAdmin), [isAdmin]);
-	function isLinkActive(href: string) {
-		const useStrictComparison = router.asPath === "/" || href === "/";
-		if (useStrictComparison) {
-			return router.asPath === href;
-		}
-		return router.asPath.startsWith(href);
-	}
+	const isLinkActive = useCallback(
+		(href: string) => {
+			const path = router.asPath;
+			const useStrictComparison = path === "/" || href === "/";
+			if (useStrictComparison) {
+				return path === href;
+			}
+			return path.startsWith(href);
+		},
+		[router.asPath],
+	);
 	return (
 		<Container>
 			<div>
