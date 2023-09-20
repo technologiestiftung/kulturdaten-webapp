@@ -4,7 +4,7 @@ export const fontFamilies = {
 };
 
 export const fontSizes = {
-	small: "0.8rem",
+	small: "0.875rem",
 	default: "16px",
 	medium: "1.2rem",
 	large: "1.6rem",
@@ -30,8 +30,10 @@ export const colors = {
 	blueLight: "#e2e9ff",
 	blueDark: "#1e3791",
 	blueDarkHover: "#152666",
-	grayLight: "#fafafa",
 	white: "#ffffff",
+	grayLight: "#fafafa",
+	neutral200: "#f1f3f9",
+	neutral300: "#e1e6ef",
 };
 
 const getSpacing = (factor: number) => {
@@ -64,6 +66,7 @@ export const widths = {
 export const borderRadiuses = {
 	small: "2px",
 	medium: "4px",
+	big: "8px",
 	round: "50%",
 };
 

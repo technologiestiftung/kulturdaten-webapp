@@ -18,7 +18,9 @@
 		"page-title": "Login"
 	},
 	"Attractions": {
-		"page-title": "Angebote"
+		"page-title": "Angebote",
+		"table-header-title": "Angebotstitel",
+		"table-header-status": "Status"
 	},
 	"Locations": {
 		"page-title": "Orte",
