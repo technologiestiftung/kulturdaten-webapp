@@ -1,14 +1,23 @@
 import apiClient from "@api/client";
 import { Location } from "@api/client/models/Location";
 import { UpdateLocationRequest } from "@api/client/models/UpdateLocationRequest";
+import FormWrapper from "@components/FormWrapper";
+import LocationEditor from "@components/LocationEditor";
+import Page from "@components/Page";
 import withAuth from "@utils/withAuth";
+import { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
 import { useCallback, useEffect, useState } from "react";
-import FormWrapper from "../../components/FormWrapper";
-import LocationEditor from "../../components/LocationEditor";
-import PageWrapper from "../../components/PageWrapper";
+import { useTranslations } from "use-intl";
+
+export const getServerSideProps: GetServerSideProps = async (context) => ({
+	props: {
+		messages: (await import(`../../../i18n/${context.locale}.json`)).default,
+	},
+});
 
 const LocationDetails = () => {
+	const t = useTranslations("Locations");
 	const router = useRouter();
 	const [location, locationSet] = useState<Location | null>(null);
 	const identifier = router.query.identifier as string | undefined;
@@ -37,7 +46,7 @@ const LocationDetails = () => {
 		return <div>Loading...</div>;
 	} else {
 		return (
-			<PageWrapper>
+			<Page metadata={{ title: t("edit-location") }}>
 				<FormWrapper>
 					<h1>Ort bearbeiten</h1>
 					<p>Hier kannst du alle hinterlegten Infos einsehen und bearbeiten</p>
@@ -51,7 +60,7 @@ const LocationDetails = () => {
 						submitLabel="Ort bearbeiten"
 					/>
 				</FormWrapper>
-			</PageWrapper>
+			</Page>
 		);
 	}
 };

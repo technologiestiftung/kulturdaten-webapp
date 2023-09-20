@@ -4,10 +4,18 @@ import { CreateUserRequest } from "@api/client/models/CreateUserRequest";
 import { Button } from "@components/Button";
 import FormWrapper from "@components/FormWrapper";
 import { Input } from "@components/InputField";
-import PageWrapper from "@components/PageWrapper";
+import Page from "@components/Page";
 import { validateEmail, validatePassword, validateRepeatPassword } from "@utils/validation";
+import { GetStaticProps } from "next";
 import { useRouter } from "next/router";
 import React, { FC, FormEvent, useEffect } from "react";
+import { useTranslations } from "use-intl";
+
+export const getStaticProps: GetStaticProps = async (context) => ({
+	props: {
+		messages: (await import(`../../../i18n/${context.locale}.json`)).default,
+	},
+});
 
 // TODO: mobile screen hook -> https://github.com/technologiestiftung/energiekarte/blob/main/src/lib/hooks/useHasMobileSize/index.ts
 
@@ -26,6 +34,7 @@ const initialerrorMessages: ErrorMessages = {
 };
 
 const Registration: FC = () => {
+	const t = useTranslations("Registration");
 	const router = useRouter();
 
 	const [email, emailSet] = React.useState<string>("");
@@ -130,7 +139,7 @@ const Registration: FC = () => {
 	};
 
 	return (
-		<PageWrapper>
+		<Page metadata={{ title: t("page-title") }} showNavigation={false}>
 			<FormWrapper>
 				<h1>Registriere dich jetzt!</h1>
 				<p className="mt-2 mb-8">
@@ -171,7 +180,7 @@ const Registration: FC = () => {
 				</form>
 				{errorMessages.general && <span aria-live="assertive">{errorMessages.general}</span>}
 			</FormWrapper>
-		</PageWrapper>
+		</Page>
 	);
 };
 

@@ -1,0 +1,33 @@
+{
+	"Common": {
+		"site-name": "kulturdaten.berlin App"
+	},
+	"Navigation": {
+		"title": "kulturdaten.berlin",
+		"group-user": "User",
+		"group-admin": "Admininistration",
+		"link-offers": "Angebote",
+		"link-locations": "Orte",
+		"link-organizations": "Anbieter:innen",
+		"link-logout": "Ausloggen"
+	},
+	"Registration": {
+		"page-title": "Registrierung"
+	},
+	"Login": {
+		"page-title": "Login"
+	},
+	"Attractions": {
+		"page-title": "Angebote"
+	},
+	"Locations": {
+		"page-title": "Orte",
+		"create-location": "Ort erstellen",
+		"edit-location": "Ort bearbeiten"
+	},
+	"Organizations": {
+		"page-title": "Anbieter:innen",
+		"create-organization": "Anbieter:in erstellen",
+		"edit-organization": "Anbieter:in bearbeiten"
+	}
+}

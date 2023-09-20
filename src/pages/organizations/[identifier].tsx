@@ -1,14 +1,23 @@
 import apiClient from "@api/client";
 import { Organization } from "@api/client/models/Organization";
 import { UpdateOrganizationRequest } from "@api/client/models/UpdateOrganizationRequest";
+import FormWrapper from "@components/FormWrapper";
+import OrganizationEditor from "@components/OrganisationEditor";
+import Page from "@components/Page";
 import withAuth from "@utils/withAuth";
+import { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
 import { useCallback, useEffect, useState } from "react";
-import FormWrapper from "../../components/FormWrapper";
-import OrganizationEditor from "../../components/OrganisationEditor";
-import PageWrapper from "../../components/PageWrapper";
+import { useTranslations } from "use-intl";
+
+export const getServerSideProps: GetServerSideProps = async (context) => ({
+	props: {
+		messages: (await import(`../../../i18n/${context.locale}.json`)).default,
+	},
+});
 
 const OrganizationDetails = () => {
+	const t = useTranslations("Organizations");
 	const router = useRouter();
 	const [organization, organizationSet] = useState<Organization | null>(null);
 	const { identifier } = router.query;
@@ -40,7 +49,7 @@ const OrganizationDetails = () => {
 		return <div>Loading...</div>;
 	} else {
 		return (
-			<PageWrapper>
+			<Page metadata={{ title: t("edit-organization") }}>
 				<FormWrapper>
 					<h1>Organisationsüberblick</h1>
 					<p>Hier kannst du alle hinterlegten Infos einsehen und bearbeiten</p>
@@ -55,7 +64,7 @@ const OrganizationDetails = () => {
 						submitLabel="Organisation bearbeiten"
 					/>
 				</FormWrapper>
-			</PageWrapper>
+			</Page>
 		);
 	}
 };

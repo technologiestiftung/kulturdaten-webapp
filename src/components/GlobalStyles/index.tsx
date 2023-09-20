@@ -34,7 +34,7 @@ const styles: CSSObject = {
 		fontFamily: fontFamilies.default,
 		lineHeight: lineHeights.default,
 		color: colors.black,
-		backgroundColor: colors.white,
+		backgroundColor: colors.grayLight,
 		scrollBehavior: "smooth",
 	},
 };

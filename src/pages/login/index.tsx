@@ -1,14 +1,19 @@
-import apiClient from "@api/client";
 import { ApiError } from "@api/client/core/ApiError";
 import { Button } from "@components/Button";
+import FormWrapper from "@components/FormWrapper";
 import { Input } from "@components/InputField";
-import PageWrapper from "@components/PageWrapper";
+import Page from "@components/Page";
+import useUser from "@hooks/useUser";
 import { validateEmail } from "@utils/validation";
-import { useRouter } from "next/router";
+import { GetStaticProps } from "next";
 import React, { FC, useState } from "react";
-import { setCookie } from "typescript-cookie";
-import FormWrapper from "../../components/FormWrapper";
-import { UserContext } from "../../contexts/userContext";
+import { useTranslations } from "use-intl";
+
+export const getStaticProps: GetStaticProps = async (context) => ({
+	props: {
+		messages: (await import(`../../../i18n/${context.locale}.json`)).default,
+	},
+});
 
 interface ErrorMessages {
 	general: string | undefined;
@@ -21,13 +26,12 @@ const initialErrorMessages: ErrorMessages = {
 };
 
 const LoginPage: FC = () => {
+	const t = useTranslations("Login");
 	const [email, emailSet] = useState<string>("");
 	const [password, passwordSet] = useState<string>("");
 	const [errorMessages, errorMessagesSet] = useState<ErrorMessages>(initialErrorMessages);
 	const [emailPristine, emailPristineSet] = useState<boolean>(true);
-
-	const router = useRouter();
-	const { saveAuthObject } = React.useContext(UserContext);
+	const { logIn } = useUser();
 
 	const onEmailChange = (value: string) => {
 		const emailValid = validateEmail(value);
@@ -45,20 +49,7 @@ const LoginPage: FC = () => {
 		const emailValid = validateEmail(email);
 		errorMessagesSet({ ...initialErrorMessages, email: emailValid ? emailValid : undefined });
 		try {
-			const loginResponse = await apiClient.authentication.postAuthenticationLogin({
-				email: email.toLowerCase(),
-				password,
-			});
-			const loginResponseData = loginResponse.data;
-			if (loginResponseData?.accessToken) {
-				setCookie("accessToken", loginResponseData.accessToken, {
-					// TODO: Calculate expiry date via loginResponseData.expiresIn.
-					// expires: loginResponseData.expiresIn ? new Date(loginResponseData.expiresIn) : undefined,
-					path: "/",
-				});
-				saveAuthObject(loginResponseData);
-				router.push("/");
-			}
+			await logIn(email, password);
 		} catch (error) {
 			const apiError = error as ApiError;
 			if (apiError?.status) {
@@ -73,7 +64,7 @@ const LoginPage: FC = () => {
 	};
 
 	return (
-		<PageWrapper>
+		<Page metadata={{ title: t("page-title") }} showNavigation={false}>
 			<FormWrapper>
 				<h1>Bei kulturdaten.berlin einloggen</h1>
 				<p className="mt-2 mb-8">
@@ -102,7 +93,7 @@ const LoginPage: FC = () => {
 				</form>
 				{errorMessages.general && <p aria-live="assertive">{errorMessages.general}</p>}
 			</FormWrapper>
-		</PageWrapper>
+		</Page>
 	);
 };
 
