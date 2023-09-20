@@ -74,3 +74,7 @@ export const timings = {
 	short: "100ms",
 	medium: "250ms",
 };
+
+export const boxShadows = {
+	elevation100: "0px 2px 8px 0px rgba(0, 0, 0, 0.12)",
+};
