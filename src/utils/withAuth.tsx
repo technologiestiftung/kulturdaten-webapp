@@ -1,10 +1,11 @@
+import { NextPage } from "next";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { ComponentType, useEffect, useState } from "react";
 import { getCookie } from "typescript-cookie";
 
-export default function withAuth<Props extends JSX.IntrinsicAttributes>(wrappedComponent: React.ComponentType<Props>) {
+export default function withAuth<Props>(wrappedComponent: ComponentType<Props>) {
 	const WrappedComponent = wrappedComponent;
-	const Wrapper = (props: Props) => {
+	const Wrapper: NextPage<Props & JSX.IntrinsicAttributes> = (props) => {
 		const router = useRouter();
 		const [loading, setLoading] = useState<boolean>(true);
 
