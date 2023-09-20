@@ -11,6 +11,9 @@
 		"link-organizations": "Anbieter:innen",
 		"link-logout": "Ausloggen"
 	},
+	"Pagination": {
+		"go-to-page": "Go to page {pageNumber}"
+	},
 	"Registration": {
 		"page-title": "Registrierung"
 	},
@@ -20,7 +23,8 @@
 	"Attractions": {
 		"page-title": "Angebote",
 		"table-header-title": "Angebotstitel",
-		"table-header-status": "Status"
+		"table-header-status": "Status",
+		"number-attractions": "{count, plural, =1 {# Angebot} other {# Angebote}}"
 	},
 	"Locations": {
 		"page-title": "Orte",
