@@ -12,7 +12,7 @@ import { useTranslations } from "use-intl";
 
 export const getServerSideProps: GetServerSideProps = async (context) => ({
 	props: {
-		messages: (await import(`../../../i18n/${context.locale}.json`)).default,
+		messages: (await import(`../../../../i18n/${context.locale}.json`)).default,
 	},
 });
 
@@ -39,7 +39,7 @@ const LocationDetails = () => {
 	const editLocation = async (locationObject: Location) => {
 		await apiClient.maintainCulturalData.patchLocations(identifier as string, locationObject as UpdateLocationRequest);
 		fetchLocation();
-		router.push(`/locations/${identifier}`);
+		router.push(`/admin/locations/${identifier}`);
 	};
 
 	if (location === null) {

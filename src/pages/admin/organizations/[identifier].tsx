@@ -12,7 +12,7 @@ import { useTranslations } from "use-intl";
 
 export const getServerSideProps: GetServerSideProps = async (context) => ({
 	props: {
-		messages: (await import(`../../../i18n/${context.locale}.json`)).default,
+		messages: (await import(`../../../../i18n/${context.locale}.json`)).default,
 	},
 });
 
@@ -41,7 +41,7 @@ const OrganizationDetails = () => {
 			.patchOrganizations(identifier as string, organizationObject as UpdateOrganizationRequest)
 			.then(() => {
 				fetchOrganization();
-				router.push(`/organizations/${identifier}`);
+				router.push(`/admin/organizations/${identifier}`);
 			});
 	};
 

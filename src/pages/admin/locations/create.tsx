@@ -12,7 +12,7 @@ import { useTranslations } from "use-intl";
 
 export const getStaticProps: GetStaticProps = async (context) => ({
 	props: {
-		messages: (await import(`../../../i18n/${context.locale}.json`)).default,
+		messages: (await import(`../../../../i18n/${context.locale}.json`)).default,
 	},
 });
 
@@ -28,7 +28,7 @@ const CreateNewLocation = () => {
 			.postLocations(newLocation as CreateLocationRequest)
 			.then((res) => {
 				const id = res.data!.locationReference!.referenceId!;
-				router.push(`/locations/${id}`);
+				router.push(`/admin/locations/${id}`);
 			})
 			.catch((error) => {
 				errorMessageSet(`Verbindung fehlgeschlagen: ${error.status}`);

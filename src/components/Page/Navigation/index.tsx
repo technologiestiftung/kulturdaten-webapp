@@ -26,15 +26,16 @@ function getNavigationGroups(isAdmin: boolean): Array<NavigationGroup> {
 	const userNavigationGroup: NavigationGroup = {
 		type: "user",
 		i18nKey: "group-user",
-		links: [
-			{ href: "/", i18nKey: "link-offers", icon: "star" },
-			{ href: "/locations", i18nKey: "link-locations", icon: "map-pin" },
-		],
+		links: [{ href: "/", i18nKey: "link-user-attractions", icon: "star" }],
 	};
 	const adminNavigationGroup: NavigationGroup = {
 		type: "admin",
 		i18nKey: "group-admin",
-		links: [{ href: "/organizations", i18nKey: "link-organizations", icon: "users" }],
+		links: [
+			{ href: "/admin/attractions", i18nKey: "link-admin-attractions", icon: "star" },
+			{ href: "/admin/locations", i18nKey: "link-admin-locations", icon: "map-pin" },
+			{ href: "/admin/organizations", i18nKey: "link-admin-organizations", icon: "users" },
+		],
 	};
 	return [userNavigationGroup, ...(isAdmin ? [adminNavigationGroup] : [])];
 }

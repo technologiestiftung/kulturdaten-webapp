@@ -9,7 +9,7 @@ import { useTranslations } from "use-intl";
 
 export const getStaticProps: GetStaticProps = async (context) => ({
 	props: {
-		messages: (await import(`../../../i18n/${context.locale}.json`)).default,
+		messages: (await import(`../../../../i18n/${context.locale}.json`)).default,
 	},
 });
 

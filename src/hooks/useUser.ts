@@ -1,14 +1,14 @@
 import apiClient from "@api/client";
+import { clearAccessToken, storeAccessToken } from "@utils/auth";
 import { useRouter } from "next/router";
 import { useContext } from "react";
-import { removeCookie, setCookie } from "typescript-cookie";
 import { UserContext } from "../contexts/userContext";
 
 export default function useUser() {
 	const router = useRouter();
 	const { userObject, clearUser, saveAuthObject } = useContext(UserContext);
 	const logOut = async () => {
-		removeCookie("accessToken");
+		clearAccessToken();
 		await router.push("/login");
 		clearUser();
 	};
@@ -19,11 +19,7 @@ export default function useUser() {
 		});
 		const loginResponseData = loginResponse.data;
 		if (loginResponseData?.accessToken) {
-			setCookie("accessToken", loginResponseData.accessToken, {
-				// TODO: Calculate expiry date via loginResponseData.expiresIn.
-				// expires: loginResponseData.expiresIn ? new Date(loginResponseData.expiresIn) : undefined,
-				path: "/",
-			});
+			storeAccessToken(loginResponseData.accessToken);
 			saveAuthObject(loginResponseData);
 			router.push("/");
 		}

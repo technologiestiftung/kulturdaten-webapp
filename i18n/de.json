@@ -6,9 +6,10 @@
 		"title": "kulturdaten.berlin",
 		"group-user": "User",
 		"group-admin": "Admininistration",
-		"link-offers": "Angebote",
-		"link-locations": "Orte",
-		"link-organizations": "Anbieter:innen",
+		"link-user-attractions": "Angebote",
+		"link-admin-attractions": "Angebote",
+		"link-admin-locations": "Orte",
+		"link-admin-organizations": "Anbieter:innen",
 		"link-logout": "Ausloggen"
 	},
 	"Pagination": {
@@ -23,6 +24,7 @@
 	"Attractions": {
 		"page-title": "Angebote",
 		"table-header-title": "Angebotstitel",
+		"table-header-events": "Termine",
 		"table-header-status": "Status",
 		"number-attractions": "{count, plural, =1 {# Angebot} other {# Angebote}}"
 	},

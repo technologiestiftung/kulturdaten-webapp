@@ -33,7 +33,7 @@ const LocationTableRow: FC<LocationTableRowProps> = ({ location }: LocationTable
 				<span className="sr-only"> {location.title?.de || "no name"}</span>
 			</td>
 			<td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
-				<a href={`/locations/${location.identifier}`} className="text-indigo-600 hover:text-indigo-900">
+				<a href={`/admin/locations/${location.identifier}`} className="text-indigo-600 hover:text-indigo-900">
 					Edit<span className="sr-only"> {location.title?.de || "no name"}</span>
 				</a>
 			</td>

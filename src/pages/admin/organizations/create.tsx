@@ -10,7 +10,7 @@ import { useTranslations } from "use-intl";
 
 export const getStaticProps: GetStaticProps = async (context) => ({
 	props: {
-		messages: (await import(`../../../i18n/${context.locale}.json`)).default,
+		messages: (await import(`../../../../i18n/${context.locale}.json`)).default,
 	},
 });
 
@@ -23,7 +23,7 @@ const CreateNewOrganization: FC = () => {
 			.postOrganizations(newOrganization)
 			.then((/* res */) => {
 				// TODO: Navigate to created organization.
-				// router.push(`/organizations/${res.identifier}`);
+				// router.push(`/admin/organizations/${res.identifier}`);
 			})
 			.catch((error) => {
 				errorMessageSet(`Verbindung fehlgeschlagen ${error.status}`);
