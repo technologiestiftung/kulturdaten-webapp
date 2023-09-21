@@ -1,7 +1,9 @@
 import { borderRadiuses, colors, spacings } from "@/src/common/styleVariables";
 import styled, { CSSObject } from "@emotion/styled";
+import { getQuery } from "@utils/pagination";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { ReactNode } from "react";
 
 const sharedStyles: CSSObject = {
@@ -12,7 +14,7 @@ const sharedStyles: CSSObject = {
 	width: "100%",
 	height: "100%",
 	color: colors.black,
-	padding: spacings.get(2),
+	padding: `${spacings.get(1)} ${spacings.get(2)}`,
 	borderRadius: borderRadiuses.medium,
 };
 
@@ -41,11 +43,15 @@ interface Props {
 }
 
 export default function PageEntry({ targetPage, interactive, active, children }: Props) {
+	const router = useRouter();
 	const t = useTranslations("Pagination");
 	if (interactive) {
 		return (
 			<StyledLink
-				href={`/?page=${targetPage}`}
+				href={{
+					pathname: router.pathname,
+					query: getQuery(targetPage),
+				}}
 				active={active}
 				aria-label={t("go-to-page", { pageNumber: targetPage })}
 			>

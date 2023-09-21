@@ -4,14 +4,14 @@ import AttractionsPage from "@components/AttractionsPage";
 import withAuth from "@utils/withAuth";
 import { GetServerSideProps } from "next";
 import { PaginationType } from "../components/Pagination";
+import { getPagination } from "../utils/pagination";
 
 interface Props {
 	attractions: Attraction[];
 }
 
 export const getServerSideProps: GetServerSideProps<Props> = async (context) => {
-	const page = Number(context.query?.page || 1);
-	const pageSize = 20;
+	const { page, pageSize } = getPagination(context.query);
 	const response = await apiClient.discoverCulturalData.getAttractions(false, page, pageSize);
 	const data = response.data!;
 	const attractions = data.attractions || [];
