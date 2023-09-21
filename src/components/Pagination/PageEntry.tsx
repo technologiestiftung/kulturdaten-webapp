@@ -52,6 +52,7 @@ export default function PageEntry({ targetPage, interactive, active, children }:
 					pathname: router.pathname,
 					query: getQuery(targetPage),
 				}}
+				replace={true}
 				active={active}
 				aria-label={t("go-to-page", { pageNumber: targetPage })}
 			>
