@@ -90,7 +90,7 @@ const LoginPage: FC = () => {
 						placeholder={"Hier bitte Passwort eingeben … "}
 						onChange={(value) => onPasswordChange(value)}
 					/>
-					<Button type="submit" label="Login" />
+					<Button type="submit">Login</Button>
 				</form>
 				{errorMessages.general && <p aria-live="assertive">{errorMessages.general}</p>}
 			</FormWrapper>

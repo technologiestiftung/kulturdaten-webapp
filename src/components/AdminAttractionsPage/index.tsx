@@ -1,6 +1,7 @@
 import { AdminAttraction } from "@api/client/models/AdminAttraction";
 import Page from "@components/Page";
 import { getLocalizedLabel } from "@utils/content";
+import { useRouter } from "next/router";
 import { useTranslations } from "use-intl";
 import ContentTable from "../ContentTable";
 import PageTitle from "../PageTitle";
@@ -13,6 +14,7 @@ interface Props {
 }
 
 export default function AdminAttractionsPage(props: Props) {
+	const router = useRouter();
 	const { attractions, pagination } = props;
 	const t = useTranslations("Attractions");
 	return (
@@ -38,6 +40,7 @@ export default function AdminAttractionsPage(props: Props) {
 						canBeSorted: false,
 					},
 				]}
+				onClickItem={(attraction) => router.push(`/admin/attractions/${attraction.identifier}`)}
 			/>
 			<Spacer size={20} />
 			<Pagination pagination={pagination} info={t("number-attractions", { count: pagination.totalCount })} />

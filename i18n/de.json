@@ -28,6 +28,14 @@
 		"table-header-status": "Status",
 		"number-attractions": "{count, plural, =1 {# Angebot} other {# Angebote}}"
 	},
+	"Attraction-Details": {
+		"page-title-add": "Neues Angebot erstellen",
+		"page-title-edit": "\"{attractionTitle}\" bearbeiten",
+		"save-button-add": "Angebot erstellen",
+		"save-button-edit": "Angebot speichern",
+		"label-title": "Titel",
+		"label-description": "Beschreibung"
+	},
 	"Locations": {
 		"page-title": "Orte",
 		"create-location": "Ort erstellen",

@@ -108,7 +108,7 @@ const OrganizationEditor: FC<OrganizationEditorProps> = ({ organization, submitH
 				placeholder={"Hier bitte den Ort eingeben … "}
 				onChange={onChange}
 			/>
-			<Button type="submit" label={submitLabel} />
+			<Button type="submit">{submitLabel}</Button>
 			{errorMessages.general && <span aria-live="assertive">{errorMessages.general}</span>}
 		</form>
 	);

@@ -10,7 +10,11 @@ const Table = styled.table({
 	borderRadius: borderRadiuses.big,
 });
 
-const Tr = styled.tr({
+const Tr = styled.tr(({ onClick }) => ({
+	"&:hover": onClick && {
+		cursor: "pointer",
+		backgroundColor: colors.grayLight,
+	},
 	":last-of-type": {
 		td: {
 			borderBottom: "none",
@@ -18,7 +22,7 @@ const Tr = styled.tr({
 			":last-of-type": { borderBottomRightRadius: borderRadiuses.big },
 		},
 	},
-});
+}));
 
 const Th = styled.th({
 	textAlign: "left",
@@ -59,7 +63,7 @@ export default function ContentTable<Item>(props: Props<Item>) {
 			</thead>
 			<tbody>
 				{items.map((item, index) => (
-					<Tr key={index} onClick={() => onClickItem?.(item)}>
+					<Tr key={index} onClick={onClickItem ? () => onClickItem(item) : undefined} tabIndex={onClickItem ? 0 : -1}>
 						{columns.map((column, index) => (
 							<Td key={index}>{column.getContent(item)}</Td>
 						))}

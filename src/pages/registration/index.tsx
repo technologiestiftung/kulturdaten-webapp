@@ -177,7 +177,7 @@ const Registration: FC = () => {
 						setPristine={repeatPasswordPristineSet}
 						errorMessage={repeatPasswordPristine ? undefined : errorMessages.repeatPassword}
 					/>
-					<Button label="Registrieren" type="submit" />
+					<Button type="submit">Registrieren</Button>
 				</form>
 				{errorMessages.general && <span aria-live="assertive">{errorMessages.general}</span>}
 			</FormWrapper>

@@ -34,6 +34,9 @@ export const colors = {
 	grayLight: "#fafafa",
 	neutral200: "#f1f3f9",
 	neutral300: "#e1e6ef",
+	mediumContrast: "#54595c",
+	highContrast: "#323536",
+	error: "#ff4f46",
 };
 
 const getSpacing = (factor: number) => {

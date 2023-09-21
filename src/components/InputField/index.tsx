@@ -1,4 +1,4 @@
-import React, { FC, useId, useState } from "react";
+import React, { FC, ReactNode, useId, useState } from "react";
 
 const InputTypes = {
 	EMAIL: "email",
@@ -12,19 +12,19 @@ const InputTypes = {
 type InputType = (typeof InputTypes)[keyof typeof InputTypes];
 
 interface InputProps {
-	type: InputType;
-	label: string;
-	onChange: (value: string, id: string, e: React.ChangeEvent<HTMLInputElement>) => void;
+	type?: InputType;
+	label: ReactNode;
+	onChange?: (value: string, id: string, e: React.ChangeEvent<HTMLInputElement>) => void;
 	setPristine?: (pristine: boolean) => void;
 	required?: boolean;
-	placeholder: string;
+	placeholder?: string;
 	id: string;
 	errorMessage?: string;
 	initialValue?: string;
 }
 
 export const Input: FC<InputProps> = ({
-	type,
+	type = "text",
 	label,
 	placeholder,
 	onChange,
@@ -40,7 +40,7 @@ export const Input: FC<InputProps> = ({
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const inputValue = e.target.value;
-		onChange(inputValue, id, e);
+		onChange?.(inputValue, id, e);
 		valueSet(inputValue);
 	};
 
@@ -57,21 +57,20 @@ export const Input: FC<InputProps> = ({
 			</label>
 			<input
 				name={id + idPrefix}
-				className="border border-black rounded font-normal p-2 text-sm leading-6 placeholder:italic"
 				type={type}
 				value={value}
 				placeholder={placeholder}
 				onChange={handleChange}
 				onBlur={handleBlur}
 				required={required}
-				aria-invalid={errorMessage ? "true" : "false"}
-				aria-describedby="errorMessage"
+				aria-invalid={!!errorMessage}
+				aria-describedby={"errorMessage" + idPrefix}
 				id={id}
 			/>
 			{errorMessage && (
 				<>
 					{/* This is the visible error message for sighted users which is not read by screen readers */}
-					<span id="errorMessage" className="block text-warning mt-1" aria-hidden>
+					<span id={"errorMessage" + idPrefix} className="block text-warning mt-1" aria-hidden>
 						{errorMessage}
 					</span>
 					{/* This is an invisible error message for screen readers only */}
