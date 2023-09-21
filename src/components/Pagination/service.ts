@@ -16,7 +16,7 @@ export function getPages(pagination: PaginationType) {
 	const { page } = pagination;
 	const paddingSize = 3;
 	const totalPages = getTotalPages(pagination);
-	const pages: Page[] = Array.from({ length: totalPages }, (_, index) => {
+	const pages = Array.from({ length: totalPages }, (_, index) => {
 		const isPadded = index < paddingSize || index >= totalPages - paddingSize;
 		const number = index + 1;
 		const active = number === page;
@@ -41,14 +41,5 @@ export function getPages(pagination: PaginationType) {
 		}
 		return null;
 	}).filter(Boolean) as Page[];
-	return trimPages(pages);
-}
-
-function trimPages(pages: Page[]) {
-	const { length } = pages;
-	const threshold = 7;
-	if (length <= threshold) {
-		return pages;
-	}
 	return pages;
 }
