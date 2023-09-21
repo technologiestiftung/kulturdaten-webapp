@@ -81,14 +81,14 @@ export default function Navigation() {
 	const navigationGroups = useMemo(() => getNavigationGroups(isAdmin), [isAdmin]);
 	const isLinkActive = useCallback(
 		(href: string) => {
-			const path = router.asPath;
-			const useStrictComparison = path === "/" || href === "/";
+			const route = router.route;
+			const useStrictComparison = route === "/" || href === "/";
 			if (useStrictComparison) {
-				return path === href;
+				return route === href;
 			}
-			return path.startsWith(href);
+			return route.startsWith(href);
 		},
-		[router.asPath],
+		[router.route],
 	);
 	return (
 		<Container>
