@@ -3,6 +3,7 @@ import { AdminAttraction } from "@api/client/models/AdminAttraction";
 import AdminAttractionsPage from "@components/AdminAttractionsPage";
 import { PaginationType } from "@components/Pagination";
 import { getAccessTokenFromContext } from "@utils/auth";
+import { loadMessages } from "@utils/i18n";
 import { getPagination } from "@utils/pagination";
 import withAuth from "@utils/withAuth";
 import { GetServerSideProps } from "next";
@@ -27,7 +28,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async (context) => 
 		props: {
 			attractions,
 			pagination,
-			messages: (await import(`../../../../i18n/${context.locale}.json`)).default,
+			messages: await loadMessages(context.locale!),
 		},
 	};
 };

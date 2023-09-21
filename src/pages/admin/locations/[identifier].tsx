@@ -4,6 +4,7 @@ import { UpdateLocationRequest } from "@api/client/models/UpdateLocationRequest"
 import FormWrapper from "@components/FormWrapper";
 import LocationEditor from "@components/LocationEditor";
 import Page from "@components/Page";
+import { loadMessages } from "@utils/i18n";
 import withAuth from "@utils/withAuth";
 import { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
@@ -12,7 +13,7 @@ import { useTranslations } from "use-intl";
 
 export const getServerSideProps: GetServerSideProps = async (context) => ({
 	props: {
-		messages: (await import(`../../../../i18n/${context.locale}.json`)).default,
+		messages: await loadMessages(context.locale!),
 	},
 });
 

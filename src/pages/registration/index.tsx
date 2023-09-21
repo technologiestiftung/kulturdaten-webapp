@@ -5,6 +5,7 @@ import { Button } from "@components/Button";
 import FormWrapper from "@components/FormWrapper";
 import { Input } from "@components/InputField";
 import Page from "@components/Page";
+import { loadMessages } from "@utils/i18n";
 import { validateEmail, validatePassword, validateRepeatPassword } from "@utils/validation";
 import { GetStaticProps } from "next";
 import { useRouter } from "next/router";
@@ -13,7 +14,7 @@ import { useTranslations } from "use-intl";
 
 export const getStaticProps: GetStaticProps = async (context) => ({
 	props: {
-		messages: (await import(`../../../i18n/${context.locale}.json`)).default,
+		messages: await loadMessages(context.locale!),
 	},
 });
 

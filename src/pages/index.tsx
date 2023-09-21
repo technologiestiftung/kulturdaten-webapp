@@ -2,6 +2,7 @@ import apiClient from "@api/client";
 import { Attraction } from "@api/client/models/Attraction";
 import AttractionsPage from "@components/AttractionsPage";
 import { PaginationType } from "@components/Pagination";
+import { loadMessages } from "@utils/i18n";
 import { getPagination } from "@utils/pagination";
 import withAuth from "@utils/withAuth";
 import { GetServerSideProps } from "next";
@@ -24,7 +25,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async (context) => 
 		props: {
 			attractions,
 			pagination,
-			messages: (await import(`../../i18n/${context.locale}.json`)).default,
+			messages: await loadMessages(context.locale!),
 		},
 	};
 };

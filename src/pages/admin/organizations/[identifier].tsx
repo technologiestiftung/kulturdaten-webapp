@@ -4,6 +4,7 @@ import { UpdateOrganizationRequest } from "@api/client/models/UpdateOrganization
 import FormWrapper from "@components/FormWrapper";
 import OrganizationEditor from "@components/OrganisationEditor";
 import Page from "@components/Page";
+import { loadMessages } from "@utils/i18n";
 import withAuth from "@utils/withAuth";
 import { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
@@ -12,7 +13,7 @@ import { useTranslations } from "use-intl";
 
 export const getServerSideProps: GetServerSideProps = async (context) => ({
 	props: {
-		messages: (await import(`../../../../i18n/${context.locale}.json`)).default,
+		messages: await loadMessages(context.locale!),
 	},
 });
 
