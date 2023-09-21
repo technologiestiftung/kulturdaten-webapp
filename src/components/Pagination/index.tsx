@@ -16,7 +16,7 @@ const Container = styled.div({
 });
 
 const Info = styled.div({
-	padding: `0px ${spacings.get(3)}`,
+	padding: `${spacings.get(1)} ${spacings.get(3)}`,
 });
 
 const List = styled.ul({
