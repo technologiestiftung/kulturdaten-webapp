@@ -1,12 +1,12 @@
 import { borderRadiuses, colors, fontSizes, lineHeights, spacings } from "@/src/common/styleVariables";
 import styled, { CSSObject } from "@emotion/styled";
-import { DetailedHTMLProps, InputHTMLAttributes } from "react";
+import { DetailedHTMLProps, TextareaHTMLAttributes } from "react";
 
 const errorStyle: CSSObject = {
 	borderColor: colors.error,
 };
 
-const StyledInput = styled.input<Props>(({ error }) => ({
+const StyledTextarea = styled.textarea<Props>(({ error }) => ({
 	appearance: "none",
 	padding: spacings.inputPadding,
 	margin: 0,
@@ -33,11 +33,10 @@ const StyledInput = styled.input<Props>(({ error }) => ({
 	...(error ? errorStyle : {}),
 }));
 
-export interface Props extends DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement> {
+export interface Props extends DetailedHTMLProps<TextareaHTMLAttributes<HTMLTextAreaElement>, HTMLTextAreaElement> {
 	error?: string;
 }
 
-export default function Input(props: Props) {
-	const { type = "text", ...otherProps } = props;
-	return <StyledInput type={type} {...otherProps} />;
+export default function Textarea(props: Props) {
+	return <StyledTextarea {...props} />;
 }

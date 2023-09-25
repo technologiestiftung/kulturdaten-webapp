@@ -48,6 +48,7 @@ export const spacings = {
 	get: (factor: number) => `${getSpacing(factor)}px`,
 	getNumber: (factor: number) => getSpacing(factor),
 	horizontalPagePadding: `clamp(${getSpacing(2)}px, 5vw, ${getSpacing(11)}px)`,
+	inputPadding: getSpacing(1.5),
 };
 
 export const breakpoints = {
