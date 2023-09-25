@@ -35,9 +35,9 @@ export default function AttractionEditor(props: Props) {
 			const apiClient = createAuthorizedClient(accessToken);
 			if (isNew) {
 				await apiClient.maintainCulturalData.postAttractions(attractionRequest);
-				return;
+			} else {
+				await apiClient.maintainCulturalData.patchAttractions(attraction.identifier, attractionRequest);
 			}
-			await apiClient.maintainCulturalData.patchAttractions(attraction.identifier, attractionRequest);
 			onAfterSubmit();
 		},
 		[attraction?.identifier, attractionRequest, isNew, onAfterSubmit],
