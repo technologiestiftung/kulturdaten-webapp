@@ -23,6 +23,7 @@
 	},
 	"Attractions": {
 		"page-title": "Angebote",
+		"create-attraction": "Angebot erstellen",
 		"table-header-title": "Angebotstitel",
 		"table-header-events": "Termine",
 		"table-header-status": "Status",

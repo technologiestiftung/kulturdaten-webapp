@@ -4,8 +4,9 @@ import Page from "@components/Page";
 import { getLocalizedLabel } from "@utils/content";
 import { useRouter } from "next/router";
 import { useTranslations } from "use-intl";
+import Button from "../Button";
 import ContentTable from "../ContentTable";
-import PageTitle from "../PageTitle";
+import PageTitleHeader from "../PageTitleHeader";
 import Pagination, { PaginationType } from "../Pagination";
 import Spacer from "../Spacer";
 
@@ -20,7 +21,14 @@ export default function AdminAttractionsPage(props: Props) {
 	const t = useTranslations("Attractions");
 	return (
 		<Page metadata={{ title: t("page-title") }}>
-			<PageTitle>{t("page-title")}</PageTitle>
+			<PageTitleHeader
+				title={t("page-title")}
+				side={
+					<Button as="a" useNextLink={true} href={ROUTES.admin.attractionCreate()}>
+						{t("create-attraction")}
+					</Button>
+				}
+			/>
 			<Spacer size={20} />
 			<ContentTable
 				items={attractions}

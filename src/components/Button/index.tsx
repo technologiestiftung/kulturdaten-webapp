@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import NextLink from "next/link";
 import { AnchorHTMLAttributes, ButtonHTMLAttributes } from "react";
 import { borderRadiuses, colors, fontWeights, lineHeights, spacings, timings } from "../../common/styleVariables";
 
@@ -8,7 +9,9 @@ const UnstyledButton = styled.button({
 	background: "none",
 });
 
-const StyledButton = styled.button({
+const StyledButton = styled("button", {
+	shouldForwardProp: (prop) => !["unstyled", "useNextLink"].includes(prop.toString()),
+})({
 	appearance: "none",
 	display: "inline-block",
 	lineHeight: lineHeights.buttons,
@@ -33,6 +36,7 @@ interface StyledButtonProps {
 }
 
 const StyledButtonAsLink = StyledButton.withComponent("a");
+const StyledButtonAsNextLink = StyledButton.withComponent(NextLink);
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement>, StyledButtonProps {}
 
@@ -41,13 +45,18 @@ interface LinkProps extends AnchorHTMLAttributes<HTMLAnchorElement> {
 	href: string;
 	rel?: string;
 	target?: string;
+	useNextLink?: boolean;
 }
 
 type Props = ButtonProps | LinkProps;
 
 const isLink = (props: Props): props is LinkProps => props.as === "a";
+const isNextLink = (props: LinkProps) => !!props.useNextLink;
 
 export default function Button(props: Props) {
+	if (isLink(props) && isNextLink(props)) {
+		return <StyledButtonAsNextLink {...props} />;
+	}
 	if (isLink(props)) {
 		return <StyledButtonAsLink {...props} />;
 	}

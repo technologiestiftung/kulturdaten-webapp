@@ -5,6 +5,7 @@ const ROUTES = {
 	admin: {
 		attractions: () => "/admin/attractions",
 		attractionDetails: (identifier: string) => `/admin/attractions/${identifier}`,
+		attractionCreate: () => `/admin/attractions/create`,
 		locations: () => "/admin/locations",
 		locationDetails: (identifier: string) => `/admin/locations/${identifier}`,
 		locationCreate: () => `/admin/locations/create`,
