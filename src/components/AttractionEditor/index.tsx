@@ -1,5 +1,6 @@
-import apiClient from "@api/client";
+import { createAuthorizedClient } from "@api/client";
 import { AdminAttraction } from "@api/client/models/AdminAttraction";
+import { getAccessToken } from "@utils/auth";
 import { useTranslations } from "next-intl";
 import { FormEventHandler, useCallback, useState } from "react";
 import { Button } from "../Button";
@@ -9,10 +10,11 @@ import { getInitialRequest } from "./service";
 
 interface Props {
 	attraction: AdminAttraction | null;
+	onAfterSubmit(): void;
 }
 
 export default function AttractionEditor(props: Props) {
-	const { attraction } = props;
+	const { attraction, onAfterSubmit } = props;
 	const isNew = attraction === null;
 	const t = useTranslations("Attraction-Details");
 	const submitLabel = t(isNew ? "save-button-add" : "save-button-edit");
@@ -23,14 +25,20 @@ export default function AttractionEditor(props: Props) {
 	const handleSubmit = useCallback<FormEventHandler>(
 		async (event) => {
 			event.preventDefault();
+			const accessToken = getAccessToken();
+			if (!accessToken) {
+				// TODO: Show error message in UI.
+				throw new Error("No access token found");
+			}
+			const apiClient = createAuthorizedClient(accessToken);
 			if (isNew) {
 				await apiClient.maintainCulturalData.postAttractions(attractionRequest);
 				return;
 			}
 			await apiClient.maintainCulturalData.patchAttractions(attraction.identifier, attractionRequest);
-			// TODO: Do something after saving.
+			onAfterSubmit();
 		},
-		[attraction?.identifier, attractionRequest, isNew],
+		[attraction?.identifier, attractionRequest, isNew, onAfterSubmit],
 	);
 	return (
 		<form onSubmit={handleSubmit}>
