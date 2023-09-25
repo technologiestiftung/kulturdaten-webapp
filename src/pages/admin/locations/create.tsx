@@ -1,6 +1,7 @@
 import apiClient from "@api/client";
 import { CreateLocationRequest } from "@api/client/models/CreateLocationRequest";
 import { Location } from "@api/client/models/Location";
+import ROUTES from "@common/routes";
 import FormWrapper from "@components/FormWrapper";
 import LocationEditor from "@components/LocationEditor";
 import Page from "@components/Page";
@@ -29,7 +30,7 @@ const CreateNewLocation = () => {
 			.postLocations(newLocation as CreateLocationRequest)
 			.then((res) => {
 				const id = res.data!.locationReference!.referenceId!;
-				router.push(`/admin/locations/${id}`);
+				router.push(ROUTES.admin.locationDetails(id));
 			})
 			.catch((error) => {
 				errorMessageSet(`Verbindung fehlgeschlagen: ${error.status}`);

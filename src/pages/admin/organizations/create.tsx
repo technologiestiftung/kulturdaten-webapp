@@ -24,7 +24,7 @@ const CreateNewOrganization: FC = () => {
 			.postOrganizations(newOrganization)
 			.then((/* res */) => {
 				// TODO: Navigate to created organization.
-				// router.push(`/admin/organizations/${res.identifier}`);
+				// router.push(ROUTES.admin.organizationDetails(res.identifier));
 			})
 			.catch((error) => {
 				errorMessageSet(`Verbindung fehlgeschlagen ${error.status}`);

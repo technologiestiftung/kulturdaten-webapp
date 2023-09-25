@@ -1,6 +1,7 @@
 import apiClient from "@api/client";
 import { Location } from "@api/client/models/Location";
 import { UpdateLocationRequest } from "@api/client/models/UpdateLocationRequest";
+import ROUTES from "@common/routes";
 import FormWrapper from "@components/FormWrapper";
 import LocationEditor from "@components/LocationEditor";
 import Page from "@components/Page";
@@ -40,7 +41,7 @@ const LocationDetails = () => {
 	const editLocation = async (locationObject: Location) => {
 		await apiClient.maintainCulturalData.patchLocations(identifier as string, locationObject as UpdateLocationRequest);
 		fetchLocation();
-		router.push(`/admin/locations/${identifier}`);
+		router.push(ROUTES.admin.locationDetails(identifier!));
 	};
 
 	if (location === null) {

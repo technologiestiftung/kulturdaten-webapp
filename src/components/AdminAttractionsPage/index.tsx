@@ -1,4 +1,5 @@
 import { AdminAttraction } from "@api/client/models/AdminAttraction";
+import ROUTES from "@common/routes";
 import Page from "@components/Page";
 import { getLocalizedLabel } from "@utils/content";
 import { useRouter } from "next/router";
@@ -40,7 +41,7 @@ export default function AdminAttractionsPage(props: Props) {
 						canBeSorted: false,
 					},
 				]}
-				onClickItem={(attraction) => router.push(`/admin/attractions/${attraction.identifier}`)}
+				onClickItem={(attraction) => router.push(ROUTES.admin.attractionDetails(attraction.identifier))}
 			/>
 			<Spacer size={20} />
 			<Pagination pagination={pagination} info={t("number-attractions", { count: pagination.totalCount })} />

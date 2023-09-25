@@ -1,3 +1,4 @@
+import ROUTES from "@common/routes";
 import { colors, fontSizes, fontWeights, spacings, widths } from "@common/styleVariables";
 import { IconName } from "@components/Icon";
 import Spacer from "@components/Spacer";
@@ -26,15 +27,15 @@ function getNavigationGroups(isAdmin: boolean): Array<NavigationGroup> {
 	const userNavigationGroup: NavigationGroup = {
 		type: "user",
 		i18nKey: "group-user",
-		links: [{ href: "/", i18nKey: "link-user-attractions", icon: "star" }],
+		links: [{ href: ROUTES.user.attractions(), i18nKey: "link-user-attractions", icon: "star" }],
 	};
 	const adminNavigationGroup: NavigationGroup = {
 		type: "admin",
 		i18nKey: "group-admin",
 		links: [
-			{ href: "/admin/attractions", i18nKey: "link-admin-attractions", icon: "star" },
-			{ href: "/admin/locations", i18nKey: "link-admin-locations", icon: "map-pin" },
-			{ href: "/admin/organizations", i18nKey: "link-admin-organizations", icon: "users" },
+			{ href: ROUTES.admin.attractions(), i18nKey: "link-admin-attractions", icon: "star" },
+			{ href: ROUTES.admin.locations(), i18nKey: "link-admin-locations", icon: "map-pin" },
+			{ href: ROUTES.admin.organizations(), i18nKey: "link-admin-organizations", icon: "users" },
 		],
 	};
 	return [userNavigationGroup, ...(isAdmin ? [adminNavigationGroup] : [])];

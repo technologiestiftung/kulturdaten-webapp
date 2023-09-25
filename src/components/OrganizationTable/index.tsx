@@ -1,4 +1,5 @@
 import { Organization } from "@api/client/models/Organization";
+import ROUTES from "@common/routes";
 import Link from "next/link";
 import { FC } from "react";
 import OrganizationTableRow from "./OrganizationTableRow";
@@ -16,7 +17,7 @@ const OrganizationTable: FC<OrganizationTableProps> = ({
 		<div className="w-full">
 			<h1 className="text-base font-semibold leading-6 text-gray-900">Organizations</h1>
 			<p className="mt-2 text-sm text-gray-700">A list of all the registered organizations</p>
-			<Link className="leading-10" href={"/admin/organizations/create"}>
+			<Link className="leading-10" href={ROUTES.admin.organizationCreate()}>
 				Add Organization
 			</Link>
 			<div className="w-full overflow-x-scroll">

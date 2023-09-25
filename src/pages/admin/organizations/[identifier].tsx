@@ -1,3 +1,4 @@
+import ROUTES from "@/src/common/routes";
 import apiClient from "@api/client";
 import { Organization } from "@api/client/models/Organization";
 import { UpdateOrganizationRequest } from "@api/client/models/UpdateOrganizationRequest";
@@ -21,7 +22,7 @@ const OrganizationDetails = () => {
 	const t = useTranslations("Organizations");
 	const router = useRouter();
 	const [organization, organizationSet] = useState<Organization | null>(null);
-	const { identifier } = router.query;
+	const identifier = router.query.identifier as string | undefined;
 
 	const fetchOrganization = useCallback(async () => {
 		if (identifier) {
@@ -39,10 +40,10 @@ const OrganizationDetails = () => {
 
 	const editOrganization = (organizationObject: Organization) => {
 		apiClient.maintainCulturalData
-			.patchOrganizations(identifier as string, organizationObject as UpdateOrganizationRequest)
+			.patchOrganizations(identifier!, organizationObject as UpdateOrganizationRequest)
 			.then(() => {
 				fetchOrganization();
-				router.push(`/admin/organizations/${identifier}`);
+				router.push(ROUTES.admin.organizationDetails(identifier!));
 			});
 	};
 
