@@ -4,8 +4,10 @@ import { getAccessToken } from "@utils/auth";
 import { useTranslations } from "next-intl";
 import { FormEventHandler, useCallback, useState } from "react";
 import Button from "../Button";
-import InputField from "../InputFieldV2";
+import FormField from "../FormField";
+import Input from "../Input";
 import Spacer from "../Spacer";
+import Textarea from "../Textarea";
 import { getInitialRequest } from "./service";
 
 interface Props {
@@ -42,7 +44,8 @@ export default function AttractionEditor(props: Props) {
 	);
 	return (
 		<form onSubmit={handleSubmit}>
-			<InputField
+			<FormField
+				component={Input}
 				label={t("label-title")}
 				id={`title.${currentLanguage}`}
 				value={attractionRequest.title[currentLanguage]}
@@ -58,7 +61,8 @@ export default function AttractionEditor(props: Props) {
 				required={true}
 			/>
 			<Spacer size={10} />
-			<InputField
+			<FormField
+				component={Textarea}
 				label={t("label-description")}
 				id={`description.${currentLanguage}`}
 				value={attractionRequest.description![currentLanguage]}
@@ -71,6 +75,7 @@ export default function AttractionEditor(props: Props) {
 						},
 					}));
 				}}
+				rows={8}
 				required={true}
 			/>
 			<Spacer size={20} />
