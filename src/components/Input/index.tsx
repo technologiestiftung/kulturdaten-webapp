@@ -28,7 +28,7 @@ const StyledInput = styled.input<Props>(({ error }) => ({
 		cursor: "not-allowed",
 	},
 	"&::placeholder": {
-		color: colors.neutral300,
+		color: colors.mediumContrast,
 	},
 	...(error ? errorStyle : {}),
 }));
