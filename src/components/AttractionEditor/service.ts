@@ -15,17 +15,15 @@ export function getInitialRequest(
 	attraction: AdminAttraction | null,
 	languages: Array<string>,
 ): CreateAttractionRequest {
-	if (attraction === null) {
-		return {
-			type: "type.Attraction",
-			title: createLanguagesObject(languages),
-			displayName: createLanguagesObject(languages),
-			description: createLanguagesObject(languages),
-			pleaseNote: createLanguagesObject(languages),
-			website: "",
-			inLanguages: languages,
-			tags: [],
-		};
-	}
-	return attraction;
+	return {
+		type: "type.Attraction",
+		title: createLanguagesObject(languages),
+		displayName: createLanguagesObject(languages),
+		description: createLanguagesObject(languages),
+		pleaseNote: createLanguagesObject(languages),
+		website: "",
+		inLanguages: languages,
+		tags: [],
+		...attraction,
+	};
 }
