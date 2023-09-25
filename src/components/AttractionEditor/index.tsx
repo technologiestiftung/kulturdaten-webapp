@@ -3,8 +3,8 @@ import { AdminAttraction } from "@api/client/models/AdminAttraction";
 import { getAccessToken } from "@utils/auth";
 import { useTranslations } from "next-intl";
 import { FormEventHandler, useCallback, useState } from "react";
-import { Button } from "../Button";
-import { InputField } from "../InputFieldV2";
+import Button from "../Button";
+import InputField from "../InputFieldV2";
 import Spacer from "../Spacer";
 import { getInitialRequest } from "./service";
 

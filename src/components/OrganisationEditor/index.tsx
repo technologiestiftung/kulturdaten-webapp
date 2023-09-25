@@ -3,7 +3,7 @@ import { Organization } from "@api/client/models/Organization";
 import { validatePostalCode } from "@utils/validation";
 import _ from "lodash";
 import { FC, FormEvent, useEffect, useState } from "react";
-import { Button } from "../../components/Button";
+import Button from "../../components/Button";
 import { Input } from "../../components/InputField";
 
 interface ErrorMessages {

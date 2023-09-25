@@ -1,7 +1,7 @@
 import apiClient from "@api/client";
 import { ApiError } from "@api/client/core/ApiError";
 import { CreateUserRequest } from "@api/client/models/CreateUserRequest";
-import { Button } from "@components/Button";
+import Button from "@components/Button";
 import FormWrapper from "@components/FormWrapper";
 import { Input } from "@components/InputField";
 import Page from "@components/Page";

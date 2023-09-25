@@ -2,7 +2,7 @@ import { CreateLocationRequest } from "@api/client/models/CreateLocationRequest"
 import { Location } from "@api/client/models/Location";
 import _ from "lodash";
 import React, { FC, FormEvent, useEffect, useState } from "react";
-import { Button } from "../../components/Button";
+import Button from "../../components/Button";
 import { Input } from "../../components/InputField";
 import Dropdown from "../Dropdown";
 

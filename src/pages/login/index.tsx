@@ -1,5 +1,5 @@
 import { ApiError } from "@api/client/core/ApiError";
-import { Button } from "@components/Button";
+import Button from "@components/Button";
 import FormWrapper from "@components/FormWrapper";
 import { Input } from "@components/InputField";
 import Page from "@components/Page";

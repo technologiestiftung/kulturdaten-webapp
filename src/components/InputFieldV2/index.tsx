@@ -15,7 +15,7 @@ interface Props extends InputProps {
 	label: ReactNode;
 }
 
-export function InputField(props: Props) {
+export default function InputField(props: Props) {
 	const { label, error, ...otherProps } = props;
 	return (
 		<Label>
