@@ -20,7 +20,10 @@ export function clearAccessToken() {
 }
 
 export function getAccessTokenFromContext(context: GetServerSidePropsContext) {
-	const cookieString = context.req.headers.cookie as string;
+	const cookieString = context.req.headers.cookie;
+	if (!cookieString) {
+		throw new Error("No cookie string found");
+	}
 	const accessToken = cookieString
 		.split("; ")
 		.find((c) => c.startsWith(`${ACCESS_TOKEN_COOKIE_NAME}=`))
