@@ -60,7 +60,7 @@ export default function AttractionEditor(props: Props) {
 				}}
 				required={true}
 			/>
-			<Spacer size={10} />
+			<Spacer size={15} />
 			<FormField
 				component={Textarea}
 				label={t("label-description")}
@@ -77,6 +77,40 @@ export default function AttractionEditor(props: Props) {
 				}}
 				rows={8}
 				required={true}
+			/>
+			<Spacer size={15} />
+			<FormField
+				component={Textarea}
+				label={t("label-please-note")}
+				id={`please-note.${currentLanguage}`}
+				value={attractionRequest.pleaseNote![currentLanguage]}
+				onChange={(event) => {
+					setAttractionRequest((prev) => ({
+						...prev,
+						pleaseNote: {
+							...prev.pleaseNote,
+							[currentLanguage]: event.target.value,
+						},
+					}));
+				}}
+				rows={4}
+				required={true}
+			/>
+			<Spacer size={15} />
+			<FormField
+				component={Input}
+				type="url"
+				label={t("label-website")}
+				placeholder="https://example.com"
+				id="website"
+				value={attractionRequest.website}
+				onChange={(event) => {
+					setAttractionRequest((prev) => ({
+						...prev,
+						website: event.target.value,
+					}));
+				}}
+				required={false}
 			/>
 			<Spacer size={20} />
 			<Button type="submit">{submitLabel}</Button>

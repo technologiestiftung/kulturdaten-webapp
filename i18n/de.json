@@ -35,7 +35,9 @@
 		"save-button-add": "Angebot erstellen",
 		"save-button-edit": "Angebot speichern",
 		"label-title": "Titel",
-		"label-description": "Beschreibung"
+		"label-description": "Beschreibung",
+		"label-please-note": "Bitte beachten",
+		"label-website": "Website"
 	},
 	"Locations": {
 		"page-title": "Orte",
