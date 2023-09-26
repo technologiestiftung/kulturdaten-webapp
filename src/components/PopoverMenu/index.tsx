@@ -47,6 +47,9 @@ export default function PopoverMenu({ options }: Props) {
 		<Popover
 			triggerProps={{
 				color: "neutral",
+				style: {
+					padding: spacings.get(2),
+				},
 				children: (
 					<TriggerIcon>
 						<Icon name="chevron-down" size="1rem" />
