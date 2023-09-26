@@ -1,7 +1,35 @@
-import styled from "@emotion/styled";
+import styled, { CSSObject } from "@emotion/styled";
 import NextLink from "next/link";
-import { AnchorHTMLAttributes, ButtonHTMLAttributes } from "react";
+import { AnchorHTMLAttributes, ButtonHTMLAttributes, Ref, forwardRef } from "react";
 import { borderRadiuses, colors, fontWeights, lineHeights, spacings, timings } from "../../common/styleVariables";
+
+type ButtonColor = "primary" | "neutral";
+
+type StyleMapping = {
+	default: CSSObject;
+	hover: CSSObject;
+};
+
+const colorStyles: Record<ButtonColor, StyleMapping> = {
+	primary: {
+		default: {
+			color: colors.white,
+			background: colors.blueDark,
+		},
+		hover: {
+			background: colors.blueDarkHover,
+		},
+	},
+	neutral: {
+		default: {
+			color: colors.black,
+			background: "transparent",
+		},
+		hover: {
+			background: colors.neutral200,
+		},
+	},
+};
 
 const UnstyledButton = styled.button({
 	appearance: "none",
@@ -10,25 +38,27 @@ const UnstyledButton = styled.button({
 });
 
 const StyledButton = styled("button", {
-	shouldForwardProp: (prop) => !["unstyled", "useNextLink"].includes(prop.toString()),
-})({
+	shouldForwardProp: (prop) => !["as", "color", "unstyled", "useNextLink"].includes(prop.toString()),
+})<{ color?: ButtonColor }>(({ color = "primary" }) => ({
 	appearance: "none",
 	display: "inline-block",
 	lineHeight: lineHeights.buttons,
 	padding: `${spacings.get(2)} ${spacings.get(3.5)}`,
-	color: colors.white,
-	background: colors.blueDark,
+	...colorStyles[color].default,
 	fontWeight: fontWeights.default,
 	textDecoration: "none",
 	border: "none",
 	borderRadius: borderRadiuses.medium,
 	transition: `all ${timings.short} ease-in-out`,
 	"&:hover": {
+		...colorStyles[color].hover,
 		cursor: "pointer",
-		color: colors.white,
-		background: colors.blueDarkHover,
 	},
-});
+}));
+
+interface CommonProps {
+	color?: ButtonColor;
+}
 
 interface StyledButtonProps {
 	as?: "button" | undefined;
@@ -38,31 +68,35 @@ interface StyledButtonProps {
 const StyledButtonAsLink = StyledButton.withComponent("a");
 const StyledButtonAsNextLink = StyledButton.withComponent(NextLink);
 
-interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement>, StyledButtonProps {}
+type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & StyledButtonProps & CommonProps;
 
-interface LinkProps extends AnchorHTMLAttributes<HTMLAnchorElement> {
-	as: "a";
-	href: string;
-	rel?: string;
-	target?: string;
-	useNextLink?: boolean;
-}
+type LinkProps = AnchorHTMLAttributes<HTMLAnchorElement> &
+	CommonProps & {
+		as: "a";
+		href: string;
+		rel?: string;
+		target?: string;
+		useNextLink?: boolean;
+		ref?: Ref<HTMLAnchorElement>;
+	};
 
 type Props = ButtonProps | LinkProps;
 
 const isLink = (props: Props): props is LinkProps => props.as === "a";
 const isNextLink = (props: LinkProps) => !!props.useNextLink;
 
-export default function Button(props: Props) {
+const Button = forwardRef<HTMLButtonElement, Props>(function Button(props, ref) {
 	if (isLink(props) && isNextLink(props)) {
-		return <StyledButtonAsNextLink {...props} />;
+		return <StyledButtonAsNextLink {...props} ref={ref as Ref<HTMLAnchorElement>} />;
 	}
 	if (isLink(props)) {
-		return <StyledButtonAsLink {...props} />;
+		return <StyledButtonAsLink {...props} ref={ref as Ref<HTMLAnchorElement>} />;
 	}
 	const { type = "button", ...otherProps } = props;
 	if (props.unstyled) {
-		return <UnstyledButton type={type} {...otherProps} />;
+		return <UnstyledButton type={type} {...otherProps} ref={ref} />;
 	}
-	return <StyledButton type={type} {...otherProps} />;
-}
+	return <StyledButton type={type} {...otherProps} ref={ref} />;
+});
+
+export default Button;

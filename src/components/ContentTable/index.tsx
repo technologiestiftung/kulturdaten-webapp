@@ -1,5 +1,5 @@
 import { borderRadiuses, colors, fontSizes, fontWeights, spacings } from "@common/styleVariables";
-import styled from "@emotion/styled";
+import styled, { CSSObject } from "@emotion/styled";
 import { ReactNode } from "react";
 
 const Table = styled.table({
@@ -33,15 +33,17 @@ const Th = styled.th({
 	":last-of-type": { borderTopRightRadius: borderRadiuses.big },
 });
 
-const Td = styled.td({
+const Td = styled.td<{ extraStyles?: CSSObject }>(({ extraStyles }) => ({
 	padding: spacings.get(2),
 	borderBottom: `1px solid ${colors.neutral300}`,
-});
+	...extraStyles,
+}));
 
 type Column<Item> = {
 	header: ReactNode;
 	getContent(item: Item): ReactNode;
 	canBeSorted: boolean;
+	cellStyle?: CSSObject;
 };
 
 type Props<Item> = {
@@ -65,7 +67,9 @@ export default function ContentTable<Item>(props: Props<Item>) {
 				{items.map((item, index) => (
 					<Tr key={index} onClick={onClickItem ? () => onClickItem(item) : undefined} tabIndex={onClickItem ? 0 : -1}>
 						{columns.map((column, index) => (
-							<Td key={index}>{column.getContent(item)}</Td>
+							<Td key={index} extraStyles={column.cellStyle}>
+								{column.getContent(item)}
+							</Td>
 						))}
 					</Tr>
 				))}

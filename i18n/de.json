@@ -27,6 +27,8 @@
 		"table-header-title": "Angebotstitel",
 		"table-header-events": "Termine",
 		"table-header-status": "Status",
+		"table-option-edit": "Bearbeiten",
+		"table-option-delete": "Löschen",
 		"number-attractions": "{count, plural, =1 {# Angebot} other {# Angebote}}"
 	},
 	"Attraction-Details": {
