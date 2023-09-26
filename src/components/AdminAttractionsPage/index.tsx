@@ -54,6 +54,7 @@ export default function AdminAttractionsPage(props: Props) {
 						header: "",
 						getContent: (attraction) => <Actions attraction={attraction} />,
 						canBeSorted: false,
+						headerStyle: { padding: `0 ${spacings.get(1)} 0 0` },
 						cellStyle: { padding: `0 ${spacings.get(1)} 0 0` },
 					},
 				]}

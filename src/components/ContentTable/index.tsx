@@ -1,6 +1,6 @@
 import { borderRadiuses, colors, fontSizes, fontWeights, spacings } from "@common/styleVariables";
-import styled, { CSSObject } from "@emotion/styled";
-import { ReactNode } from "react";
+import styled from "@emotion/styled";
+import { CSSProperties, ReactNode } from "react";
 
 const Table = styled.table({
 	width: "100%",
@@ -33,17 +33,17 @@ const Th = styled.th({
 	":last-of-type": { borderTopRightRadius: borderRadiuses.big },
 });
 
-const Td = styled.td<{ extraStyles?: CSSObject }>(({ extraStyles }) => ({
+const Td = styled.td({
 	padding: spacings.get(2),
 	borderBottom: `1px solid ${colors.neutral300}`,
-	...extraStyles,
-}));
+});
 
 type Column<Item> = {
 	header: ReactNode;
 	getContent(item: Item): ReactNode;
 	canBeSorted: boolean;
-	cellStyle?: CSSObject;
+	headerStyle?: CSSProperties;
+	cellStyle?: CSSProperties;
 };
 
 type Props<Item> = {
@@ -59,7 +59,9 @@ export default function ContentTable<Item>(props: Props<Item>) {
 			<thead>
 				<Tr>
 					{columns.map((column, index) => (
-						<Th key={index}>{column.header}</Th>
+						<Th key={index} style={column.headerStyle}>
+							{column.header}
+						</Th>
 					))}
 				</Tr>
 			</thead>
@@ -67,7 +69,7 @@ export default function ContentTable<Item>(props: Props<Item>) {
 				{items.map((item, index) => (
 					<Tr key={index} onClick={onClickItem ? () => onClickItem(item) : undefined} tabIndex={onClickItem ? 0 : -1}>
 						{columns.map((column, index) => (
-							<Td key={index} extraStyles={column.cellStyle}>
+							<Td key={index} style={column.cellStyle}>
 								{column.getContent(item)}
 							</Td>
 						))}
