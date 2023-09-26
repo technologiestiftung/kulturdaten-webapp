@@ -5,8 +5,10 @@ import Button from "../Button";
 import Icon from "../Icon";
 import Popover from "../Popover";
 
+const iconSize = "16px";
+
 const TriggerIcon = styled.div({
-	width: "1rem",
+	width: iconSize,
 });
 
 const Options = styled.ul({
@@ -52,7 +54,7 @@ export default function PopoverMenu({ options }: Props) {
 				},
 				children: (
 					<TriggerIcon>
-						<Icon name="chevron-down" size="1rem" />
+						<Icon name="chevron-down" size={iconSize} />
 					</TriggerIcon>
 				),
 			}}
