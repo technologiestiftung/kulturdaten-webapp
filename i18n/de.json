@@ -13,7 +13,7 @@
 		"link-logout": "Ausloggen"
 	},
 	"Pagination": {
-		"go-to-page": "Go to page {pageNumber}"
+		"go-to-page": "Zu Seite {pageNumber} springen"
 	},
 	"Registration": {
 		"page-title": "Registrierung"
