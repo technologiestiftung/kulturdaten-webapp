@@ -83,20 +83,15 @@ type LinkProps = AnchorHTMLAttributes<HTMLAnchorElement> &
 type Props = ButtonProps | LinkProps;
 
 const isLink = (props: Props): props is LinkProps => props.as === "a";
-const isNextLink = (props: LinkProps) => !!props.useNextLink;
 
 const Button = forwardRef<HTMLButtonElement, Props>(function Button(props, ref) {
-	if (isLink(props) && isNextLink(props)) {
-		return <StyledButtonAsNextLink {...props} ref={ref as Ref<HTMLAnchorElement>} />;
-	}
 	if (isLink(props)) {
-		return <StyledButtonAsLink {...props} ref={ref as Ref<HTMLAnchorElement>} />;
+		const LinkComponent = props.useNextLink ? StyledButtonAsNextLink : StyledButtonAsLink;
+		return <LinkComponent {...props} ref={ref as Ref<HTMLAnchorElement>} />;
 	}
 	const { type = "button", ...otherProps } = props;
-	if (props.unstyled) {
-		return <UnstyledButton type={type} {...otherProps} ref={ref} />;
-	}
-	return <StyledButton type={type} {...otherProps} ref={ref} />;
+	const ButtonComponent = props.unstyled ? UnstyledButton : StyledButton;
+	return <ButtonComponent type={type} {...otherProps} ref={ref} />;
 });
 
 export default Button;
