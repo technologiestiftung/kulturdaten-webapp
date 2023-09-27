@@ -1,4 +1,4 @@
-import { colors, fontSizes } from "@/src/common/styleVariables";
+import { colors, fontSizes } from "@common/styleVariables";
 import styled from "@emotion/styled";
 import { ComponentProps, ComponentType, ReactNode } from "react";
 import Input from "../Input";

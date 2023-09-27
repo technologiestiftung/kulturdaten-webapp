@@ -1,4 +1,4 @@
-import { borderRadiuses, colors, fontSizes, spacings } from "@/src/common/styleVariables";
+import { borderRadiuses, colors, fontSizes, spacings } from "@common/styleVariables";
 import styled from "@emotion/styled";
 import { ReactNode } from "react";
 import { IconNext, IconPrevious } from "./Icons";

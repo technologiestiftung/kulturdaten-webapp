@@ -1,7 +1,7 @@
-import ROUTES from "@/src/common/routes";
 import apiClient from "@api/client";
 import { Organization } from "@api/client/models/Organization";
 import { UpdateOrganizationRequest } from "@api/client/models/UpdateOrganizationRequest";
+import ROUTES from "@common/routes";
 import FormWrapper from "@components/FormWrapper";
 import OrganizationEditor from "@components/OrganisationEditor";
 import Page from "@components/Page";

@@ -1,4 +1,4 @@
-import { borderRadiuses, colors, fontSizes, lineHeights, spacings } from "@/src/common/styleVariables";
+import { borderRadiuses, colors, fontSizes, lineHeights, spacings } from "@common/styleVariables";
 import styled, { CSSObject } from "@emotion/styled";
 import { DetailedHTMLProps, TextareaHTMLAttributes } from "react";
 

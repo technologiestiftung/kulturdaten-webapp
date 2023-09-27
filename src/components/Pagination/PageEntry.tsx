@@ -1,4 +1,4 @@
-import { borderRadiuses, colors, spacings } from "@/src/common/styleVariables";
+import { borderRadiuses, colors, spacings } from "@common/styleVariables";
 import styled, { CSSObject } from "@emotion/styled";
 import { getQuery } from "@utils/pagination";
 import { useTranslations } from "next-intl";
