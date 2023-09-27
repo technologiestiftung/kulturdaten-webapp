@@ -2,6 +2,7 @@ import { AdminAttraction } from "@api/client/models/AdminAttraction";
 import ROUTES from "@common/routes";
 import Page from "@components/Page";
 import PageTitle from "@components/PageTitle";
+import { getLocalizedLabel } from "@utils/content";
 import { useRouter } from "next/router";
 import { useCallback } from "react";
 import { useTranslations } from "use-intl";
@@ -15,9 +16,11 @@ interface Props {
 export default function AdminAttractionDetailsPage(props: Props) {
 	const { attraction } = props;
 	const router = useRouter();
-	const isNew = attraction === null;
 	const t = useTranslations("Attraction-Details");
-	const pageTitle = isNew ? t("page-title-add") : t("page-title-edit", { attractionTitle: attraction?.title.de });
+	const isNew = attraction === null;
+	const pageTitle = isNew
+		? t("page-title-add")
+		: t("page-title-edit", { attractionTitle: getLocalizedLabel(attraction?.title) });
 	const handleAfterSubmit = useCallback(() => {
 		router.push(ROUTES.admin.attractions());
 	}, [router]);
