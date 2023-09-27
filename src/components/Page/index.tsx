@@ -1,4 +1,4 @@
-import { colors, spacings, widths } from "@common/styleVariables";
+import { boxShadows, colors, spacings, widths } from "@common/styleVariables";
 import styled from "@emotion/styled";
 import { ReactNode } from "react";
 import Head from "./Head";
@@ -8,7 +8,7 @@ const PageContainer = styled.div({
 	width: `min(100%, ${widths.maxContentWidth})`,
 	margin: "0 auto",
 	position: "relative",
-	boxShadow: `0px 0px 5px 0px rgba(0, 0, 0, 0.15)`,
+	boxShadow: boxShadows.elevation100,
 });
 
 const Main = styled.main<{ showNavigation: boolean }>(({ showNavigation }) => ({

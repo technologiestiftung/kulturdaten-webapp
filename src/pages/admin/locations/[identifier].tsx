@@ -1,9 +1,11 @@
 import apiClient from "@api/client";
 import { Location } from "@api/client/models/Location";
 import { UpdateLocationRequest } from "@api/client/models/UpdateLocationRequest";
+import ROUTES from "@common/routes";
 import FormWrapper from "@components/FormWrapper";
 import LocationEditor from "@components/LocationEditor";
 import Page from "@components/Page";
+import { loadMessages } from "@utils/i18n";
 import withAuth from "@utils/withAuth";
 import { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
@@ -12,7 +14,7 @@ import { useTranslations } from "use-intl";
 
 export const getServerSideProps: GetServerSideProps = async (context) => ({
 	props: {
-		messages: (await import(`../../../i18n/${context.locale}.json`)).default,
+		messages: await loadMessages(context.locale!),
 	},
 });
 
@@ -39,7 +41,7 @@ const LocationDetails = () => {
 	const editLocation = async (locationObject: Location) => {
 		await apiClient.maintainCulturalData.patchLocations(identifier as string, locationObject as UpdateLocationRequest);
 		fetchLocation();
-		router.push(`/locations/${identifier}`);
+		router.push(ROUTES.admin.locationDetails(identifier!));
 	};
 
 	if (location === null) {

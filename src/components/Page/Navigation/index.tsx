@@ -1,3 +1,4 @@
+import ROUTES from "@common/routes";
 import { colors, fontSizes, fontWeights, spacings, widths } from "@common/styleVariables";
 import { IconName } from "@components/Icon";
 import Spacer from "@components/Spacer";
@@ -26,15 +27,16 @@ function getNavigationGroups(isAdmin: boolean): Array<NavigationGroup> {
 	const userNavigationGroup: NavigationGroup = {
 		type: "user",
 		i18nKey: "group-user",
-		links: [
-			{ href: "/", i18nKey: "link-offers", icon: "star" },
-			{ href: "/locations", i18nKey: "link-locations", icon: "map-pin" },
-		],
+		links: [{ href: ROUTES.user.attractions(), i18nKey: "link-user-attractions", icon: "star" }],
 	};
 	const adminNavigationGroup: NavigationGroup = {
 		type: "admin",
 		i18nKey: "group-admin",
-		links: [{ href: "/organizations", i18nKey: "link-organizations", icon: "users" }],
+		links: [
+			{ href: ROUTES.admin.attractions(), i18nKey: "link-admin-attractions", icon: "star" },
+			{ href: ROUTES.admin.locations(), i18nKey: "link-admin-locations", icon: "map-pin" },
+			{ href: ROUTES.admin.organizations(), i18nKey: "link-admin-organizations", icon: "users" },
+		],
 	};
 	return [userNavigationGroup, ...(isAdmin ? [adminNavigationGroup] : [])];
 }
@@ -81,14 +83,14 @@ export default function Navigation() {
 	const navigationGroups = useMemo(() => getNavigationGroups(isAdmin), [isAdmin]);
 	const isLinkActive = useCallback(
 		(href: string) => {
-			const path = router.asPath;
-			const useStrictComparison = path === "/" || href === "/";
+			const route = router.route;
+			const useStrictComparison = route === "/" || href === "/";
 			if (useStrictComparison) {
-				return path === href;
+				return route === href;
 			}
-			return path.startsWith(href);
+			return route.startsWith(href);
 		},
-		[router.asPath],
+		[router.route],
 	);
 	return (
 		<Container>

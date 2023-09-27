@@ -3,6 +3,7 @@ import { CreateOrganizationRequest } from "@api/client/models/CreateOrganization
 import FormWrapper from "@components/FormWrapper";
 import OrganizationEditor from "@components/OrganisationEditor";
 import Page from "@components/Page";
+import { loadMessages } from "@utils/i18n";
 import withAuth from "@utils/withAuth";
 import { GetStaticProps } from "next";
 import { FC, FormEvent, useState } from "react";
@@ -10,7 +11,7 @@ import { useTranslations } from "use-intl";
 
 export const getStaticProps: GetStaticProps = async (context) => ({
 	props: {
-		messages: (await import(`../../../i18n/${context.locale}.json`)).default,
+		messages: await loadMessages(context.locale!),
 	},
 });
 
@@ -23,7 +24,7 @@ const CreateNewOrganization: FC = () => {
 			.postOrganizations(newOrganization)
 			.then((/* res */) => {
 				// TODO: Navigate to created organization.
-				// router.push(`/organizations/${res.identifier}`);
+				// router.push(ROUTES.admin.organizationDetails(res.identifier));
 			})
 			.catch((error) => {
 				errorMessageSet(`Verbindung fehlgeschlagen ${error.status}`);

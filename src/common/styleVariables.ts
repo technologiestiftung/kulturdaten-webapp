@@ -4,7 +4,7 @@ export const fontFamilies = {
 };
 
 export const fontSizes = {
-	small: "0.8rem",
+	small: "0.875rem",
 	default: "16px",
 	medium: "1.2rem",
 	large: "1.6rem",
@@ -30,8 +30,13 @@ export const colors = {
 	blueLight: "#e2e9ff",
 	blueDark: "#1e3791",
 	blueDarkHover: "#152666",
-	grayLight: "#fafafa",
 	white: "#ffffff",
+	grayLight: "#fafafa",
+	neutral200: "#f1f3f9",
+	neutral300: "#e1e6ef",
+	mediumContrast: "#54595c",
+	highContrast: "#323536",
+	error: "#ff4f46",
 };
 
 const getSpacing = (factor: number) => {
@@ -43,6 +48,7 @@ export const spacings = {
 	get: (factor: number) => `${getSpacing(factor)}px`,
 	getNumber: (factor: number) => getSpacing(factor),
 	horizontalPagePadding: `clamp(${getSpacing(2)}px, 5vw, ${getSpacing(11)}px)`,
+	inputPadding: getSpacing(1.5),
 };
 
 export const breakpoints = {
@@ -64,10 +70,15 @@ export const widths = {
 export const borderRadiuses = {
 	small: "2px",
 	medium: "4px",
+	big: "8px",
 	round: "50%",
 };
 
 export const timings = {
 	short: "100ms",
 	medium: "250ms",
+};
+
+export const boxShadows = {
+	elevation100: "0px 2px 8px 0px rgba(0, 0, 0, 0.12)",
 };

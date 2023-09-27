@@ -1,9 +1,11 @@
 import apiClient from "@api/client";
 import { CreateLocationRequest } from "@api/client/models/CreateLocationRequest";
 import { Location } from "@api/client/models/Location";
+import ROUTES from "@common/routes";
 import FormWrapper from "@components/FormWrapper";
 import LocationEditor from "@components/LocationEditor";
 import Page from "@components/Page";
+import { loadMessages } from "@utils/i18n";
 import withAuth from "@utils/withAuth";
 import { GetStaticProps } from "next";
 import { useRouter } from "next/router";
@@ -12,7 +14,7 @@ import { useTranslations } from "use-intl";
 
 export const getStaticProps: GetStaticProps = async (context) => ({
 	props: {
-		messages: (await import(`../../../i18n/${context.locale}.json`)).default,
+		messages: await loadMessages(context.locale!),
 	},
 });
 
@@ -28,7 +30,7 @@ const CreateNewLocation = () => {
 			.postLocations(newLocation as CreateLocationRequest)
 			.then((res) => {
 				const id = res.data!.locationReference!.referenceId!;
-				router.push(`/locations/${id}`);
+				router.push(ROUTES.admin.locationDetails(id));
 			})
 			.catch((error) => {
 				errorMessageSet(`Verbindung fehlgeschlagen: ${error.status}`);

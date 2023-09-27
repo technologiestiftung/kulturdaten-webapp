@@ -1,19 +1,22 @@
-import apiClient from "@api/client";
-import { Attraction } from "@api/client/models/Attraction";
-import AttractionsPage from "@components/AttractionsPage";
+import { createAuthorizedClient } from "@api/client";
+import { AdminAttraction } from "@api/client/models/AdminAttraction";
+import AdminAttractionsPage from "@components/AdminAttractionsPage";
 import { PaginationType } from "@components/Pagination";
+import { getAccessTokenFromContext } from "@utils/auth";
 import { loadMessages } from "@utils/i18n";
 import { getPagination } from "@utils/pagination";
 import withAuth from "@utils/withAuth";
 import { GetServerSideProps } from "next";
 
 interface Props {
-	attractions: Attraction[];
+	attractions: AdminAttraction[];
 }
 
 export const getServerSideProps: GetServerSideProps<Props> = async (context) => {
+	const accessToken = getAccessTokenFromContext(context);
+	const apiClient = createAuthorizedClient(accessToken);
 	const { page, pageSize } = getPagination(context.query);
-	const response = await apiClient.discoverCulturalData.getAttractions(false, page, pageSize);
+	const response = await apiClient.admin.getAdminAttractions(page, pageSize);
 	const data = response.data!;
 	const attractions = data.attractions || [];
 	const pagination: PaginationType = {
@@ -30,4 +33,4 @@ export const getServerSideProps: GetServerSideProps<Props> = async (context) => 
 	};
 };
 
-export default withAuth(AttractionsPage);
+export default withAuth(AdminAttractionsPage);

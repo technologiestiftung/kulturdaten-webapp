@@ -3,7 +3,7 @@ import { Organization } from "@api/client/models/Organization";
 import { validatePostalCode } from "@utils/validation";
 import _ from "lodash";
 import { FC, FormEvent, useEffect, useState } from "react";
-import { Button } from "../../components/Button";
+import Button from "../../components/Button";
 import { Input } from "../../components/InputField";
 
 interface ErrorMessages {
@@ -108,7 +108,7 @@ const OrganizationEditor: FC<OrganizationEditorProps> = ({ organization, submitH
 				placeholder={"Hier bitte den Ort eingeben … "}
 				onChange={onChange}
 			/>
-			<Button type="submit" label={submitLabel} />
+			<Button type="submit">{submitLabel}</Button>
 			{errorMessages.general && <span aria-live="assertive">{errorMessages.general}</span>}
 		</form>
 	);

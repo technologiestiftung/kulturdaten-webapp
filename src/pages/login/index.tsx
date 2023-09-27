@@ -1,9 +1,10 @@
 import { ApiError } from "@api/client/core/ApiError";
-import { Button } from "@components/Button";
+import Button from "@components/Button";
 import FormWrapper from "@components/FormWrapper";
 import { Input } from "@components/InputField";
 import Page from "@components/Page";
 import useUser from "@hooks/useUser";
+import { loadMessages } from "@utils/i18n";
 import { validateEmail } from "@utils/validation";
 import { GetStaticProps } from "next";
 import React, { FC, useState } from "react";
@@ -11,7 +12,7 @@ import { useTranslations } from "use-intl";
 
 export const getStaticProps: GetStaticProps = async (context) => ({
 	props: {
-		messages: (await import(`../../../i18n/${context.locale}.json`)).default,
+		messages: await loadMessages(context.locale!),
 	},
 });
 
@@ -89,7 +90,7 @@ const LoginPage: FC = () => {
 						placeholder={"Hier bitte Passwort eingeben … "}
 						onChange={(value) => onPasswordChange(value)}
 					/>
-					<Button type="submit" label="Login" />
+					<Button type="submit">Login</Button>
 				</form>
 				{errorMessages.general && <p aria-live="assertive">{errorMessages.general}</p>}
 			</FormWrapper>

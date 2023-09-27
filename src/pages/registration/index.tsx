@@ -1,10 +1,11 @@
 import apiClient from "@api/client";
 import { ApiError } from "@api/client/core/ApiError";
 import { CreateUserRequest } from "@api/client/models/CreateUserRequest";
-import { Button } from "@components/Button";
+import Button from "@components/Button";
 import FormWrapper from "@components/FormWrapper";
 import { Input } from "@components/InputField";
 import Page from "@components/Page";
+import { loadMessages } from "@utils/i18n";
 import { validateEmail, validatePassword, validateRepeatPassword } from "@utils/validation";
 import { GetStaticProps } from "next";
 import { useRouter } from "next/router";
@@ -13,7 +14,7 @@ import { useTranslations } from "use-intl";
 
 export const getStaticProps: GetStaticProps = async (context) => ({
 	props: {
-		messages: (await import(`../../../i18n/${context.locale}.json`)).default,
+		messages: await loadMessages(context.locale!),
 	},
 });
 
@@ -176,7 +177,7 @@ const Registration: FC = () => {
 						setPristine={repeatPasswordPristineSet}
 						errorMessage={repeatPasswordPristine ? undefined : errorMessages.repeatPassword}
 					/>
-					<Button label="Registrieren" type="submit" />
+					<Button type="submit">Registrieren</Button>
 				</form>
 				{errorMessages.general && <span aria-live="assertive">{errorMessages.general}</span>}
 			</FormWrapper>
