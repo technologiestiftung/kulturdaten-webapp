@@ -33,7 +33,7 @@
 	},
 	"Attraction-Details": {
 		"page-title-add": "Neues Angebot erstellen",
-		"page-title-edit": "\"{attractionTitle}\" bearbeiten",
+		"page-title-edit": "{attractionTitle} bearbeiten",
 		"save-button-add": "Angebot erstellen",
 		"save-button-edit": "Angebot speichern",
 		"label-title": "Titel",
