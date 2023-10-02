@@ -26,7 +26,7 @@ const CreateNewLocation = () => {
 
 	const createLocationHandler = (e: FormEvent<HTMLFormElement>, newLocation: Location) => {
 		e.preventDefault();
-		apiClient.maintainCulturalData
+		apiClient.manageCulturalData
 			.postLocations(newLocation as CreateLocationRequest)
 			.then((res) => {
 				const id = res.data!.locationReference!.referenceId!;

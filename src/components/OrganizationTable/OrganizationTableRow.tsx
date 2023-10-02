@@ -9,7 +9,7 @@ interface OrganizationTableRowProps {
 const OrganizationTableRow: FC<OrganizationTableRowProps> = ({ organization }: OrganizationTableRowProps) => {
 	const deleteOrganization = (/* identifier: string */) => {
 		// TODO: Deleting organizations is not yet implemented on API side.
-		// apiClient.maintainCulturalData
+		// apiClient.manageCulturalData
 		// 	.deleteOrganizations(identifier)
 		// 	.then(() => {
 		// 		console.log('Organization deleted successfully');

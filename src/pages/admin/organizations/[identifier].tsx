@@ -39,7 +39,7 @@ const OrganizationDetails = () => {
 	}, [identifier, fetchOrganization]);
 
 	const editOrganization = (organizationObject: Organization) => {
-		apiClient.maintainCulturalData
+		apiClient.manageCulturalData
 			.patchOrganizations(identifier!, organizationObject as UpdateOrganizationRequest)
 			.then(() => {
 				fetchOrganization();
