@@ -94,7 +94,7 @@ export default function AttractionEditor(props: Props) {
 					}));
 				}}
 				rows={4}
-				required={true}
+				required={false}
 			/>
 			<Spacer size={15} />
 			<FormField
