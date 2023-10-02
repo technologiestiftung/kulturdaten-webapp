@@ -18,7 +18,6 @@ export function getInitialRequest(
 	return {
 		type: "type.Attraction",
 		title: createLanguagesObject(languages, attraction?.title),
-		displayName: createLanguagesObject(languages, attraction?.displayName),
 		description: createLanguagesObject(languages, attraction?.description),
 		pleaseNote: createLanguagesObject(languages, attraction?.pleaseNote),
 		website: attraction?.website ?? "",
