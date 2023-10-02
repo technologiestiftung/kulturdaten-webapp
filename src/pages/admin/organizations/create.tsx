@@ -20,7 +20,7 @@ const CreateNewOrganization: FC = () => {
 	const [errorMessage, errorMessageSet] = useState<string | undefined>(undefined);
 	const createOrganizationHandler = (e: FormEvent<HTMLFormElement>, newOrganization: CreateOrganizationRequest) => {
 		e.preventDefault();
-		apiClient.maintainCulturalData
+		apiClient.manageCulturalData
 			.postOrganizations(newOrganization)
 			.then((/* res */) => {
 				// TODO: Navigate to created organization.

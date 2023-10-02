@@ -13,7 +13,7 @@ interface Props {
 
 export const getServerSideProps: GetServerSideProps<Props> = async (context) => {
 	const { page, pageSize } = getPagination(context.query);
-	const response = await apiClient.discoverCulturalData.getAttractions(false, page, pageSize);
+	const response = await apiClient.discoverCulturalData.getAttractions(page, pageSize, false);
 	const data = response.data!;
 	const attractions = data.attractions || [];
 	const pagination: PaginationType = {

@@ -9,7 +9,7 @@ interface LocationTableRowProps {
 const LocationTableRow: FC<LocationTableRowProps> = ({ location }: LocationTableRowProps) => {
 	const deleteLocation = (/* identifier: string */) => {
 		// TODO: Deleting locations is not yet implemented on API side.
-		// apiClient.maintainCulturalData
+		// apiClient.manageCulturalData
 		// 	.deleteLocations(identifier)
 		// 	.then(() => {
 		// 		console.log('Location deleted successfully');

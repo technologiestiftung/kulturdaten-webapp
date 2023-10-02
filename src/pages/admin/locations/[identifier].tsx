@@ -39,7 +39,7 @@ const LocationDetails = () => {
 	}, [identifier, fetchLocation]);
 
 	const editLocation = async (locationObject: Location) => {
-		await apiClient.maintainCulturalData.patchLocations(identifier as string, locationObject as UpdateLocationRequest);
+		await apiClient.manageCulturalData.patchLocations(identifier as string, locationObject as UpdateLocationRequest);
 		fetchLocation();
 		router.push(ROUTES.admin.locationDetails(identifier!));
 	};
