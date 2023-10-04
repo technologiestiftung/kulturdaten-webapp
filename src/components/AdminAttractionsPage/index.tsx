@@ -11,6 +11,7 @@ import PageTitleHeader from "../PageTitleHeader";
 import Pagination, { PaginationType } from "../Pagination";
 import Spacer from "../Spacer";
 import Actions from "./Actions";
+import Date from "./Date";
 
 interface Props {
 	attractions: AdminAttraction[];
@@ -48,6 +49,16 @@ export default function AdminAttractionsPage(props: Props) {
 					{
 						header: t("table-header-status"),
 						getContent: (attraction) => attraction.status || "–",
+						canBeSorted: false,
+					},
+					{
+						header: t("table-header-created"),
+						getContent: (attraction) => <Date date={attraction.metadata.created} />,
+						canBeSorted: false,
+					},
+					{
+						header: t("table-header-updated"),
+						getContent: (attraction) => <Date date={attraction.metadata.updated} />,
 						canBeSorted: false,
 					},
 					{
