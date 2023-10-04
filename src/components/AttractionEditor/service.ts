@@ -16,7 +16,6 @@ export function getInitialRequest(
 	languages: Array<string>,
 ): CreateAttractionRequest {
 	return {
-		type: "type.Attraction",
 		title: createLanguagesObject(languages, attraction?.title),
 		description: createLanguagesObject(languages, attraction?.description),
 		pleaseNote: createLanguagesObject(languages, attraction?.pleaseNote),
