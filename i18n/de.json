@@ -31,7 +31,10 @@
 		"table-header-updated": "Bearbeitet",
 		"table-option-edit": "Bearbeiten",
 		"table-option-delete": "Löschen",
-		"number-attractions": "{count, plural, =1 {# Angebot} other {# Angebote}}"
+		"number-attractions": "{count, plural, =1 {# Angebot} other {# Angebote}}",
+		"status-published": "Öffentlich",
+		"status-unpublished": "Entwurf",
+		"status-archived": "Archiviert"
 	},
 	"Attraction-Details": {
 		"page-title-add": "Neues Angebot erstellen",

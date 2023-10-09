@@ -2,6 +2,7 @@ import { Attraction } from "@api/client/models/Attraction";
 import Page from "@components/Page";
 import { getLocalizedLabel } from "@utils/content";
 import { useTranslations } from "use-intl";
+import AttractionStatus from "../AttractionStatus";
 import ContentTable from "../ContentTable";
 import PageTitle from "../PageTitle";
 import Pagination, { PaginationType } from "../Pagination";
@@ -29,7 +30,7 @@ export default function AttractionsPage(props: Props) {
 					},
 					{
 						header: t("table-header-status"),
-						getContent: (attraction) => attraction.status || "–",
+						getContent: (attraction) => <AttractionStatus status={attraction.status} />,
 						canBeSorted: false,
 					},
 				]}
