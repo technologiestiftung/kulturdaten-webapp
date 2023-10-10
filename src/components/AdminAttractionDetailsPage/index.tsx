@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 import { useCallback } from "react";
 import { useTranslations } from "use-intl";
 import AttractionEditor from "../AttractionEditor";
+import AttractionStatus from "../AttractionStatus";
 import Spacer from "../Spacer";
 
 interface Props {
@@ -27,6 +28,7 @@ export default function AdminAttractionDetailsPage(props: Props) {
 	return (
 		<Page metadata={{ title: pageTitle }}>
 			<PageTitle>{pageTitle}</PageTitle>
+			{attraction && <AttractionStatus status={attraction.status} />}
 			<Spacer size={20} />
 			<AttractionEditor attraction={attraction} onAfterSubmit={handleAfterSubmit} />
 		</Page>

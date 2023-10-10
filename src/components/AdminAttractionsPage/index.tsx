@@ -5,6 +5,7 @@ import Page from "@components/Page";
 import { getLocalizedLabel } from "@utils/content";
 import { useRouter } from "next/router";
 import { useTranslations } from "use-intl";
+import AttractionStatus from "../AttractionStatus";
 import Button from "../Button";
 import ContentTable from "../ContentTable";
 import PageTitleHeader from "../PageTitleHeader";
@@ -48,7 +49,7 @@ export default function AdminAttractionsPage(props: Props) {
 					},
 					{
 						header: t("table-header-status"),
-						getContent: (attraction) => attraction.status || "–",
+						getContent: (attraction) => <AttractionStatus status={attraction.status} />,
 						canBeSorted: false,
 					},
 					{
