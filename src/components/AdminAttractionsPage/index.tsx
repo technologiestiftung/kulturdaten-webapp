@@ -49,7 +49,7 @@ export default function AdminAttractionsPage(props: Props) {
 					},
 					{
 						header: t("table-header-status"),
-						getContent: (attraction) => <AttractionStatus status={attraction.status!} />,
+						getContent: (attraction) => <AttractionStatus status={attraction.status} />,
 						canBeSorted: false,
 					},
 					{

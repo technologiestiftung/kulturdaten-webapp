@@ -28,7 +28,7 @@ export default function AdminAttractionDetailsPage(props: Props) {
 	return (
 		<Page metadata={{ title: pageTitle }}>
 			<PageTitle>{pageTitle}</PageTitle>
-			{attraction && <AttractionStatus status={attraction.status!} />}
+			{attraction && <AttractionStatus status={attraction.status} />}
 			<Spacer size={20} />
 			<AttractionEditor attraction={attraction} onAfterSubmit={handleAfterSubmit} />
 		</Page>
