@@ -1,6 +1,5 @@
-import { createAuthorizedClient } from "@api/client";
 import { AdminAttraction } from "@api/client/models/AdminAttraction";
-import { getAccessToken } from "@utils/auth";
+import useApiClient from "@hooks/useApiClient";
 import { useTranslations } from "next-intl";
 import { FormEventHandler, useCallback, useState } from "react";
 import Button from "../Button";
@@ -24,15 +23,10 @@ export default function AttractionEditor(props: Props) {
 	const languages = ["de"];
 	const currentLanguage = languages[0];
 	const [attractionRequest, setAttractionRequest] = useState(getInitialRequest(attraction, languages));
+	const apiClient = useApiClient();
 	const handleSubmit = useCallback<FormEventHandler>(
 		async (event) => {
 			event.preventDefault();
-			const accessToken = getAccessToken();
-			if (!accessToken) {
-				// TODO: Show error message in UI.
-				throw new Error("No access token found");
-			}
-			const apiClient = createAuthorizedClient(accessToken);
 			if (isNew) {
 				await apiClient.manageCulturalData.postAttractions(attractionRequest);
 			} else {
@@ -40,7 +34,7 @@ export default function AttractionEditor(props: Props) {
 			}
 			onAfterSubmit();
 		},
-		[attraction?.identifier, attractionRequest, isNew, onAfterSubmit],
+		[apiClient, attraction?.identifier, attractionRequest, isNew, onAfterSubmit],
 	);
 	return (
 		<form onSubmit={handleSubmit}>
