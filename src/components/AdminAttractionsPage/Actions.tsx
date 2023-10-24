@@ -9,9 +9,10 @@ import PopoverMenu, { MenuOption } from "../PopoverMenu";
 
 interface Props {
 	attraction: AdminAttraction;
+	onUpdated(): void;
 }
 
-export default function Actions({ attraction }: Props) {
+export default function Actions({ attraction, onUpdated }: Props) {
 	const router = useRouter();
 	const apiClient = useApiClient();
 	const t = useTranslations("Attractions");
@@ -26,6 +27,7 @@ export default function Actions({ attraction }: Props) {
 				label: t("table-option-archive"),
 				onClick: async () => {
 					await apiClient.manageCulturalData.postAttractionsArchive(attraction.identifier);
+					onUpdated();
 					// TODO: Show success message.
 				},
 			},
@@ -33,6 +35,7 @@ export default function Actions({ attraction }: Props) {
 				label: t("table-option-unarchive"),
 				onClick: async () => {
 					await apiClient.manageCulturalData.postAttractionsUnarchive(attraction.identifier);
+					onUpdated();
 					// TODO: Show success message.
 				},
 			},
@@ -40,6 +43,7 @@ export default function Actions({ attraction }: Props) {
 				label: t("table-option-publish"),
 				onClick: async () => {
 					await apiClient.manageCulturalData.postAttractionsPublish(attraction.identifier);
+					onUpdated();
 					// TODO: Show success message.
 				},
 			},
@@ -47,10 +51,11 @@ export default function Actions({ attraction }: Props) {
 				label: t("table-option-unpublish"),
 				onClick: async () => {
 					await apiClient.manageCulturalData.postAttractionsUnpublish(attraction.identifier);
+					onUpdated();
 					// TODO: Show success message.
 				},
 			},
 		].filter(Boolean) as MenuOption[];
-	}, [apiClient, attraction.identifier, attraction.status, router, t]);
+	}, [apiClient, attraction.identifier, attraction.status, onUpdated, router, t]);
 	return <PopoverMenu options={options} />;
 }
