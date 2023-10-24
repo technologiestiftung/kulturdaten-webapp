@@ -1,12 +1,13 @@
 import { AdminAttraction } from "@api/client/models/AdminAttraction";
 import useApiClient from "@hooks/useApiClient";
 import { useTranslations } from "next-intl";
+import { useRouter } from "next/router";
 import { FormEventHandler, useCallback, useState } from "react";
-import Button from "../Button";
 import FormField from "../FormField";
 import Input from "../Input";
 import Spacer from "../Spacer";
 import Textarea from "../Textarea";
+import Buttons from "./Buttons";
 import { getInitialRequest } from "./service";
 
 interface Props {
@@ -16,6 +17,7 @@ interface Props {
 
 export default function AttractionEditor(props: Props) {
 	const { attraction, onAfterSubmit } = props;
+	const router = useRouter();
 	const isNew = attraction === null;
 	const t = useTranslations("Attraction-Details");
 	const submitLabel = t(isNew ? "save-button-add" : "save-button-edit");
@@ -24,6 +26,10 @@ export default function AttractionEditor(props: Props) {
 	const currentLanguage = languages[0];
 	const [attractionRequest, setAttractionRequest] = useState(getInitialRequest(attraction, languages));
 	const apiClient = useApiClient();
+	const handleUpdatedStatus = useCallback(() => {
+		router.replace(router.asPath, undefined, { scroll: false });
+		// TODO: Show success message.
+	}, [router]);
 	const handleSubmit = useCallback<FormEventHandler>(
 		async (event) => {
 			event.preventDefault();
@@ -107,7 +113,7 @@ export default function AttractionEditor(props: Props) {
 				required={false}
 			/>
 			<Spacer size={20} />
-			<Button type="submit">{submitLabel}</Button>
+			<Buttons attraction={attraction} onUpdated={handleUpdatedStatus} submitLabel={submitLabel} />
 		</form>
 	);
 }
