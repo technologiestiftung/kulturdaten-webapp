@@ -31,7 +31,7 @@ const OptionButton = styled(Button)(() => ({
 	},
 }));
 
-interface MenuOption {
+export interface MenuOption {
 	label: ReactNode;
 	onClick: ReactEventHandler<HTMLButtonElement>;
 }
