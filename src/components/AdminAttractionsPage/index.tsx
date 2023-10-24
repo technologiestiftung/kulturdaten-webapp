@@ -26,6 +26,7 @@ export default function AdminAttractionsPage(props: Props) {
 	const t = useTranslations("Attractions");
 	const handleUpdated = useCallback(() => {
 		router.replace(router.route, undefined, { scroll: false });
+		// TODO: Show success message.
 	}, [router]);
 	return (
 		<Page metadata={{ title: t("page-title") }}>

@@ -23,28 +23,11 @@ export default function Actions({ attraction, onUpdated }: Props) {
 				label: t("table-option-edit"),
 				onClick: () => router.push(ROUTES.admin.attractionDetails(attraction.identifier)),
 			},
-			allowedStatusUpdates.archive && {
-				label: t("table-option-archive"),
-				onClick: async () => {
-					await apiClient.manageCulturalData.postAttractionsArchive(attraction.identifier);
-					onUpdated();
-					// TODO: Show success message.
-				},
-			},
-			allowedStatusUpdates.unarchive && {
-				label: t("table-option-unarchive"),
-				onClick: async () => {
-					await apiClient.manageCulturalData.postAttractionsUnarchive(attraction.identifier);
-					onUpdated();
-					// TODO: Show success message.
-				},
-			},
 			allowedStatusUpdates.publish && {
 				label: t("table-option-publish"),
 				onClick: async () => {
 					await apiClient.manageCulturalData.postAttractionsPublish(attraction.identifier);
 					onUpdated();
-					// TODO: Show success message.
 				},
 			},
 			allowedStatusUpdates.unpublish && {
@@ -52,7 +35,20 @@ export default function Actions({ attraction, onUpdated }: Props) {
 				onClick: async () => {
 					await apiClient.manageCulturalData.postAttractionsUnpublish(attraction.identifier);
 					onUpdated();
-					// TODO: Show success message.
+				},
+			},
+			allowedStatusUpdates.archive && {
+				label: t("table-option-archive"),
+				onClick: async () => {
+					await apiClient.manageCulturalData.postAttractionsArchive(attraction.identifier);
+					onUpdated();
+				},
+			},
+			allowedStatusUpdates.unarchive && {
+				label: t("table-option-unarchive"),
+				onClick: async () => {
+					await apiClient.manageCulturalData.postAttractionsUnarchive(attraction.identifier);
+					onUpdated();
 				},
 			},
 		].filter(Boolean) as MenuOption[];
