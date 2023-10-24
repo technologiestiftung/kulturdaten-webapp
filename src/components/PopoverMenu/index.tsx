@@ -1,6 +1,6 @@
 import { borderRadiuses, colors, spacings } from "@common/styleVariables";
 import styled from "@emotion/styled";
-import { MouseEvent, ReactEventHandler, ReactNode } from "react";
+import { MouseEvent, ReactEventHandler, ReactNode, useState } from "react";
 import Button from "../Button";
 import Icon from "../Icon";
 import Popover from "../Popover";
@@ -41,12 +41,16 @@ interface Props {
 }
 
 export default function PopoverMenu({ options }: Props) {
+	const [isOpen, setIsOpen] = useState(false);
 	const handleItemClick = (event: MouseEvent<HTMLButtonElement>, option: MenuOption) => {
 		event.stopPropagation();
 		option.onClick(event);
+		setIsOpen(false);
 	};
 	return (
 		<Popover
+			isOpen={isOpen}
+			onOpenChange={setIsOpen}
 			triggerProps={{
 				color: "neutral",
 				style: {
@@ -57,6 +61,7 @@ export default function PopoverMenu({ options }: Props) {
 						<Icon name="chevron-down" size={iconSize} />
 					</TriggerIcon>
 				),
+				onClick: (event: MouseEvent) => event.stopPropagation(),
 			}}
 		>
 			<Options>
