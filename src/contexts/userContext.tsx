@@ -4,12 +4,15 @@ import { clearAccessToken, getAccessToken, storeAccessToken } from "@utils/auth"
 import { FC, ReactNode, createContext, useEffect, useMemo, useState } from "react";
 
 type LoginData = Required<LoginResponse>["data"];
+// TODO: Use proper union type from OpenAPI definition, once it exists.
+export type Role = "admin" | "author" | "editor" | "member" | string;
 
 const STORAGE_KEY = "login-response";
 
 type UserContextType = {
 	loginData: LoginData | null;
 	activeOrganization: Organization | null;
+	activeRole: Role | null;
 	storeLoginResponse: (loginResponse: LoginResponse) => void;
 	selectOrganization: (organization: Organization | null) => void;
 	clearLoginData: () => void;
@@ -18,6 +21,7 @@ type UserContextType = {
 export const UserContext = createContext<UserContextType>({
 	loginData: null,
 	activeOrganization: null,
+	activeRole: null,
 	storeLoginResponse: () => {},
 	selectOrganization: () => {},
 	clearLoginData: () => {},
@@ -30,33 +34,35 @@ type UserContextProviderProps = {
 export const UserContextProvider: FC<UserContextProviderProps> = ({ children }: UserContextProviderProps) => {
 	const [loginData, setLoginData] = useState<LoginData | null>(null);
 	const [activeOrganization, setActiveOrganization] = useState<Organization | null>(null);
+	const [activeRole, setActiveRole] = useState<Role | null>(null);
 
-	const initializeOrganizations = (loginData: LoginData | null) => {
-		const initialOrganization = loginData?.organizations?.[0] || null;
-		setActiveOrganization(initialOrganization);
-		if (initialOrganization) {
-			const matchingToken = loginData!.accessTokens.find(
-				(token) => token.organizationID === initialOrganization.identifier,
-			);
-			storeAccessToken(matchingToken!.token);
-		}
-	};
-
-	const restoreOrganizations = (loginData: LoginData) => {
-		const existingAccessToken = getAccessToken();
-		if (existingAccessToken) {
-			const matchingAccessToken = loginData.accessTokens.find(
-				(accessToken) => accessToken.token === existingAccessToken,
-			);
-			const organizationID = matchingAccessToken!.organizationID;
-			const selectedOrganization = loginData.organizations!.find(
-				(organization) => organization.identifier === organizationID,
-			)!;
-			setActiveOrganization(selectedOrganization);
-		}
+	const reloadFromToken = (existingAccessToken: string, loginData: LoginData) => {
+		const matchingAccessToken = loginData.accessTokens.find(
+			(accessToken) => accessToken.token === existingAccessToken,
+		)!;
+		const organizationID = matchingAccessToken.organizationID;
+		const selectedOrganization = loginData.organizations!.find(
+			(organization) => organization.identifier === organizationID,
+		)!;
+		setActiveOrganization(selectedOrganization);
+		setActiveRole(matchingAccessToken.role!);
 	};
 
 	const value = useMemo<UserContextType>(() => {
+		const initializeOrganizations = (loginData: LoginData | null) => {
+			const initialOrganization = loginData?.organizations?.[0] || null;
+			setActiveOrganization(initialOrganization);
+			if (initialOrganization) {
+				const matchingToken = loginData!.accessTokens.find(
+					(token) => token.organizationID === initialOrganization.identifier,
+				);
+				storeAccessToken(matchingToken!.token);
+				setActiveRole(matchingToken!.role!);
+			} else {
+				setActiveRole(null);
+			}
+		};
+
 		const storeLoginResponse = (loginResponse: LoginResponse) => {
 			const loginData = loginResponse.data!;
 			localStorage.setItem(STORAGE_KEY, JSON.stringify(loginData));
@@ -68,33 +74,40 @@ export const UserContextProvider: FC<UserContextProviderProps> = ({ children }: 
 			localStorage.removeItem(STORAGE_KEY);
 			setLoginData(null);
 			setActiveOrganization(null);
+			clearAccessToken();
 		};
 
 		const selectOrganization = (organization: Organization | null) => {
 			setActiveOrganization(organization);
 			if (organization) {
-				const matchingToken = loginData!.accessTokens.find((token) => token.organizationID === organization.identifier);
-				storeAccessToken(matchingToken!.token);
+				const matchingToken = loginData!.accessTokens.find(
+					(token) => token.organizationID === organization.identifier,
+				)!;
+				storeAccessToken(matchingToken.token);
+				setActiveRole(matchingToken.role!);
 			} else {
 				clearAccessToken();
+				setActiveRole(null);
 			}
 		};
 
 		return {
 			loginData,
 			activeOrganization,
+			activeRole,
 			selectOrganization,
 			storeLoginResponse,
 			clearLoginData,
 		};
-	}, [activeOrganization, loginData]);
+	}, [loginData, activeOrganization, activeRole]);
 
 	useEffect(() => {
 		const loginDataString = localStorage.getItem(STORAGE_KEY);
 		const loginData = loginDataString ? (JSON.parse(loginDataString) as LoginData) : null;
 		setLoginData(loginData);
-		if (loginData) {
-			restoreOrganizations(loginData);
+		const existingAccessToken = getAccessToken();
+		if (existingAccessToken && loginData) {
+			reloadFromToken(existingAccessToken, loginData);
 		}
 	}, []);
 

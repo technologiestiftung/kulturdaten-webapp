@@ -8,6 +8,7 @@ import { useRouter } from "next/router";
 import { useCallback, useMemo } from "react";
 import { useTranslations } from "use-intl";
 import NavigationLink, { NavigationButton } from "./NavigationLink";
+import OrganizationSelect from "./OrganizationSelect";
 
 type NavigationGroupType = "user" | "admin";
 
@@ -77,9 +78,9 @@ const GroupItem = styled.li({});
 
 export default function Navigation() {
 	const t = useTranslations("Navigation");
-	const { logOut } = useUser();
+	const { organizations, activeOrganization, activeRole, selectOrganization, logOut } = useUser();
 	const router = useRouter();
-	const isAdmin = true;
+	const isAdmin = activeRole === "admin";
 	const navigationGroups = useMemo(() => getNavigationGroups(isAdmin), [isAdmin]);
 	const isLinkActive = useCallback(
 		(href: string) => {
@@ -96,6 +97,12 @@ export default function Navigation() {
 		<Container>
 			<div>
 				<PageTitle>{t("title")}</PageTitle>
+				<Spacer size={20} />
+				<OrganizationSelect
+					organizations={organizations}
+					activeOrganization={activeOrganization}
+					onSelectOrganization={selectOrganization}
+				/>
 				<Spacer size={20} />
 				{navigationGroups.map((group, index) => (
 					<Group key={index}>

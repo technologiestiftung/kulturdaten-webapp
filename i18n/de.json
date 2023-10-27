@@ -10,7 +10,8 @@
 		"link-admin-attractions": "Angebote",
 		"link-admin-locations": "Orte",
 		"link-admin-organizations": "Anbieter:innen",
-		"link-logout": "Ausloggen"
+		"link-logout": "Ausloggen",
+		"active-organization": "Aktive:r Anbieter:in"
 	},
 	"Pagination": {
 		"go-to-page": "Zu Seite {pageNumber} springen"
