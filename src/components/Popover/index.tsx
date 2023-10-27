@@ -18,6 +18,7 @@ const TriggerButton = styled(Button)({});
 
 const PopoverContainer = styled.div({
 	backgroundColor: colors.white,
+	zIndex: 1,
 });
 
 interface Props {
