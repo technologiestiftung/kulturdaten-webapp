@@ -25,7 +25,7 @@ export default function AdminAttractionsPage(props: Props) {
 	const { attractions, pagination } = props;
 	const t = useTranslations("Attractions");
 	const handleUpdated = useCallback(() => {
-		router.replace(router.route, undefined, { scroll: false });
+		router.replace(router.asPath, undefined, { scroll: false });
 		// TODO: Show success message.
 	}, [router]);
 	return (
