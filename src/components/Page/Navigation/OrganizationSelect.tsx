@@ -25,7 +25,9 @@ export default function OrganizationSelect({ organizations, activeOrganization, 
 			onChange={(option) => onSelectOrganization(option?.organization || null)}
 			isClearable={false}
 			isSearchable={false}
-			aria-label={t("active-organization")}
+			aria-label={t("organization-select-label")}
+			placeholder={t("organization-select-placeholder")}
+			noOptionsMessage={() => t("organization-select-no-options")}
 		/>
 	);
 }

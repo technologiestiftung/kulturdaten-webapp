@@ -39,6 +39,10 @@ export default function Select<
 					fontSize: fontSizes.small,
 					cursor: "pointer",
 				}),
+				noOptionsMessage: (baseStyles) => ({
+					...baseStyles,
+					fontSize: fontSizes.small,
+				}),
 			}}
 		/>
 	);

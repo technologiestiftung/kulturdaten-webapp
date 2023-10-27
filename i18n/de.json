@@ -11,7 +11,9 @@
 		"link-admin-locations": "Orte",
 		"link-admin-organizations": "Anbieter:innen",
 		"link-logout": "Ausloggen",
-		"active-organization": "Aktive:r Anbieter:in"
+		"organization-select-label": "Aktive:r Anbieter:in",
+		"organization-select-placeholder": "Anbieter:in auswählen…",
+		"organization-select-no-options": "Kein:e Anbieter:in verfügbar"
 	},
 	"Pagination": {
 		"go-to-page": "Zu Seite {pageNumber} springen"
