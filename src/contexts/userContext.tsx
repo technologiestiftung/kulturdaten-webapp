@@ -59,6 +59,8 @@ export const UserContextProvider: FC<UserContextProviderProps> = ({ children }: 
 				storeAccessToken(matchingToken!.token);
 				setActiveRole(matchingToken!.role!);
 			} else {
+				const accessToken = loginData!.accessTokens[0].token;
+				storeAccessToken(accessToken);
 				setActiveRole(null);
 			}
 		};
