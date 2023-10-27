@@ -4,6 +4,7 @@ import { spacings } from "@common/styleVariables";
 import Page from "@components/Page";
 import { getLocalizedLabel } from "@utils/content";
 import { useRouter } from "next/router";
+import { useCallback } from "react";
 import { useTranslations } from "use-intl";
 import AttractionStatus from "../AttractionStatus";
 import Button from "../Button";
@@ -23,6 +24,10 @@ export default function AdminAttractionsPage(props: Props) {
 	const router = useRouter();
 	const { attractions, pagination } = props;
 	const t = useTranslations("Attractions");
+	const handleUpdated = useCallback(() => {
+		router.replace(router.asPath, undefined, { scroll: false });
+		// TODO: Show success message.
+	}, [router]);
 	return (
 		<Page metadata={{ title: t("page-title") }}>
 			<PageTitleHeader
@@ -64,7 +69,7 @@ export default function AdminAttractionsPage(props: Props) {
 					},
 					{
 						header: "",
-						getContent: (attraction) => <Actions attraction={attraction} />,
+						getContent: (attraction) => <Actions attraction={attraction} onUpdated={handleUpdated} />,
 						canBeSorted: false,
 						headerStyle: { padding: `0 ${spacings.get(1)} 0 0` },
 						cellStyle: { padding: `0 ${spacings.get(1)} 0 0` },

@@ -1,0 +1,28 @@
+import { AdminAttraction } from "@api/client/models/AdminAttraction";
+import { spacings } from "@common/styleVariables";
+import styled from "@emotion/styled";
+import { ReactNode } from "react";
+import Button from "../../Button";
+import StatusButtons from "./StatusButtons";
+
+const Container = styled.div({
+	display: "flex",
+	justifyContent: "space-between",
+	flexWrap: "wrap",
+	gap: spacings.get(2),
+});
+
+interface Props {
+	attraction: AdminAttraction | null;
+	onUpdated(): void;
+	submitLabel: ReactNode;
+}
+
+export default function Buttons({ attraction, onUpdated, submitLabel }: Props) {
+	return (
+		<Container>
+			<Button type="submit">{submitLabel}</Button>
+			<div>{attraction !== null && <StatusButtons attraction={attraction} onUpdated={onUpdated} />}</div>
+		</Container>
+	);
+}

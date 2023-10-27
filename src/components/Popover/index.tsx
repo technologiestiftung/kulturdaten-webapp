@@ -11,26 +11,28 @@ import {
 	useInteractions,
 	useRole,
 } from "@floating-ui/react";
-import { ComponentPropsWithoutRef, ReactNode, useState } from "react";
+import { ComponentPropsWithoutRef, ReactNode } from "react";
 import Button from "../Button";
 
 const TriggerButton = styled(Button)({});
 
 const PopoverContainer = styled.div({
 	backgroundColor: colors.white,
+	zIndex: 1,
 });
 
 interface Props {
+	isOpen: boolean;
+	onOpenChange: (isOpen: boolean, event?: Event) => void;
 	triggerProps?: ComponentPropsWithoutRef<typeof Button>;
 	children: ReactNode;
 }
 
-export default function Popover({ triggerProps, children }: Props) {
-	const [isOpen, setIsOpen] = useState(false);
+export default function Popover({ isOpen, onOpenChange, triggerProps, children }: Props) {
 	const { refs, floatingStyles, context } = useFloating<HTMLButtonElement>({
 		open: isOpen,
 		placement: "bottom-start",
-		onOpenChange: setIsOpen,
+		onOpenChange,
 		middleware: [flip(), shift()],
 		whileElementsMounted: autoUpdate,
 	});
@@ -41,13 +43,10 @@ export default function Popover({ triggerProps, children }: Props) {
 	return (
 		<>
 			<TriggerButton
-				as="button"
-				{...triggerProps}
 				ref={refs.setReference}
 				{...getReferenceProps({
-					onClick(event) {
-						event.stopPropagation();
-					},
+					as: "button",
+					...triggerProps,
 				})}
 			/>
 			{isOpen && (
