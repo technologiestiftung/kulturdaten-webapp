@@ -2758,6 +2758,12 @@ components:
                 type: string
               role:
                 type: string
+                enum:
+                  - admin
+                  - editor
+                  - author
+                  - member
+                  - unassigned
       required:
         - type
         - identifier
@@ -7255,10 +7261,28 @@ components:
                 properties:
                   token:
                     type: string
-                  organizationID:
-                    type: string
-                  role:
-                    type: string
+                  decodedToken:
+                    type: object
+                    properties:
+                      identifier:
+                        type: string
+                      organizationIdentifier:
+                        type: string
+                        nullable: true
+                      role:
+                        type: string
+                        enum:
+                          - admin
+                          - editor
+                          - author
+                          - member
+                          - unassigned
+                      permissionFlags:
+                        type: number
+                      iat:
+                        type: number
+                      exp:
+                        type: number
                 required:
                   - token
             user:
@@ -7293,6 +7317,12 @@ components:
                         type: string
                       role:
                         type: string
+                        enum:
+                          - admin
+                          - editor
+                          - author
+                          - member
+                          - unassigned
               required:
                 - type
                 - identifier
@@ -7546,6 +7576,12 @@ components:
                               type: string
                             role:
                               type: string
+                              enum:
+                                - admin
+                                - editor
+                                - author
+                                - member
+                                - unassigned
                     required:
                       - type
                       - identifier
@@ -7640,6 +7676,12 @@ components:
                         type: string
                       role:
                         type: string
+                        enum:
+                          - admin
+                          - editor
+                          - author
+                          - member
+                          - unassigned
               required:
                 - type
                 - identifier

@@ -4,8 +4,8 @@ import { clearAccessToken, getAccessToken, storeAccessToken } from "@utils/auth"
 import { FC, ReactNode, createContext, useEffect, useMemo, useState } from "react";
 
 type LoginData = Required<LoginResponse>["data"];
-// TODO: Use proper union type from OpenAPI definition, once it exists.
-export type Role = "admin" | "author" | "editor" | "member" | string;
+
+export type Role = Required<LoginData["accessTokens"][0]>["decodedToken"]["role"];
 
 const STORAGE_KEY = "login-response";
 
@@ -40,12 +40,12 @@ export const UserContextProvider: FC<UserContextProviderProps> = ({ children }: 
 		const matchingAccessToken = loginData.accessTokens.find(
 			(accessToken) => accessToken.token === existingAccessToken,
 		)!;
-		const organizationID = matchingAccessToken.organizationID;
+		const organizationIdentifier = matchingAccessToken.decodedToken!.organizationIdentifier;
 		const selectedOrganization = loginData.organizations!.find(
-			(organization) => organization.identifier === organizationID,
+			(organization) => organization.identifier === organizationIdentifier,
 		)!;
 		setActiveOrganization(selectedOrganization);
-		setActiveRole(matchingAccessToken.role!);
+		setActiveRole(matchingAccessToken.decodedToken!.role!);
 	};
 
 	const value = useMemo<UserContextType>(() => {
@@ -54,10 +54,10 @@ export const UserContextProvider: FC<UserContextProviderProps> = ({ children }: 
 			setActiveOrganization(initialOrganization);
 			if (initialOrganization) {
 				const matchingToken = loginData!.accessTokens.find(
-					(token) => token.organizationID === initialOrganization.identifier,
+					(token) => token.decodedToken!.organizationIdentifier === initialOrganization.identifier,
 				);
 				storeAccessToken(matchingToken!.token);
-				setActiveRole(matchingToken!.role!);
+				setActiveRole(matchingToken!.decodedToken!.role!);
 			} else {
 				const accessToken = loginData!.accessTokens[0].token;
 				storeAccessToken(accessToken);
@@ -83,10 +83,10 @@ export const UserContextProvider: FC<UserContextProviderProps> = ({ children }: 
 			setActiveOrganization(organization);
 			if (organization) {
 				const matchingToken = loginData!.accessTokens.find(
-					(token) => token.organizationID === organization.identifier,
+					(token) => token.decodedToken!.organizationIdentifier! === organization.identifier,
 				)!;
 				storeAccessToken(matchingToken.token);
-				setActiveRole(matchingToken.role!);
+				setActiveRole(matchingToken.decodedToken!.role!);
 			} else {
 				clearAccessToken();
 				setActiveRole(null);
