@@ -15,14 +15,18 @@ const Side = styled.div({});
 
 interface Props {
 	title: string;
-	side: ReactNode;
+	description?: string;
+	side?: ReactNode;
 }
 
-export default function PageTitleHeader({ title, side }: Props) {
+export default function PageTitleHeader({ title, description, side }: Props) {
 	return (
 		<Container>
-			<PageTitle>{title}</PageTitle>
-			<Side>{side}</Side>
+			<div>
+				<PageTitle>{title}</PageTitle>
+				{description}
+			</div>
+			{side && <Side>{side}</Side>}
 		</Container>
 	);
 }

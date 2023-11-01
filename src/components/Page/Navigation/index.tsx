@@ -36,7 +36,8 @@ function getNavigationGroups(isAdmin: boolean): Array<NavigationGroup> {
 		links: [
 			{ href: ROUTES.admin.attractions(), i18nKey: "link-admin-attractions", icon: "star" },
 			{ href: ROUTES.admin.locations(), i18nKey: "link-admin-locations", icon: "map-pin" },
-			{ href: ROUTES.admin.organizations(), i18nKey: "link-admin-organizations", icon: "users" },
+			{ href: ROUTES.admin.organizations(), i18nKey: "link-admin-organizations", icon: "drama" },
+			{ href: ROUTES.admin.users(), i18nKey: "link-admin-users", icon: "users" },
 		],
 	};
 	return [userNavigationGroup, ...(isAdmin ? [adminNavigationGroup] : [])];

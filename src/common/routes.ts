@@ -12,6 +12,7 @@ const ROUTES = {
 		organizations: () => "/admin/organizations",
 		organizationDetails: (identifier: string) => `/admin/organizations/${identifier}`,
 		organizationCreate: () => `/admin/organizations/create`,
+		users: () => "/admin/users",
 	},
 };
 

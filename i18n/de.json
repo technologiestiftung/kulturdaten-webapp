@@ -10,6 +10,7 @@
 		"link-admin-attractions": "Angebote",
 		"link-admin-locations": "Orte",
 		"link-admin-organizations": "Anbieter:innen",
+		"link-admin-users": "Benutzer:innen",
 		"link-logout": "Ausloggen",
 		"organization-select-label": "Aktive:r Anbieter:in",
 		"organization-select-placeholder": "Anbieter:in auswählen…",
@@ -66,5 +67,14 @@
 		"page-title": "Anbieter:innen",
 		"create-organization": "Anbieter:in erstellen",
 		"edit-organization": "Anbieter:in bearbeiten"
+	},
+	"Users": {
+		"page-title": "Benutzer:innen",
+		"page-description": "Benutzer:innen zu {organizationName} hinzufügen oder bearbeiten.",
+		"table-header-name": "Name",
+		"table-header-role": "Rolle",
+		"table-option-delete": "Löschen",
+		"table-name-current-user-indicator": "Ich",
+		"number-users": "{count, plural, =1 {# Benutzer:in} other {# Benutzer:innen}}"
 	}
 }
