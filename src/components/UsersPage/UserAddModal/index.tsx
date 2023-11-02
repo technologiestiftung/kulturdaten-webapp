@@ -22,28 +22,36 @@ interface UserCreateRequest {
 	role: Role;
 }
 
+const defaultRequest: UserCreateRequest = {
+	email: "",
+	password: "",
+	firstName: "",
+	lastName: "",
+	role: "member",
+};
+
 export default function UserAddModal(props: Props) {
 	const { isOpen, onClose } = props;
 	const t = useTranslations("User-Details");
-	const [request, setRequest] = useState<UserCreateRequest>({
-		email: "",
-		password: "",
-		firstName: "",
-		lastName: "",
-		role: "member",
-	});
+	const [request, setRequest] = useState<UserCreateRequest>(defaultRequest);
+	console.log("request: ", request);
 	// TODO: const apiClient = useApiClient();
 	const handleSubmit = useCallback<FormEventHandler>(
 		async (event) => {
 			event.preventDefault();
 			// TODO: Invite user via apiClient.
 			onClose();
+			setRequest(defaultRequest);
 		},
 		[onClose],
 	);
+	const handleClose = () => {
+		setRequest(defaultRequest);
+		onClose();
+	};
 	const roles: Role[] = ["admin", "editor", "author", "member", "unassigned"];
 	return (
-		<Modal modalTitle={t("modal-title")} isOpen={isOpen} onClose={onClose} minWidth="500px">
+		<Modal modalTitle={t("modal-title")} isOpen={isOpen} onClose={handleClose} minWidth="500px">
 			<form onSubmit={handleSubmit}>
 				<FormField
 					label={t("label-email")}
@@ -119,7 +127,7 @@ export default function UserAddModal(props: Props) {
 					))}
 				</FormField>
 				<Spacer size={20} />
-				<Buttons onClose={onClose} />
+				<Buttons onClose={handleClose} />
 			</form>
 		</Modal>
 	);
