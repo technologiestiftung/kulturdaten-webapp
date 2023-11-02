@@ -76,11 +76,25 @@
 		"table-header-role": "Rolle",
 		"table-option-delete": "Löschen",
 		"table-name-current-user-indicator": "Ich",
+		"add-user": "Benutzer:in hinzufügen",
 		"number-users": "{count, plural, =1 {# Benutzer:in} other {# Benutzer:innen}}",
 		"role-admin": "Administrator",
 		"role-editor": "Editor",
 		"role-author": "Autor",
 		"role-member": "Mitglied",
 		"role-unassigned": "Keine"
+	},
+	"User-Details": {
+		"modal-title": "Benutzer:in hinzufügen",
+		"label-email": "E-Mail",
+		"label-password": "Passwort",
+		"label-firstName": "Vorname",
+		"label-lastName": "Nachname",
+		"label-role": "Rolle",
+		"save-button": "Speichern",
+		"cancel-button": "Abbrechen"
+	},
+	"Modal": {
+		"close-button": "Schließen"
 	}
 }

@@ -1,18 +1,20 @@
 import { User } from "@api/client/models/User";
 import { spacings } from "@common/styleVariables";
+import Badge from "@components/Badge";
+import Button from "@components/Button";
+import ContentTable from "@components/ContentTable";
 import Page from "@components/Page";
+import PageTitleHeader from "@components/PageTitleHeader";
+import Pagination, { PaginationType } from "@components/Pagination";
+import Spacer from "@components/Spacer";
+import UserRole from "@components/UserRole";
 import useUser from "@hooks/useUser";
 import { getLocalizedLabel } from "@utils/content";
 import { useRouter } from "next/router";
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import { useTranslations } from "use-intl";
-import Badge from "../Badge";
-import ContentTable from "../ContentTable";
-import PageTitleHeader from "../PageTitleHeader";
-import Pagination, { PaginationType } from "../Pagination";
-import Spacer from "../Spacer";
-import UserRole from "../UserRole";
 import Actions from "./Actions";
+import UserAddModal from "./UserAddModal";
 import UserName from "./UserName";
 
 interface Props {
@@ -23,6 +25,7 @@ interface Props {
 export default function UsersPage(props: Props) {
 	const t = useTranslations("Users");
 	const router = useRouter();
+	const [isAddModalOpen, setAddModalOpen] = useState(false);
 	const { user: activeUser, activeOrganization } = useUser();
 	const { users, pagination } = props;
 	const handleUpdated = useCallback(() => {
@@ -37,6 +40,7 @@ export default function UsersPage(props: Props) {
 			<PageTitleHeader
 				title={t("page-title")}
 				description={t("page-description", { organizationName: getLocalizedLabel(activeOrganization!.title) })}
+				side={<Button onClick={() => setAddModalOpen(true)}>{t("add-user")}</Button>}
 			/>
 			<Spacer size={20} />
 			<ContentTable
@@ -76,6 +80,7 @@ export default function UsersPage(props: Props) {
 			/>
 			<Spacer size={20} />
 			<Pagination pagination={pagination} info={t("number-users", { count: pagination.totalCount })} />
+			<UserAddModal isOpen={isAddModalOpen} onClose={() => setAddModalOpen(false)} />
 		</Page>
 	);
 }
