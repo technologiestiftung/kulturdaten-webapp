@@ -82,3 +82,5 @@ export const timings = {
 export const boxShadows = {
 	elevation100: "0px 2px 8px 0px rgba(0, 0, 0, 0.12)",
 };
+
+export const getAsNumber = (pixelValue: string): number => Number(pixelValue.replace("px", ""));

@@ -1,4 +1,4 @@
-import { colors, fontSizes, spacings } from "@common/styleVariables";
+import { borderRadiuses, colors, fontSizes, getAsNumber, spacings } from "@common/styleVariables";
 import ReactSelect, { GroupBase, Props as ReactSelectProps } from "react-select";
 
 export default function Select<
@@ -11,7 +11,7 @@ export default function Select<
 			{...props}
 			theme={(theme) => ({
 				...theme,
-				borderRadius: 4, // borderRadiuses.medium
+				borderRadius: getAsNumber(borderRadiuses.medium),
 				spacing: {
 					baseUnit: spacings.getNumber(1),
 					controlHeight: 16,
