@@ -71,6 +71,7 @@
 	"Users": {
 		"page-title": "Benutzer:innen",
 		"page-description": "Benutzer:innen zu {organizationName} hinzufügen oder bearbeiten.",
+		"table-header-email": "E-Mail",
 		"table-header-name": "Name",
 		"table-header-role": "Rolle",
 		"table-option-delete": "Löschen",

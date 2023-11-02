@@ -6,6 +6,7 @@ import { getLocalizedLabel } from "@utils/content";
 import { useRouter } from "next/router";
 import { useCallback } from "react";
 import { useTranslations } from "use-intl";
+import Badge from "../Badge";
 import ContentTable from "../ContentTable";
 import PageTitleHeader from "../PageTitleHeader";
 import Pagination, { PaginationType } from "../Pagination";
@@ -41,8 +42,17 @@ export default function UsersPage(props: Props) {
 				items={users}
 				columns={[
 					{
+						header: t("table-header-email"),
+						getContent: (user) => (
+							<>
+								{user.email} {isCurrentUser(user) && <Badge>{t("table-name-current-user-indicator")}</Badge>}
+							</>
+						),
+						canBeSorted: false,
+					},
+					{
 						header: t("table-header-name"),
-						getContent: (user) => <UserName user={user} isCurrentUser={isCurrentUser(user)} />,
+						getContent: (user) => <UserName user={user} />,
 						canBeSorted: false,
 					},
 					{
