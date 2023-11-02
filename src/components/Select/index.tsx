@@ -1,8 +1,6 @@
 import { colors, fontSizes, spacings } from "@common/styleVariables";
 import ReactSelect, { GroupBase, Props as ReactSelectProps } from "react-select";
 
-// interface Props extends Select {}
-
 export default function Select<
 	Option,
 	IsMulti extends boolean = false,
