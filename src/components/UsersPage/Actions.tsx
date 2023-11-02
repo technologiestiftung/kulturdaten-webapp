@@ -1,7 +1,6 @@
 import { User } from "@api/client/models/User";
 import useApiClient from "@hooks/useApiClient";
 import { useTranslations } from "next-intl";
-import { useRouter } from "next/router";
 import { useMemo } from "react";
 import PopoverMenu, { MenuOption } from "../PopoverMenu";
 
@@ -11,7 +10,6 @@ interface Props {
 }
 
 export default function Actions({ user, onUpdated }: Props) {
-	const router = useRouter();
 	const apiClient = useApiClient();
 	const t = useTranslations("Users");
 	const options = useMemo<MenuOption[]>(() => {
