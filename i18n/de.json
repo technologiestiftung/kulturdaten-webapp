@@ -76,6 +76,11 @@
 		"table-header-role": "Rolle",
 		"table-option-delete": "Löschen",
 		"table-name-current-user-indicator": "Ich",
-		"number-users": "{count, plural, =1 {# Benutzer:in} other {# Benutzer:innen}}"
+		"number-users": "{count, plural, =1 {# Benutzer:in} other {# Benutzer:innen}}",
+		"role-admin": "Administrator",
+		"role-editor": "Editor",
+		"role-author": "Autor",
+		"role-member": "Mitglied",
+		"role-unassigned": "Keine"
 	}
 }

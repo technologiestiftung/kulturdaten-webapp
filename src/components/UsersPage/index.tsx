@@ -11,6 +11,7 @@ import ContentTable from "../ContentTable";
 import PageTitleHeader from "../PageTitleHeader";
 import Pagination, { PaginationType } from "../Pagination";
 import Spacer from "../Spacer";
+import UserRole from "../UserRole";
 import Actions from "./Actions";
 import UserName from "./UserName";
 
@@ -57,7 +58,10 @@ export default function UsersPage(props: Props) {
 					},
 					{
 						header: t("table-header-role"),
-						getContent: (user) => getRole(user),
+						getContent: (user) => {
+							const role = getRole(user);
+							return role ? <UserRole role={role} /> : "-";
+						},
 						canBeSorted: false,
 					},
 					{

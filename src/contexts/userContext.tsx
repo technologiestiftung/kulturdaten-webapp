@@ -5,7 +5,7 @@ import { FC, ReactNode, createContext, useEffect, useMemo, useState } from "reac
 
 type LoginData = Required<LoginResponse>["data"];
 
-export type Role = Required<LoginData["accessTokens"][0]>["decodedToken"]["role"];
+export type Role = NonNullable<Required<LoginData["accessTokens"][0]>["decodedToken"]["role"]>;
 
 const STORAGE_KEY = "login-response";
 
