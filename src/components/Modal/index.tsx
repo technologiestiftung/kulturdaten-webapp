@@ -1,4 +1,4 @@
-import { borderRadiuses, boxShadows, colors, spacings } from "@common/styleVariables";
+import { borderRadiuses, boxShadows, colors, fontSizes, fontWeights, spacings } from "@common/styleVariables";
 import styled from "@emotion/styled";
 import { ReactNode } from "react";
 import ReactModal from "react-modal";
@@ -14,8 +14,13 @@ const Header = styled.div({
 	padding: `${spacings.get(1)} ${spacings.get(1)} ${spacings.get(1)} ${contentPadding}`,
 });
 
+const ModalTitle = styled.h2({
+	fontSize: fontSizes.default,
+	fontWeight: fontWeights.medium,
+});
+
 const Content = styled.div({
-	padding: contentPadding,
+	padding: `0 ${contentPadding} ${contentPadding} ${contentPadding}`,
 });
 
 interface Props {
@@ -54,7 +59,7 @@ export default function Modal(props: Props) {
 			}}
 		>
 			<Header style={{ justifyContent: modalTitle ? "space-between" : "flex-end" }}>
-				{modalTitle && <div>{modalTitle}</div>}
+				{modalTitle && <ModalTitle>{modalTitle}</ModalTitle>}
 				<CloseButton onClick={onClose} />
 			</Header>
 			<Content>{children}</Content>
