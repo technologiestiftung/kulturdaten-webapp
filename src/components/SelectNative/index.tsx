@@ -1,7 +1,45 @@
-import { borderRadiuses, colors, fontSizes, lineHeights, spacings } from "@common/styleVariables";
+import { borderRadiuses, colors, fontSizes, iconSizes, lineHeights, spacings, timings } from "@common/styleVariables";
 import styled, { CSSObject } from "@emotion/styled";
 import { SelectHTMLAttributes } from "react";
 import Icon from "../Icon";
+
+type Variation = "default" | "table";
+
+type StyleMapping = {
+	default: CSSObject;
+	hover: CSSObject;
+	focus: CSSObject;
+	iconSize: number;
+};
+
+const variationStyles: Record<Variation, StyleMapping> = {
+	default: {
+		default: {
+			fontSize: fontSizes.default,
+			padding: spacings.inputPadding,
+			paddingRight: spacings.inputPadding + iconSizes[24],
+			border: `1px solid ${colors.mediumContrast}`,
+		},
+		hover: {},
+		focus: {},
+		iconSize: iconSizes[24],
+	},
+	table: {
+		default: {
+			fontSize: fontSizes.small,
+			padding: `${spacings.get(1)} ${spacings.get(1.5)}`,
+			paddingRight: spacings.getNumber(1.5) + iconSizes[16],
+			border: `1px solid ${colors.neutral300}`,
+		},
+		hover: {
+			border: `1px solid ${colors.mediumContrast}`,
+		},
+		focus: {
+			border: `1px solid ${colors.mediumContrast}`,
+		},
+		iconSize: iconSizes[16],
+	},
+};
 
 const errorStyle: CSSObject = {
 	borderColor: colors.error,
@@ -21,26 +59,24 @@ const IconWrapper = styled.div({
 	pointerEvents: "none",
 });
 
-const iconSize = 24;
-
-const StyledSelect = styled.select<Props>(({ error }) => ({
+const StyledSelect = styled.select<{ variation: Variation; error?: string }>(({ variation, error }) => ({
 	appearance: "none",
-	padding: spacings.inputPadding,
-	paddingRight: spacings.inputPadding + iconSize,
 	margin: 0,
-	fontSize: fontSizes.default,
 	lineHeight: lineHeights.default,
-	border: `1px solid ${colors.mediumContrast}`,
 	borderRadius: borderRadiuses.medium,
 	background: colors.white,
 	color: colors.black,
 	width: "100%",
 	cursor: "pointer",
+	transition: `all ${timings.short} ease-in-out`,
+	...variationStyles[variation].default,
 	"&:hover": {
 		boxShadow: `0px 0px 0px 2px ${colors.neutral300}`,
+		...variationStyles[variation].hover,
 	},
 	"&:focus": {
 		boxShadow: `0px 0px 0px 2px ${colors.blueDark}`,
+		...variationStyles[variation].focus,
 	},
 	"&:disabled": {
 		background: colors.neutral200,
@@ -53,15 +89,17 @@ const StyledSelect = styled.select<Props>(({ error }) => ({
 }));
 
 interface Props extends SelectHTMLAttributes<HTMLSelectElement> {
+	variation?: Variation;
 	error?: string;
 }
 
 export default function SelectNative(props: Props) {
+	const { variation = "default", ...otherProps } = props;
 	return (
 		<Container>
-			<StyledSelect {...props} />
+			<StyledSelect variation={variation} {...otherProps} />
 			<IconWrapper role="presentation">
-				<Icon name="chevron-down" size={iconSize} />
+				<Icon name="chevron-down" size={variationStyles[variation].iconSize} />
 			</IconWrapper>
 		</Container>
 	);

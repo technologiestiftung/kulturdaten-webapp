@@ -6,11 +6,11 @@ import Page from "@components/Page";
 import PageTitleHeader from "@components/PageTitleHeader";
 import Pagination, { PaginationType } from "@components/Pagination";
 import Spacer from "@components/Spacer";
-import UserRole from "@components/UserRole";
+import UserRoleSelect from "@components/UserRoleSelect";
 import useUser from "@hooks/useUser";
 import { getLocalizedLabel } from "@utils/content";
 import { useRouter } from "next/router";
-import { useCallback, useState } from "react";
+import { ChangeEvent, useCallback, useState } from "react";
 import { useTranslations } from "use-intl";
 import Actions from "./Actions";
 import UserEditModal from "./UserEditModal";
@@ -34,6 +34,10 @@ export default function UsersPage(props: Props) {
 	const editUser = useCallback((user: User) => {
 		setEditedUser(user);
 		setEditModalOpen(true);
+	}, []);
+	const handleChangeRole = useCallback((event: ChangeEvent<HTMLSelectElement>, user: User) => {
+		// TODO: Update role via api.
+		// const newRole = event.target.value as Role;
 	}, []);
 	const handleUpdated = useCallback(() => {
 		router.replace(router.asPath, undefined, { scroll: false });
@@ -69,9 +73,21 @@ export default function UsersPage(props: Props) {
 						header: t("table-header-role"),
 						getContent: (user) => {
 							const role = getRole(user, activeOrganization!);
-							return role ? <UserRole role={role} /> : "-";
+							if (role) {
+								return (
+									<UserRoleSelect
+										value={role}
+										onClick={(event) => event.stopPropagation()}
+										onChange={(event) => handleChangeRole(event, user)}
+										variation="table"
+									/>
+								);
+							}
+							return "-";
 						},
 						canBeSorted: false,
+						headerStyle: { width: "160px" },
+						cellStyle: { width: "160px" },
 					},
 					{
 						header: "",

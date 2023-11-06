@@ -85,4 +85,9 @@ export const boxShadows = {
 	elevation100: "0px 2px 8px 0px rgba(0, 0, 0, 0.12)",
 };
 
+export const iconSizes = {
+	16: 16,
+	24: 24,
+};
+
 export const getAsNumber = (pixelValue: string): number => Number(pixelValue.replace("px", ""));

@@ -1,9 +1,9 @@
 import SelectNative from "@components/SelectNative";
 import UserRole from "@components/UserRole";
 import { Role } from "@contexts/userContext";
-import { DetailedHTMLProps, SelectHTMLAttributes } from "react";
+import { ComponentPropsWithoutRef } from "react";
 
-interface Props extends DetailedHTMLProps<SelectHTMLAttributes<HTMLSelectElement>, HTMLSelectElement> {}
+type Props = ComponentPropsWithoutRef<typeof SelectNative>;
 
 const roles: Role[] = ["admin", "editor", "author", "member", "unassigned"];
 
