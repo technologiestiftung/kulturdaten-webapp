@@ -2,14 +2,12 @@ import { Organization } from "@api/client/models/Organization";
 import { User } from "@api/client/models/User";
 import FormField from "@components/FormField";
 import Modal from "@components/Modal";
-import SelectNative from "@components/SelectNative";
 import Spacer from "@components/Spacer";
-import UserRole from "@components/UserRole";
+import UserRoleSelect from "@components/UserRoleSelect";
 import { Role } from "@contexts/userContext";
 import { getFullName } from "@utils/users";
 import { useTranslations } from "next-intl";
 import { FormEventHandler, useCallback, useState } from "react";
-import { roles } from "../constants";
 import { UserInviteRequest, getInitialRequest } from "../service";
 import Buttons from "./Buttons";
 
@@ -66,7 +64,7 @@ export default function UserEditModal(props: Props) {
 				/>
 				<Spacer size={15} />
 				<FormField
-					component={SelectNative}
+					component={UserRoleSelect}
 					label={t("label-role")}
 					id="role"
 					value={request.role}
@@ -77,13 +75,7 @@ export default function UserEditModal(props: Props) {
 						}));
 					}}
 					required={true}
-				>
-					{roles.map((role) => (
-						<option key={role} value={role}>
-							<UserRole role={role} />
-						</option>
-					))}
-				</FormField>
+				/>
 				<Spacer size={20} />
 				<Buttons onClose={onClose} onDelete={handleDelete} />
 			</form>
