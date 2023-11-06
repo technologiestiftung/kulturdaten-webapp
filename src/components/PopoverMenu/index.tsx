@@ -1,15 +1,9 @@
-import { borderRadiuses, colors, spacings } from "@common/styleVariables";
+import { borderRadiuses, colors, iconSizes, spacings } from "@common/styleVariables";
 import styled from "@emotion/styled";
 import { MouseEvent, ReactEventHandler, ReactNode, useState } from "react";
 import Button from "../Button";
 import Icon from "../Icon";
 import Popover from "../Popover";
-
-const iconSize = "16px";
-
-const TriggerIcon = styled.div({
-	width: iconSize,
-});
 
 const Options = styled.ul({
 	listStyle: "none",
@@ -54,13 +48,9 @@ export default function PopoverMenu({ options }: Props) {
 			triggerProps={{
 				color: "neutral",
 				style: {
-					padding: spacings.get(2),
+					padding: spacings.get(1.5),
 				},
-				children: (
-					<TriggerIcon>
-						<Icon name="chevron-down" size={iconSize} />
-					</TriggerIcon>
-				),
+				children: <Icon name="chevron-down" size={iconSizes[16]} />,
 				onClick: (event: MouseEvent) => event.stopPropagation(),
 			}}
 		>

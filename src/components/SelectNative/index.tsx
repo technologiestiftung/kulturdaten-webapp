@@ -62,7 +62,7 @@ const IconWrapper = styled.div({
 const StyledSelect = styled.select<{ variation: Variation; error?: string }>(({ variation, error }) => ({
 	appearance: "none",
 	margin: 0,
-	lineHeight: lineHeights.default,
+	lineHeight: lineHeights.buttons,
 	borderRadius: borderRadiuses.medium,
 	background: colors.white,
 	color: colors.black,
