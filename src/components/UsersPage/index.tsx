@@ -14,7 +14,7 @@ import { useRouter } from "next/router";
 import { useCallback, useState } from "react";
 import { useTranslations } from "use-intl";
 import Actions from "./Actions";
-import UserAddModal from "./UserAddModal";
+import UserInviteModal from "./UserInviteModal";
 import UserName from "./UserName";
 
 interface Props {
@@ -25,7 +25,7 @@ interface Props {
 export default function UsersPage(props: Props) {
 	const t = useTranslations("Users");
 	const router = useRouter();
-	const [isAddModalOpen, setAddModalOpen] = useState(false);
+	const [isInviteModalOpen, setInviteModalOpen] = useState(false);
 	const { user: activeUser, activeOrganization } = useUser();
 	const { users, pagination } = props;
 	const handleUpdated = useCallback(() => {
@@ -40,7 +40,7 @@ export default function UsersPage(props: Props) {
 			<PageTitleHeader
 				title={t("page-title")}
 				description={t("page-description", { organizationName: getLocalizedLabel(activeOrganization!.title) })}
-				side={<Button onClick={() => setAddModalOpen(true)}>{t("add-user")}</Button>}
+				side={<Button onClick={() => setInviteModalOpen(true)}>{t("invite-user")}</Button>}
 			/>
 			<Spacer size={20} />
 			<ContentTable
@@ -80,7 +80,7 @@ export default function UsersPage(props: Props) {
 			/>
 			<Spacer size={20} />
 			<Pagination pagination={pagination} info={t("number-users", { count: pagination.totalCount })} />
-			<UserAddModal isOpen={isAddModalOpen} onClose={() => setAddModalOpen(false)} />
+			<UserInviteModal isOpen={isInviteModalOpen} onClose={() => setInviteModalOpen(false)} />
 		</Page>
 	);
 }

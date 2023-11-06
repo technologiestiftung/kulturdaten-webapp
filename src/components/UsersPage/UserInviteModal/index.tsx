@@ -14,32 +14,25 @@ interface Props {
 }
 
 // TODO: Use proper type from generated API client.
-interface UserCreateRequest {
+interface UserInviteRequest {
 	email: string;
-	password: string;
-	firstName: string;
-	lastName: string;
 	role: Role;
 }
 
-const defaultRequest: UserCreateRequest = {
+const defaultRequest: UserInviteRequest = {
 	email: "",
-	password: "",
-	firstName: "",
-	lastName: "",
 	role: "member",
 };
 
-export default function UserAddModal(props: Props) {
+export default function UserInviteModal(props: Props) {
 	const { isOpen, onClose } = props;
 	const t = useTranslations("User-Details");
-	const [request, setRequest] = useState<UserCreateRequest>(defaultRequest);
-	console.log("request: ", request);
+	const [request, setRequest] = useState<UserInviteRequest>(defaultRequest);
 	// TODO: const apiClient = useApiClient();
 	const handleSubmit = useCallback<FormEventHandler>(
 		async (event) => {
 			event.preventDefault();
-			// TODO: Invite user via apiClient.
+			// TODO: Invite user via apiClient (and show error message if it failed).
 			onClose();
 			setRequest(defaultRequest);
 		},
@@ -65,46 +58,6 @@ export default function UserAddModal(props: Props) {
 						}));
 					}}
 					required={true}
-				/>
-				<Spacer size={15} />
-				<FormField
-					label={t("label-password")}
-					id="password"
-					type="password"
-					value={request.password}
-					onChange={(event) => {
-						setRequest((prev) => ({
-							...prev,
-							password: event.target.value,
-						}));
-					}}
-					required={true}
-				/>
-				<Spacer size={15} />
-				<FormField
-					label={t("label-firstName")}
-					id="firstName"
-					value={request.firstName}
-					onChange={(event) => {
-						setRequest((prev) => ({
-							...prev,
-							firstName: event.target.value,
-						}));
-					}}
-					required={false}
-				/>
-				<Spacer size={15} />
-				<FormField
-					label={t("label-lastName")}
-					id="lastName"
-					value={request.lastName}
-					onChange={(event) => {
-						setRequest((prev) => ({
-							...prev,
-							lastName: event.target.value,
-						}));
-					}}
-					required={false}
 				/>
 				<Spacer size={15} />
 				<FormField

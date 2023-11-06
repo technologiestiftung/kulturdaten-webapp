@@ -18,7 +18,7 @@ export default function Buttons(props: Props) {
 	return (
 		<Container>
 			<Button color="primary" type="submit">
-				{t("save-button")}
+				{t("invite-button")}
 			</Button>
 			<Button color="neutral" onClick={onClose}>
 				{t("cancel-button")}

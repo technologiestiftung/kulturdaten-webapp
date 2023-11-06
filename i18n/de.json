@@ -70,13 +70,13 @@
 	},
 	"Users": {
 		"page-title": "Benutzer:innen",
-		"page-description": "Benutzer:innen zu {organizationName} hinzufügen oder bearbeiten.",
+		"page-description": "Benutzer:innen zu {organizationName} einladen oder deren Rollen bearbeiten.",
 		"table-header-email": "E-Mail",
 		"table-header-name": "Name",
 		"table-header-role": "Rolle",
 		"table-option-delete": "Löschen",
 		"table-name-current-user-indicator": "Ich",
-		"add-user": "Benutzer:in hinzufügen",
+		"invite-user": "Benutzer:in einladen",
 		"number-users": "{count, plural, =1 {# Benutzer:in} other {# Benutzer:innen}}",
 		"role-admin": "Administrator",
 		"role-editor": "Editor",
@@ -85,13 +85,10 @@
 		"role-unassigned": "Keine"
 	},
 	"User-Details": {
-		"modal-title": "Benutzer:in hinzufügen",
+		"modal-title": "Benutzer:in einladen",
 		"label-email": "E-Mail",
-		"label-password": "Passwort",
-		"label-firstName": "Vorname",
-		"label-lastName": "Nachname",
 		"label-role": "Rolle",
-		"save-button": "Speichern",
+		"invite-button": "Einladen",
 		"cancel-button": "Abbrechen"
 	},
 	"Modal": {
