@@ -58,6 +58,7 @@ const StyledButton = styled("button", {
 	padding: `${spacings.get(2)} ${spacings.get(3.5)}`,
 	fontWeight: fontWeights.default,
 	textDecoration: "none",
+	whiteSpace: "nowrap",
 	border: "1px transparent",
 	borderRadius: borderRadiuses.medium,
 	transition: `all ${timings.short} ease-in-out`,
