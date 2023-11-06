@@ -1,3 +1,4 @@
+import { Organization } from "@api/client/models/Organization";
 import FormField from "@components/FormField";
 import Modal from "@components/Modal";
 import SelectNative from "@components/SelectNative";
@@ -6,27 +7,19 @@ import UserRole from "@components/UserRole";
 import { Role } from "@contexts/userContext";
 import { useTranslations } from "next-intl";
 import { FormEventHandler, useCallback, useState } from "react";
+import { UserInviteRequest, getInitialRequest } from "../service";
 import Buttons from "./Buttons";
 
 interface Props {
+	organization: Organization;
 	isOpen: boolean;
 	onClose(): void;
 }
 
-// TODO: Use proper type from generated API client.
-interface UserInviteRequest {
-	email: string;
-	role: Role;
-}
-
-const defaultRequest: UserInviteRequest = {
-	email: "",
-	role: "member",
-};
-
 export default function UserInviteModal(props: Props) {
-	const { isOpen, onClose } = props;
+	const { organization, isOpen, onClose } = props;
 	const t = useTranslations("User-Details");
+	const defaultRequest = getInitialRequest(null, organization);
 	const [request, setRequest] = useState<UserInviteRequest>(defaultRequest);
 	// TODO: const apiClient = useApiClient();
 	const handleSubmit = useCallback<FormEventHandler>(
@@ -36,15 +29,17 @@ export default function UserInviteModal(props: Props) {
 			onClose();
 			setRequest(defaultRequest);
 		},
-		[onClose],
+		[defaultRequest, onClose],
 	);
-	const handleClose = () => {
-		setRequest(defaultRequest);
-		onClose();
-	};
 	const roles: Role[] = ["admin", "editor", "author", "member", "unassigned"];
 	return (
-		<Modal modalTitle={t("modal-title")} isOpen={isOpen} onClose={handleClose} minWidth="500px">
+		<Modal
+			modalTitle={t("modal-title")}
+			isOpen={isOpen}
+			onClose={onClose}
+			onAfterClose={() => setRequest(defaultRequest)}
+			minWidth="500px"
+		>
 			<form onSubmit={handleSubmit}>
 				<FormField
 					label={t("label-email")}
@@ -80,7 +75,7 @@ export default function UserInviteModal(props: Props) {
 					))}
 				</FormField>
 				<Spacer size={20} />
-				<Buttons onClose={handleClose} />
+				<Buttons onClose={onClose} />
 			</form>
 		</Modal>
 	);

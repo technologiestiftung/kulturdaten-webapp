@@ -29,18 +29,20 @@ interface Props {
 	isOpen: boolean;
 	onClose(): void;
 	onAfterOpen?(): void;
+	onAfterClose?(): void;
 	modalTitle?: ReactNode;
 	children: ReactNode;
 	minWidth?: string;
 }
 
 export default function Modal(props: Props) {
-	const { isOpen, onAfterOpen, onClose, modalTitle, children, minWidth = "200px" } = props;
+	const { isOpen, onAfterOpen, onAfterClose, onClose, modalTitle, children, minWidth = "200px" } = props;
 	return (
 		<ReactModal
 			isOpen={isOpen}
 			onAfterOpen={onAfterOpen}
 			onRequestClose={onClose}
+			onAfterClose={onAfterClose}
 			aria={{ labelledby: modalTitle ? MODAL_TITLE_ID : undefined }}
 			style={{
 				overlay: {

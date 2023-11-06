@@ -15,6 +15,7 @@ import { useTranslations } from "use-intl";
 import Actions from "./Actions";
 import UserInviteModal from "./UserInviteModal";
 import UserName from "./UserName";
+import { getRole } from "./service";
 
 interface Props {
 	users: User[];
@@ -32,8 +33,6 @@ export default function UsersPage(props: Props) {
 		// TODO: Show success message.
 	}, [router]);
 	const isCurrentUser = (user: User) => user.identifier === activeUser!.identifier;
-	const getRole = (user: User) =>
-		user.memberships.find((membership) => membership.organizationIdentifier === activeOrganization?.identifier)?.role;
 	return (
 		<Page metadata={{ title: t("page-title") }}>
 			<PageTitleHeader
@@ -62,7 +61,7 @@ export default function UsersPage(props: Props) {
 					{
 						header: t("table-header-role"),
 						getContent: (user) => {
-							const role = getRole(user);
+							const role = getRole(user, activeOrganization!);
 							return role ? <UserRole role={role} /> : "-";
 						},
 						canBeSorted: false,
@@ -79,7 +78,11 @@ export default function UsersPage(props: Props) {
 			/>
 			<Spacer size={20} />
 			<Pagination pagination={pagination} info={t("number-users", { count: pagination.totalCount })} />
-			<UserInviteModal isOpen={isInviteModalOpen} onClose={() => setInviteModalOpen(false)} />
+			<UserInviteModal
+				organization={activeOrganization!}
+				isOpen={isInviteModalOpen}
+				onClose={() => setInviteModalOpen(false)}
+			/>
 		</Page>
 	);
 }
