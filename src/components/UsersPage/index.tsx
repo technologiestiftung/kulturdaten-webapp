@@ -31,6 +31,10 @@ export default function UsersPage(props: Props) {
 	const [editedUser, setEditedUser] = useState<User | null>(null);
 	const { user: activeUser, activeOrganization } = useUser();
 	const { users, pagination } = props;
+	const editUser = useCallback((user: User) => {
+		setEditedUser(user);
+		setEditModalOpen(true);
+	}, []);
 	const handleUpdated = useCallback(() => {
 		router.replace(router.asPath, undefined, { scroll: false });
 		// TODO: Show success message.
@@ -71,16 +75,13 @@ export default function UsersPage(props: Props) {
 					},
 					{
 						header: "",
-						getContent: (user) => <Actions user={user} onUpdated={handleUpdated} />,
+						getContent: (user) => <Actions user={user} onEdit={editUser} onUpdated={handleUpdated} />,
 						canBeSorted: false,
 						headerStyle: ACTIONS_CELL_STYLE,
 						cellStyle: ACTIONS_CELL_STYLE,
 					},
 				]}
-				onClickItem={(user) => {
-					setEditedUser(user);
-					setEditModalOpen(true);
-				}}
+				onClickItem={editUser}
 			/>
 			<Spacer size={20} />
 			<Pagination pagination={pagination} info={t("number-users", { count: pagination.totalCount })} />

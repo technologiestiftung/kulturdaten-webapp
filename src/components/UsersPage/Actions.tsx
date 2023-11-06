@@ -6,14 +6,19 @@ import PopoverMenu, { MenuOption } from "../PopoverMenu";
 
 interface Props {
 	user: User;
+	onEdit(user: User): void;
 	onUpdated(): void;
 }
 
-export default function Actions({ user, onUpdated }: Props) {
+export default function Actions({ user, onEdit, onUpdated }: Props) {
 	const apiClient = useApiClient();
 	const t = useTranslations("Users");
 	const options = useMemo<MenuOption[]>(() => {
 		return [
+			{
+				label: t("table-option-edit"),
+				onClick: () => onEdit(user),
+			},
 			{
 				label: t("table-option-delete"),
 				onClick: async () => {
@@ -23,6 +28,6 @@ export default function Actions({ user, onUpdated }: Props) {
 				},
 			},
 		].filter(Boolean) as MenuOption[];
-	}, [apiClient, onUpdated, t, user.identifier]);
+	}, [apiClient, user, onEdit, onUpdated, t]);
 	return <PopoverMenu options={options} />;
 }
