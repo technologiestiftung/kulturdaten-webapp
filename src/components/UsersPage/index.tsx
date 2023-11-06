@@ -1,8 +1,7 @@
 import { User } from "@api/client/models/User";
-import { spacings } from "@common/styleVariables";
 import Badge from "@components/Badge";
 import Button from "@components/Button";
-import ContentTable from "@components/ContentTable";
+import ContentTable, { ACTIONS_CELL_STYLE } from "@components/ContentTable";
 import Page from "@components/Page";
 import PageTitleHeader from "@components/PageTitleHeader";
 import Pagination, { PaginationType } from "@components/Pagination";
@@ -72,8 +71,8 @@ export default function UsersPage(props: Props) {
 						header: "",
 						getContent: (user) => <Actions user={user} onUpdated={handleUpdated} />,
 						canBeSorted: false,
-						headerStyle: { padding: `0 ${spacings.get(1)} 0 0` },
-						cellStyle: { padding: `0 ${spacings.get(1)} 0 0` },
+						headerStyle: ACTIONS_CELL_STYLE,
+						cellStyle: ACTIONS_CELL_STYLE,
 					},
 				]}
 				// onClickItem={(attraction) => router.push(ROUTES.admin.attractionDetails(attraction.identifier))}
