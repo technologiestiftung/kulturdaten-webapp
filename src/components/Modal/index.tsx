@@ -19,6 +19,8 @@ const ModalTitle = styled.h2({
 	fontWeight: fontWeights.medium,
 });
 
+const MODAL_TITLE_ID = "modal-title";
+
 const Content = styled.div({
 	padding: `0 ${contentPadding} ${contentPadding} ${contentPadding}`,
 });
@@ -39,6 +41,7 @@ export default function Modal(props: Props) {
 			isOpen={isOpen}
 			onAfterOpen={onAfterOpen}
 			onRequestClose={onClose}
+			aria={{ labelledby: modalTitle ? MODAL_TITLE_ID : undefined }}
 			style={{
 				overlay: {
 					backgroundColor: colors.modalOverlay,
@@ -59,7 +62,7 @@ export default function Modal(props: Props) {
 			}}
 		>
 			<Header style={{ justifyContent: modalTitle ? "space-between" : "flex-end" }}>
-				{modalTitle && <ModalTitle>{modalTitle}</ModalTitle>}
+				{modalTitle && <ModalTitle id={MODAL_TITLE_ID}>{modalTitle}</ModalTitle>}
 				<CloseButton onClick={onClose} />
 			</Header>
 			<Content>{children}</Content>
