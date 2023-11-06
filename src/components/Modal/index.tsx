@@ -36,7 +36,7 @@ interface Props {
 }
 
 export default function Modal(props: Props) {
-	const { isOpen, onAfterOpen, onAfterClose, onClose, modalTitle, children, minWidth = "200px" } = props;
+	const { isOpen, onAfterOpen, onAfterClose, onClose, modalTitle, children, minWidth = "500px" } = props;
 	return (
 		<ReactModal
 			isOpen={isOpen}

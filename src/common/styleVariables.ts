@@ -37,6 +37,7 @@ export const colors = {
 	mediumContrast: "#54595c",
 	highContrast: "#323536",
 	error: "#ff4f46",
+	errorDark: "#e00b00",
 	modalOverlay: "rgba(0, 0, 0, 0.5)",
 };
 

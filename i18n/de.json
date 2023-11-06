@@ -85,10 +85,14 @@
 		"role-unassigned": "Keine"
 	},
 	"User-Details": {
-		"modal-title": "Benutzer:in einladen",
+		"invite-modal-title": "Benutzer:in einladen",
+		"edit-modal-title": "Benutzer:in bearbeiten",
 		"label-email": "E-Mail",
+		"label-name": "Name",
 		"label-role": "Rolle",
 		"invite-button": "Einladen",
+		"update-button": "Speichern",
+		"delete-button": "Löschen",
 		"cancel-button": "Abbrechen"
 	},
 	"Modal": {

@@ -13,6 +13,7 @@ import { useRouter } from "next/router";
 import { useCallback, useState } from "react";
 import { useTranslations } from "use-intl";
 import Actions from "./Actions";
+import UserEditModal from "./UserEditModal";
 import UserInviteModal from "./UserInviteModal";
 import UserName from "./UserName";
 import { getRole } from "./service";
@@ -26,6 +27,8 @@ export default function UsersPage(props: Props) {
 	const t = useTranslations("Users");
 	const router = useRouter();
 	const [isInviteModalOpen, setInviteModalOpen] = useState(false);
+	const [isEditModalOpen, setEditModalOpen] = useState(false);
+	const [editedUser, setEditedUser] = useState<User | null>(null);
 	const { user: activeUser, activeOrganization } = useUser();
 	const { users, pagination } = props;
 	const handleUpdated = useCallback(() => {
@@ -74,7 +77,10 @@ export default function UsersPage(props: Props) {
 						cellStyle: ACTIONS_CELL_STYLE,
 					},
 				]}
-				// onClickItem={(attraction) => router.push(ROUTES.admin.attractionDetails(attraction.identifier))}
+				onClickItem={(user) => {
+					setEditedUser(user);
+					setEditModalOpen(true);
+				}}
 			/>
 			<Spacer size={20} />
 			<Pagination pagination={pagination} info={t("number-users", { count: pagination.totalCount })} />
@@ -83,6 +89,14 @@ export default function UsersPage(props: Props) {
 				isOpen={isInviteModalOpen}
 				onClose={() => setInviteModalOpen(false)}
 			/>
+			{editedUser && (
+				<UserEditModal
+					user={editedUser}
+					organization={activeOrganization!}
+					isOpen={isEditModalOpen}
+					onClose={() => setEditModalOpen(false)}
+				/>
+			)}
 		</Page>
 	);
 }
