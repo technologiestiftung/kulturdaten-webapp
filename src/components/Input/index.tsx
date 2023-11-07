@@ -6,7 +6,7 @@ const errorStyle: CSSObject = {
 	borderColor: colors.error,
 };
 
-const StyledInput = styled.input<Props>(({ error }) => ({
+const StyledInput = styled.input<Props>(({ error, disabled, readOnly }) => ({
 	appearance: "none",
 	padding: spacings.inputPadding,
 	margin: 0,
@@ -17,9 +17,10 @@ const StyledInput = styled.input<Props>(({ error }) => ({
 	background: colors.white,
 	color: colors.black,
 	width: "100%",
-	"&:hover": {
-		boxShadow: `0px 0px 0px 2px ${colors.neutral300}`,
-	},
+	"&:hover": !disabled &&
+		!readOnly && {
+			boxShadow: `0px 0px 0px 2px ${colors.neutral300}`,
+		},
 	"&:focus": {
 		boxShadow: `0px 0px 0px 2px ${colors.blueDark}`,
 	},

@@ -59,7 +59,7 @@ const IconWrapper = styled.div({
 	pointerEvents: "none",
 });
 
-const StyledSelect = styled.select<{ variation: Variation; error?: string }>(({ variation, error }) => ({
+const StyledSelect = styled.select<{ variation: Variation; error?: string }>(({ variation, error, disabled }) => ({
 	appearance: "none",
 	margin: 0,
 	lineHeight: lineHeights.buttons,
@@ -70,7 +70,7 @@ const StyledSelect = styled.select<{ variation: Variation; error?: string }>(({ 
 	cursor: "pointer",
 	transition: `all ${timings.short} ease-in-out`,
 	...variationStyles[variation].default,
-	"&:hover": {
+	"&:hover": !disabled && {
 		boxShadow: `0px 0px 0px 2px ${colors.neutral300}`,
 		...variationStyles[variation].hover,
 	},
