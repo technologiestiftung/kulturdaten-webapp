@@ -171,6 +171,12 @@ paths:
     post:
       tags:
         - Discover cultural data
+      description: >
+        This POST operation allows you to search for attractions using
+        MongoDB-like query syntax. You can apply a variety of filters on
+        different attributes of an attraction, including its type, status, tags,
+        and more. The search request should be made in the request body as a
+        JSON object adhering to MongoDB's query structure.
       parameters:
         - $ref: "#/components/parameters/page"
         - $ref: "#/components/parameters/pageSize"
@@ -179,6 +185,48 @@ paths:
           application/json:
             schema:
               $ref: "#/components/schemas/SearchAttractionsRequest"
+            examples:
+              filterByTags:
+                summary: Filter by Tags
+                description: >-
+                  This example filters attractions by the tags 'Lectures' or
+                  'Music'.
+                value:
+                  searchFilter:
+                    tags:
+                      $in:
+                        - attraction.category.Lectures
+                        - attraction.category.Music
+              filterByStatus:
+                summary: Filter by Status
+                description: This example filters attractions by their published status.
+                value:
+                  searchFilter:
+                    status: attraction.published
+              filterByAvailableLanguages:
+                summary: Filter by Available Languages
+                description: >-
+                  This example filters attractions that are available in both
+                  German and English.
+                value:
+                  searchFilter:
+                    inLanguages:
+                      $all:
+                        - de
+                        - en
+              combinedSearch:
+                summary: Combined Search
+                description: This example combines multiple filters.
+                value:
+                  searchFilter:
+                    status: attraction.published
+                    tags:
+                      $in:
+                        - attraction.category.Exhibitions
+                    inLanguages:
+                      $all:
+                        - de
+                        - en
       responses:
         "200":
           description: OK
@@ -955,7 +1003,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Error"
+                $ref: "#/components/schemas/Response"
   /organizations/bulk-create:
     post:
       tags:
@@ -1043,6 +1091,135 @@ paths:
       responses:
         "200":
           description: OK
+  /organizations/{identifier}/memberships:
+    get:
+      tags:
+        - Manage your organization data
+      parameters:
+        - name: identifier
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetOrganizationMembershipsResponse"
+    post:
+      tags:
+        - Manage your organization data
+      parameters:
+        - name: identifier
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateMembershipRequest"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CreateMembershipResponse"
+        "400":
+          description: User is already a member
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Response"
+        "404":
+          description: User not exist
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Response"
+  /organizations/{identifier}/memberships/{userIdentifier}:
+    get:
+      tags:
+        - Manage your organization data
+      parameters:
+        - name: identifier
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: userIdentifier
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetOrganizationMembershipResponse"
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NotFoundError"
+    patch:
+      tags:
+        - Manage your organization data
+      parameters:
+        - name: identifier
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: userIdentifier
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateOrganizationMembershipRequest"
+      responses:
+        "204":
+          description: OK
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NotFoundError"
+    delete:
+      tags:
+        - Manage your organization data
+      parameters:
+        - name: identifier
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: userIdentifier
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "204":
+          description: OK
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NotFoundError"
   /organizations/{identifier}/activate:
     post:
       tags:
@@ -1424,47 +1601,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
-                  message:
-                    type: string
-                  data:
-                    type: object
-                    properties:
-                      createdOrganizations:
-                        type: array
-                        items:
-                          type: string
-                      duplicateOrganizations:
-                        type: array
-                        items:
-                          type: string
-                      createdLocations:
-                        type: array
-                        items:
-                          type: string
-                      duplicateLocations:
-                        type: array
-                        items:
-                          type: string
-                      createdEvents:
-                        type: array
-                        items:
-                          type: string
-                      duplicateEvents:
-                        type: array
-                        items:
-                          type: string
-                      createdAttractions:
-                        type: array
-                        items:
-                          type: string
-                      duplicateAttractions:
-                        type: array
-                        items:
-                          type: string
+                $ref: "#/components/schemas/HarvestResponse"
 components:
   securitySchemes:
     bearerAuth:
@@ -1543,22 +1680,46 @@ components:
     Error:
       type: object
       properties:
-        code:
-          type: number
+        success:
+          type: boolean
         message:
           type: string
-        details:
-          type: string
+        data:
+          type: object
+        error:
+          type: object
+          properties:
+            code:
+              type: number
+            message:
+              type: string
+            details:
+              type: string
+          additionalProperties: false
+      required:
+        - success
       additionalProperties: false
     NotFoundError:
       type: object
       properties:
-        code:
-          type: number
+        success:
+          type: boolean
         message:
           type: string
-        details:
-          type: string
+        data:
+          type: object
+        error:
+          type: object
+          properties:
+            code:
+              type: number
+            message:
+              type: string
+            details:
+              type: string
+          additionalProperties: false
+      required:
+        - success
       additionalProperties: false
     Event:
       type: object
@@ -1596,6 +1757,10 @@ components:
                 - de
                 - en
               items:
+                type: string
+            externalIDs:
+              type: object
+              additionalProperties:
                 type: string
           required:
             - created
@@ -1857,6 +2022,10 @@ components:
                 - en
               items:
                 type: string
+            externalIDs:
+              type: object
+              additionalProperties:
+                type: string
           required:
             - created
             - updated
@@ -1950,6 +2119,10 @@ components:
                       - de
                       - en
                     items:
+                      type: string
+                  externalIDs:
+                    type: object
+                    additionalProperties:
                       type: string
                 required:
                   - created
@@ -2234,6 +2407,10 @@ components:
                 - en
               items:
                 type: string
+            externalIDs:
+              type: object
+              additionalProperties:
+                type: string
           required:
             - created
             - updated
@@ -2273,6 +2450,28 @@ components:
         website:
           type: string
           example: https://example.com/
+        curator:
+          type: object
+          properties:
+            referenceType:
+              type: string
+            referenceId:
+              type: string
+            referenceLabel:
+              type: object
+              additionalProperties:
+                type: string
+              description: >-
+                A string that can be translated into multiple languages, e.g. {
+                "de": "Konzert", "en": "concert" }
+              example:
+                de: Konzert
+                en: concert
+          required:
+            - referenceType
+            - referenceId
+          additionalProperties: false
+          description: The curating organization of this attraction.
         inLanguages:
           type: array
           description: List of languages this object is available in.
@@ -2344,6 +2543,10 @@ components:
                 - de
                 - en
               items:
+                type: string
+            externalIDs:
+              type: object
+              additionalProperties:
                 type: string
           required:
             - created
@@ -2595,6 +2798,10 @@ components:
                 - en
               items:
                 type: string
+            externalIDs:
+              type: object
+              additionalProperties:
+                type: string
           required:
             - created
             - updated
@@ -2764,6 +2971,10 @@ components:
                   - author
                   - member
                   - unassigned
+            required:
+              - organizationIdentifier
+              - role
+            additionalProperties: false
       required:
         - type
         - identifier
@@ -2861,6 +3072,10 @@ components:
                         - de
                         - en
                       items:
+                        type: string
+                    externalIDs:
+                      type: object
+                      additionalProperties:
                         type: string
                   required:
                     - created
@@ -3091,6 +3306,10 @@ components:
                               - de
                               - en
                             items:
+                              type: string
+                          externalIDs:
+                            type: object
+                            additionalProperties:
                               type: string
                         required:
                           - created
@@ -3486,6 +3705,10 @@ components:
                               - en
                             items:
                               type: string
+                          externalIDs:
+                            type: object
+                            additionalProperties:
+                              type: string
                         required:
                           - created
                           - updated
@@ -3753,6 +3976,62 @@ components:
               example: +49 30 12345678
           additionalProperties: false
       additionalProperties: false
+    CreateMembershipRequest:
+      type: object
+      properties:
+        email:
+          type: string
+        role:
+          type: string
+          enum:
+            - admin
+            - editor
+            - author
+            - member
+            - unassigned
+      required:
+        - email
+        - role
+      additionalProperties: false
+    CreateMembershipResponse:
+      properties:
+        success:
+          type: boolean
+          enum:
+            - true
+        message:
+          type: string
+        data:
+          type: object
+          properties:
+            membership:
+              type: object
+              properties:
+                email:
+                  type: string
+                userIdentifier:
+                  type: string
+                firstName:
+                  type: string
+                lastName:
+                  type: string
+                role:
+                  type: string
+                  enum:
+                    - admin
+                    - editor
+                    - author
+                    - member
+                    - unassigned
+              required:
+                - email
+                - userIdentifier
+                - role
+              additionalProperties: false
+          additionalProperties: false
+      required:
+        - success
+      additionalProperties: false
     GetAttractionsResponse:
       type: object
       properties:
@@ -3827,6 +4106,10 @@ components:
                               - en
                             items:
                               type: string
+                          externalIDs:
+                            type: object
+                            additionalProperties:
+                              type: string
                         required:
                           - created
                           - updated
@@ -3868,6 +4151,29 @@ components:
                       website:
                         type: string
                         example: https://example.com/
+                      curator:
+                        type: object
+                        properties:
+                          referenceType:
+                            type: string
+                          referenceId:
+                            type: string
+                          referenceLabel:
+                            type: object
+                            additionalProperties:
+                              type: string
+                            description: >-
+                              A string that can be translated into multiple
+                              languages, e.g. { "de": "Konzert", "en": "concert"
+                              }
+                            example:
+                              de: Konzert
+                              en: concert
+                        required:
+                          - referenceType
+                          - referenceId
+                        additionalProperties: false
+                        description: The curating organization of this attraction.
                       inLanguages:
                         type: array
                         description: List of languages this object is available in.
@@ -4120,6 +4426,10 @@ components:
                               - en
                             items:
                               type: string
+                          externalIDs:
+                            type: object
+                            additionalProperties:
+                              type: string
                         required:
                           - created
                           - updated
@@ -4161,6 +4471,29 @@ components:
                       website:
                         type: string
                         example: https://example.com/
+                      curator:
+                        type: object
+                        properties:
+                          referenceType:
+                            type: string
+                          referenceId:
+                            type: string
+                          referenceLabel:
+                            type: object
+                            additionalProperties:
+                              type: string
+                            description: >-
+                              A string that can be translated into multiple
+                              languages, e.g. { "de": "Konzert", "en": "concert"
+                              }
+                            example:
+                              de: Konzert
+                              en: concert
+                        required:
+                          - referenceType
+                          - referenceId
+                        additionalProperties: false
+                        description: The curating organization of this attraction.
                       inLanguages:
                         type: array
                         description: List of languages this object is available in.
@@ -4272,6 +4605,10 @@ components:
                         - en
                       items:
                         type: string
+                    externalIDs:
+                      type: object
+                      additionalProperties:
+                        type: string
                   required:
                     - created
                     - updated
@@ -4313,6 +4650,28 @@ components:
                 website:
                   type: string
                   example: https://example.com/
+                curator:
+                  type: object
+                  properties:
+                    referenceType:
+                      type: string
+                    referenceId:
+                      type: string
+                    referenceLabel:
+                      type: object
+                      additionalProperties:
+                        type: string
+                      description: >-
+                        A string that can be translated into multiple languages,
+                        e.g. { "de": "Konzert", "en": "concert" }
+                      example:
+                        de: Konzert
+                        en: concert
+                  required:
+                    - referenceType
+                    - referenceId
+                  additionalProperties: false
+                  description: The curating organization of this attraction.
                 inLanguages:
                   type: array
                   description: List of languages this object is available in.
@@ -4509,6 +4868,10 @@ components:
                               - de
                               - en
                             items:
+                              type: string
+                          externalIDs:
+                            type: object
+                            additionalProperties:
                               type: string
                         required:
                           - created
@@ -5070,6 +5433,10 @@ components:
                               - en
                             items:
                               type: string
+                          externalIDs:
+                            type: object
+                            additionalProperties:
+                              type: string
                         required:
                           - created
                           - updated
@@ -5362,6 +5729,10 @@ components:
                         - de
                         - en
                       items:
+                        type: string
+                    externalIDs:
+                      type: object
+                      additionalProperties:
                         type: string
                   required:
                     - created
@@ -5850,6 +6221,10 @@ components:
                               - de
                               - en
                             items:
+                              type: string
+                          externalIDs:
+                            type: object
+                            additionalProperties:
                               type: string
                         required:
                           - created
@@ -6474,6 +6849,10 @@ components:
                               - en
                             items:
                               type: string
+                          externalIDs:
+                            type: object
+                            additionalProperties:
+                              type: string
                         required:
                           - created
                           - updated
@@ -6780,6 +7159,10 @@ components:
                         - de
                         - en
                       items:
+                        type: string
+                    externalIDs:
+                      type: object
+                      additionalProperties:
                         type: string
                   required:
                     - created
@@ -7283,6 +7666,9 @@ components:
                         type: number
                       exp:
                         type: number
+                    required:
+                      - identifier
+                    additionalProperties: true
                 required:
                   - token
             user:
@@ -7323,6 +7709,10 @@ components:
                           - author
                           - member
                           - unassigned
+                    required:
+                      - organizationIdentifier
+                      - role
+                    additionalProperties: false
               required:
                 - type
                 - identifier
@@ -7373,6 +7763,10 @@ components:
                           - de
                           - en
                         items:
+                          type: string
+                      externalIDs:
+                        type: object
+                        additionalProperties:
                           type: string
                     required:
                       - created
@@ -7582,6 +7976,10 @@ components:
                                 - author
                                 - member
                                 - unassigned
+                          required:
+                            - organizationIdentifier
+                            - role
+                          additionalProperties: false
                     required:
                       - type
                       - identifier
@@ -7682,6 +8080,10 @@ components:
                           - author
                           - member
                           - unassigned
+                    required:
+                      - organizationIdentifier
+                      - role
+                    additionalProperties: false
               required:
                 - type
                 - identifier
@@ -7762,49 +8164,44 @@ components:
                       de: Konzert
                       en: concert
                   metadata:
-                    allOf:
-                      - type: object
-                        properties:
-                          created:
-                            type: string
-                            description: >-
-                              The date and time the object was created (ISO
-                              timestamp).
-                            example: "2011-10-05T14:48:00.000Z"
-                          updated:
-                            type: string
-                            description: >-
-                              The date and time the object was last updated (ISO
-                              timestamp). Is identical to created date after
-                              first creation.
-                            example: "2011-10-05T14:48:00.000Z"
-                          origin:
-                            type: string
-                            description: The source of this object.
-                            example: bezirkskalender
-                          originObjectID:
-                            type: string
-                            description: >-
-                              The original ID of this object in the original
-                              system.
-                          availableLanguages:
-                            type: array
-                            description: List of languages this object is available in.
-                            example:
-                              - de
-                              - en
-                            items:
-                              type: string
-                        required:
-                          - created
-                          - updated
-                        additionalProperties: false
-                      - type: object
-                        properties:
-                          externalIDs:
-                            type: object
-                            additionalProperties:
-                              type: string
+                    type: object
+                    properties:
+                      created:
+                        type: string
+                        description: >-
+                          The date and time the object was created (ISO
+                          timestamp).
+                        example: "2011-10-05T14:48:00.000Z"
+                      updated:
+                        type: string
+                        description: >-
+                          The date and time the object was last updated (ISO
+                          timestamp). Is identical to created date after first
+                          creation.
+                        example: "2011-10-05T14:48:00.000Z"
+                      origin:
+                        type: string
+                        description: The source of this object.
+                        example: bezirkskalender
+                      originObjectID:
+                        type: string
+                        description: The original ID of this object in the original system.
+                      availableLanguages:
+                        type: array
+                        description: List of languages this object is available in.
+                        example:
+                          - de
+                          - en
+                        items:
+                          type: string
+                      externalIDs:
+                        type: object
+                        additionalProperties:
+                          type: string
+                    required:
+                      - created
+                      - updated
+                    additionalProperties: false
                 required:
                   - type
                   - identifier
@@ -7845,49 +8242,44 @@ components:
                     de: Konzert
                     en: concert
                 metadata:
-                  allOf:
-                    - type: object
-                      properties:
-                        created:
-                          type: string
-                          description: >-
-                            The date and time the object was created (ISO
-                            timestamp).
-                          example: "2011-10-05T14:48:00.000Z"
-                        updated:
-                          type: string
-                          description: >-
-                            The date and time the object was last updated (ISO
-                            timestamp). Is identical to created date after first
-                            creation.
-                          example: "2011-10-05T14:48:00.000Z"
-                        origin:
-                          type: string
-                          description: The source of this object.
-                          example: bezirkskalender
-                        originObjectID:
-                          type: string
-                          description: >-
-                            The original ID of this object in the original
-                            system.
-                        availableLanguages:
-                          type: array
-                          description: List of languages this object is available in.
-                          example:
-                            - de
-                            - en
-                          items:
-                            type: string
-                      required:
-                        - created
-                        - updated
-                      additionalProperties: false
-                    - type: object
-                      properties:
-                        externalIDs:
-                          type: object
-                          additionalProperties:
-                            type: string
+                  type: object
+                  properties:
+                    created:
+                      type: string
+                      description: >-
+                        The date and time the object was created (ISO
+                        timestamp).
+                      example: "2011-10-05T14:48:00.000Z"
+                    updated:
+                      type: string
+                      description: >-
+                        The date and time the object was last updated (ISO
+                        timestamp). Is identical to created date after first
+                        creation.
+                      example: "2011-10-05T14:48:00.000Z"
+                    origin:
+                      type: string
+                      description: The source of this object.
+                      example: bezirkskalender
+                    originObjectID:
+                      type: string
+                      description: The original ID of this object in the original system.
+                    availableLanguages:
+                      type: array
+                      description: List of languages this object is available in.
+                      example:
+                        - de
+                        - en
+                      items:
+                        type: string
+                    externalIDs:
+                      type: object
+                      additionalProperties:
+                        type: string
+                  required:
+                    - created
+                    - updated
+                  additionalProperties: false
               required:
                 - type
                 - identifier
@@ -7950,49 +8342,44 @@ components:
                     de: Konzert
                     en: concert
                 metadata:
-                  allOf:
-                    - type: object
-                      properties:
-                        created:
-                          type: string
-                          description: >-
-                            The date and time the object was created (ISO
-                            timestamp).
-                          example: "2011-10-05T14:48:00.000Z"
-                        updated:
-                          type: string
-                          description: >-
-                            The date and time the object was last updated (ISO
-                            timestamp). Is identical to created date after first
-                            creation.
-                          example: "2011-10-05T14:48:00.000Z"
-                        origin:
-                          type: string
-                          description: The source of this object.
-                          example: bezirkskalender
-                        originObjectID:
-                          type: string
-                          description: >-
-                            The original ID of this object in the original
-                            system.
-                        availableLanguages:
-                          type: array
-                          description: List of languages this object is available in.
-                          example:
-                            - de
-                            - en
-                          items:
-                            type: string
-                      required:
-                        - created
-                        - updated
-                      additionalProperties: false
-                    - type: object
-                      properties:
-                        externalIDs:
-                          type: object
-                          additionalProperties:
-                            type: string
+                  type: object
+                  properties:
+                    created:
+                      type: string
+                      description: >-
+                        The date and time the object was created (ISO
+                        timestamp).
+                      example: "2011-10-05T14:48:00.000Z"
+                    updated:
+                      type: string
+                      description: >-
+                        The date and time the object was last updated (ISO
+                        timestamp). Is identical to created date after first
+                        creation.
+                      example: "2011-10-05T14:48:00.000Z"
+                    origin:
+                      type: string
+                      description: The source of this object.
+                      example: bezirkskalender
+                    originObjectID:
+                      type: string
+                      description: The original ID of this object in the original system.
+                    availableLanguages:
+                      type: array
+                      description: List of languages this object is available in.
+                      example:
+                        - de
+                        - en
+                      items:
+                        type: string
+                    externalIDs:
+                      type: object
+                      additionalProperties:
+                        type: string
+                  required:
+                    - created
+                    - updated
+                  additionalProperties: false
               required:
                 - type
                 - identifier
@@ -8052,6 +8439,10 @@ components:
                         - de
                         - en
                       items:
+                        type: string
+                    externalIDs:
+                      type: object
+                      additionalProperties:
                         type: string
                   required:
                     - created
@@ -8150,6 +8541,10 @@ components:
                               - de
                               - en
                             items:
+                              type: string
+                          externalIDs:
+                            type: object
+                            additionalProperties:
                               type: string
                         required:
                           - created
@@ -8485,6 +8880,10 @@ components:
                               - en
                             items:
                               type: string
+                          externalIDs:
+                            type: object
+                            additionalProperties:
+                              type: string
                         required:
                           - created
                           - updated
@@ -8584,6 +8983,10 @@ components:
                                     - de
                                     - en
                                   items:
+                                    type: string
+                                externalIDs:
+                                  type: object
+                                  additionalProperties:
                                     type: string
                               required:
                                 - created
@@ -8857,3 +9260,144 @@ components:
       example:
         de: Konzert
         en: concert
+    HarvestResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        data:
+          type: object
+          properties:
+            createdOrganizations:
+              type: array
+              items:
+                type: string
+            duplicateOrganizations:
+              type: array
+              items:
+                type: string
+            createdLocations:
+              type: array
+              items:
+                type: string
+            duplicateLocations:
+              type: array
+              items:
+                type: string
+            createdEvents:
+              type: array
+              items:
+                type: string
+            duplicateEvents:
+              type: array
+              items:
+                type: string
+            createdAttractions:
+              type: array
+              items:
+                type: string
+            duplicateAttractions:
+              type: array
+              items:
+                type: string
+      required:
+        - success
+      additionalProperties: false
+    GetOrganizationMembershipsResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        data:
+          type: object
+          properties:
+            organizationIdentifier:
+              type: string
+            memberships:
+              type: array
+              items:
+                type: object
+                properties:
+                  email:
+                    type: string
+                  userIdentifier:
+                    type: string
+                  firstName:
+                    type: string
+                  lastName:
+                    type: string
+                  role:
+                    type: string
+                    enum:
+                      - admin
+                      - editor
+                      - author
+                      - member
+                      - unassigned
+                required:
+                  - email
+                  - userIdentifier
+                  - role
+                additionalProperties: false
+          additionalProperties: false
+      required:
+        - success
+      additionalProperties: false
+    GetOrganizationMembershipResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        data:
+          type: object
+          properties:
+            organizationIdentifier:
+              type: string
+            membership:
+              type: object
+              properties:
+                email:
+                  type: string
+                userIdentifier:
+                  type: string
+                firstName:
+                  type: string
+                lastName:
+                  type: string
+                role:
+                  type: string
+                  enum:
+                    - admin
+                    - editor
+                    - author
+                    - member
+                    - unassigned
+              required:
+                - email
+                - userIdentifier
+                - role
+              additionalProperties: false
+          additionalProperties: false
+      required:
+        - success
+      additionalProperties: false
+    UpdateOrganizationMembershipRequest:
+      type: object
+      properties:
+        role:
+          type: string
+          enum:
+            - admin
+            - editor
+            - author
+            - member
+            - unassigned
+      required:
+        - role
+      additionalProperties: false
