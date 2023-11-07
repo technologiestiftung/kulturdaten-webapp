@@ -31,6 +31,7 @@
 		"typescript-cookie": "^1.0.6"
 	},
 	"devDependencies": {
+		"@emotion/babel-plugin": "11.11.0",
 		"@types/node": "20.6.0",
 		"@types/react": "18.2.21",
 		"@types/react-dom": "18.2.7",
