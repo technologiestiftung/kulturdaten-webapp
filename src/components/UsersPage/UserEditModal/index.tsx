@@ -68,6 +68,7 @@ export default function UserEditModal(props: Props) {
 				setRequest(initialRequest);
 				setError(null);
 			}}
+			minWidth="550px"
 		>
 			<form onSubmit={handleSubmit}>
 				<FormField

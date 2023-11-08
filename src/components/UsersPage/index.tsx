@@ -4,6 +4,7 @@ import Button from "@components/Button";
 import ContentTable, { ACTIONS_CELL_STYLE } from "@components/ContentTable";
 import Page from "@components/Page";
 import PageTitleHeader from "@components/PageTitleHeader";
+import { PaginationInfo } from "@components/Pagination";
 import Spacer from "@components/Spacer";
 import UserRoleSelect from "@components/UserRoleSelect";
 import { Role } from "@contexts/userContext";
@@ -120,7 +121,7 @@ export default function UsersPage(props: Props) {
 				onClickItem={editMembership}
 			/>
 			<Spacer size={20} />
-			{t("number-users", { count: memberships.length })}
+			<PaginationInfo info={t("number-users", { count: memberships.length })} />
 			<UserInviteModal
 				organization={activeOrganization!}
 				isOpen={isInviteModalOpen}
