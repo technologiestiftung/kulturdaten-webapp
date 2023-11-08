@@ -32,6 +32,12 @@ export default function MembershipEditModal(props: Props) {
 		async (event) => {
 			event.preventDefault();
 			setError(null);
+			const hasRoleChanged = request.role !== membership.role;
+			// If there is nothing to save, just close the modal.
+			if (!hasRoleChanged) {
+				onClose();
+				return;
+			}
 			try {
 				await apiClient.manageYourOrganizationData.patchOrganizationsMemberships(
 					organization.identifier,
@@ -44,7 +50,7 @@ export default function MembershipEditModal(props: Props) {
 			}
 			onChanged();
 		},
-		[apiClient, organization.identifier, membership.userIdentifier, request, onChanged],
+		[request, membership, onChanged, onClose, apiClient.manageYourOrganizationData, organization.identifier],
 	);
 	const handleDelete = useCallback(async () => {
 		setError(null);
