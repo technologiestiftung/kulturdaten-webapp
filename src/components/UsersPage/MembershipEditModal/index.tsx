@@ -21,12 +21,17 @@ interface Props {
 	onChanged(): void;
 }
 
+function getInitialRequest(membership: Membership): UpdateOrganizationMembershipRequest {
+	return {
+		role: membership.role,
+	};
+}
+
 export default function MembershipEditModal(props: Props) {
 	const { membership, organization, isOpen, onClose, onChanged } = props;
 	const t = useTranslations("User-Details");
 	const apiClient = useApiClient();
-	const initialRequest: UpdateOrganizationMembershipRequest = { role: membership.role };
-	const [request, setRequest] = useState<UpdateOrganizationMembershipRequest>(initialRequest);
+	const [request, setRequest] = useState<UpdateOrganizationMembershipRequest>(getInitialRequest(membership));
 	const [error, setError] = useState<string | null>(null);
 	const handleSubmit = useCallback<FormEventHandler>(
 		async (event) => {
@@ -70,9 +75,9 @@ export default function MembershipEditModal(props: Props) {
 			modalTitle={t("edit-modal-title")}
 			isOpen={isOpen}
 			onClose={onClose}
-			onAfterClose={() => {
-				setRequest(initialRequest);
+			onAfterOpen={() => {
 				setError(null);
+				setRequest(getInitialRequest(membership));
 			}}
 			minWidth="550px"
 		>

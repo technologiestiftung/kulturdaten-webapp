@@ -139,6 +139,7 @@ export default function UsersPage(props: Props) {
 					onClose={() => setEditModalOpen(false)}
 					onChanged={() => {
 						setEditModalOpen(false);
+						setEditedMembership(null);
 						reloadPage();
 					}}
 				/>
