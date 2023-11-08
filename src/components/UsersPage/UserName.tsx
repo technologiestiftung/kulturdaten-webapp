@@ -1,8 +1,7 @@
-import { User } from "@api/client/models/User";
-import { getFullName } from "@utils/users";
+import { UserLike, getFullName } from "@utils/users";
 
 interface Props {
-	user: User;
+	user: UserLike;
 }
 
 export default function UserName({ user }: Props) {

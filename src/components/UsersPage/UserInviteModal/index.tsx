@@ -8,7 +8,6 @@ import { Role } from "@contexts/userContext";
 import useApiClient from "@hooks/useApiClient";
 import { useTranslations } from "next-intl";
 import { FormEventHandler, useCallback, useState } from "react";
-import { getInitialRequest } from "../service";
 import Buttons from "./Buttons";
 import Error from "./Error";
 
@@ -22,7 +21,10 @@ export default function UserInviteModal(props: Props) {
 	const { organization, isOpen, onClose } = props;
 	const t = useTranslations("User-Details");
 	const apiClient = useApiClient();
-	const defaultRequest = getInitialRequest(null, organization);
+	const defaultRequest: CreateMembershipRequest = {
+		email: "",
+		role: "member",
+	};
 	const [request, setRequest] = useState<CreateMembershipRequest>(defaultRequest);
 	const [error, setError] = useState<string | null>(null);
 	const handleSubmit = useCallback<FormEventHandler>(

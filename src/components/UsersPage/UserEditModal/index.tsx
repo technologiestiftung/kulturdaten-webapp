@@ -1,6 +1,6 @@
 import { Organization } from "@api/client/models/Organization";
 import { UpdateOrganizationMembershipRequest } from "@api/client/models/UpdateOrganizationMembershipRequest";
-import { User } from "@api/client/models/User";
+import { Membership } from "@common/types";
 import FormField from "@components/FormField";
 import Modal from "@components/Modal";
 import Spacer from "@components/Spacer";
@@ -10,22 +10,21 @@ import useApiClient from "@hooks/useApiClient";
 import { getFullName } from "@utils/users";
 import { useTranslations } from "next-intl";
 import { FormEventHandler, useCallback, useState } from "react";
-import { getRole } from "../service";
 import Buttons from "./Buttons";
 import Error from "./Error";
 
 interface Props {
-	user: User;
+	membership: Membership;
 	organization: Organization;
 	isOpen: boolean;
 	onClose(): void;
 }
 
 export default function UserEditModal(props: Props) {
-	const { user, organization, isOpen, onClose } = props;
+	const { membership, organization, isOpen, onClose } = props;
 	const t = useTranslations("User-Details");
 	const apiClient = useApiClient();
-	const initialRequest: UpdateOrganizationMembershipRequest = { role: getRole(user, organization)! };
+	const initialRequest: UpdateOrganizationMembershipRequest = { role: membership.role };
 	const [request, setRequest] = useState<UpdateOrganizationMembershipRequest>(initialRequest);
 	const [error, setError] = useState<string | null>(null);
 	const handleSubmit = useCallback<FormEventHandler>(
@@ -35,7 +34,7 @@ export default function UserEditModal(props: Props) {
 			try {
 				await apiClient.manageYourOrganizationData.patchOrganizationsMemberships(
 					organization.identifier,
-					user.identifier,
+					membership.userIdentifier,
 					request,
 				);
 			} catch (error) {
@@ -44,21 +43,21 @@ export default function UserEditModal(props: Props) {
 			}
 			onClose();
 		},
-		[apiClient, organization.identifier, user.identifier, request, onClose],
+		[apiClient, organization.identifier, membership.userIdentifier, request, onClose],
 	);
 	const handleDelete = useCallback(async () => {
 		setError(null);
 		try {
 			await apiClient.manageYourOrganizationData.deleteOrganizationsMemberships(
 				organization.identifier,
-				user.identifier,
+				membership.userIdentifier,
 			);
 		} catch (error) {
 			setError((error as Error).message);
 			return;
 		}
 		onClose();
-	}, [apiClient, organization.identifier, user.identifier, onClose]);
+	}, [apiClient, organization.identifier, membership.userIdentifier, onClose]);
 	return (
 		<Modal
 			modalTitle={t("edit-modal-title")}
@@ -73,7 +72,7 @@ export default function UserEditModal(props: Props) {
 				<FormField
 					label={t("label-name")}
 					id="name"
-					value={getFullName(user)}
+					value={getFullName(membership)}
 					readOnly={true}
 					disabled={true}
 					required={true}
@@ -83,7 +82,7 @@ export default function UserEditModal(props: Props) {
 					label={t("label-email")}
 					id="email"
 					type="email"
-					value={user.email}
+					value={membership.email}
 					readOnly={true}
 					disabled={true}
 					required={true}

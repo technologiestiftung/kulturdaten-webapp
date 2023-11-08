@@ -1,22 +1,25 @@
-import { getPaginationProps, withApiClientAndPagination } from "@/src/utils/data";
-import { User } from "@api/client/models/User";
+import { Membership } from "@common/types";
 import UsersPage from "@components/UsersPage";
+import { decodeAccessToken, getAccessTokenFromContext } from "@utils/auth";
+import { withApiClientAndPagination } from "@utils/data";
 import withAuth from "@utils/withAuth";
 import { GetServerSideProps } from "next";
 
 interface Props {
-	users: User[];
+	memberships: Membership[];
 }
 
 export const getServerSideProps: GetServerSideProps<Props> = (context) =>
-	withApiClientAndPagination<Props>(context)(async (apiClient, page, pageSize, messages) => {
-		// TODO: Use apiClient.manageYourOrganizationData.getOrganizationsMemberships()
-		const response = await apiClient.users.getUsers(page, pageSize);
+	withApiClientAndPagination<Props>(context)(async (apiClient, _page, _pageSize, messages) => {
+		const accessToken = getAccessTokenFromContext(context);
+		const decodedAccessToken = decodeAccessToken(accessToken);
+		const response = await apiClient.manageYourOrganizationData.getOrganizationsMemberships(
+			decodedAccessToken.organizationIdentifier,
+		);
 		const data = response.data!;
 		return {
 			props: {
-				users: data.users || [],
-				pagination: getPaginationProps(data),
+				memberships: data.memberships || [],
 				messages,
 			},
 		};

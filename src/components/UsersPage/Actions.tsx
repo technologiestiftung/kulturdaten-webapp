@@ -1,27 +1,27 @@
-import { User } from "@api/client/models/User";
+import { Membership } from "@common/types";
 import { useTranslations } from "next-intl";
 import { useMemo } from "react";
 import PopoverMenu, { MenuOption } from "../PopoverMenu";
 
 interface Props {
-	user: User;
-	onEdit(user: User): void;
-	onDelete(user: User): void;
+	membership: Membership;
+	onEdit(membership: Membership): void;
+	onDelete(membership: Membership): void;
 }
 
-export default function Actions({ user, onEdit, onDelete }: Props) {
+export default function Actions({ membership, onEdit, onDelete }: Props) {
 	const t = useTranslations("Users");
 	const options = useMemo<MenuOption[]>(() => {
 		return [
 			{
 				label: t("table-option-edit"),
-				onClick: () => onEdit(user),
+				onClick: () => onEdit(membership),
 			},
 			{
 				label: t("table-option-delete"),
-				onClick: async () => onDelete(user),
+				onClick: async () => onDelete(membership),
 			},
 		].filter(Boolean) as MenuOption[];
-	}, [user, onEdit, onDelete, t]);
+	}, [membership, onEdit, onDelete, t]);
 	return <PopoverMenu options={options} />;
 }

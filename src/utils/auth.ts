@@ -1,3 +1,5 @@
+import { Role } from "@contexts/userContext";
+import { jwtDecode } from "jwt-decode";
 import { GetServerSidePropsContext } from "next";
 import { getCookie, removeCookie, setCookie } from "typescript-cookie";
 
@@ -32,4 +34,17 @@ export function getAccessTokenFromContext(context: GetServerSidePropsContext) {
 		throw new Error("No access token found");
 	}
 	return accessToken;
+}
+
+type DecodedAccessToken = {
+	identifier: string;
+	organizationIdentifier: string;
+	role: Role;
+	permissionFlags: number;
+	iat: number;
+	exp: number;
+};
+
+export function decodeAccessToken(accessToken: string) {
+	return jwtDecode(accessToken) as DecodedAccessToken;
 }

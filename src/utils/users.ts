@@ -1,5 +1,8 @@
-import { User } from "@api/client/models/User";
+export interface UserLike {
+	firstName?: string;
+	lastName?: string;
+}
 
-export function getFullName(user: User) {
+export function getFullName(user: UserLike) {
 	return [user.firstName || "-", user.lastName || ""].join(" ").trim();
 }
