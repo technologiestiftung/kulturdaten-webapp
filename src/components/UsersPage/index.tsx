@@ -125,6 +125,10 @@ export default function UsersPage(props: Props) {
 				organization={activeOrganization!}
 				isOpen={isInviteModalOpen}
 				onClose={() => setInviteModalOpen(false)}
+				onInvited={() => {
+					setInviteModalOpen(false);
+					reloadPage();
+				}}
 			/>
 			{editedMembership && (
 				<UserEditModal
@@ -132,6 +136,10 @@ export default function UsersPage(props: Props) {
 					organization={activeOrganization!}
 					isOpen={isEditModalOpen}
 					onClose={() => setEditModalOpen(false)}
+					onChanged={() => {
+						setEditModalOpen(false);
+						reloadPage();
+					}}
 				/>
 			)}
 		</Page>

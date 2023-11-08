@@ -18,10 +18,11 @@ interface Props {
 	organization: Organization;
 	isOpen: boolean;
 	onClose(): void;
+	onChanged(): void;
 }
 
 export default function UserEditModal(props: Props) {
-	const { membership, organization, isOpen, onClose } = props;
+	const { membership, organization, isOpen, onClose, onChanged } = props;
 	const t = useTranslations("User-Details");
 	const apiClient = useApiClient();
 	const initialRequest: UpdateOrganizationMembershipRequest = { role: membership.role };
@@ -41,9 +42,9 @@ export default function UserEditModal(props: Props) {
 				setError((error as Error).message);
 				return;
 			}
-			onClose();
+			onChanged();
 		},
-		[apiClient, organization.identifier, membership.userIdentifier, request, onClose],
+		[apiClient, organization.identifier, membership.userIdentifier, request, onChanged],
 	);
 	const handleDelete = useCallback(async () => {
 		setError(null);
@@ -56,8 +57,8 @@ export default function UserEditModal(props: Props) {
 			setError((error as Error).message);
 			return;
 		}
-		onClose();
-	}, [apiClient, organization.identifier, membership.userIdentifier, onClose]);
+		onChanged();
+	}, [apiClient, organization.identifier, membership.userIdentifier, onChanged]);
 	return (
 		<Modal
 			modalTitle={t("edit-modal-title")}

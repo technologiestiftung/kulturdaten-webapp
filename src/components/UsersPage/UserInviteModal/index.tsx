@@ -15,10 +15,11 @@ interface Props {
 	organization: Organization;
 	isOpen: boolean;
 	onClose(): void;
+	onInvited(): void;
 }
 
 export default function UserInviteModal(props: Props) {
-	const { organization, isOpen, onClose } = props;
+	const { organization, isOpen, onClose, onInvited } = props;
 	const t = useTranslations("User-Details");
 	const apiClient = useApiClient();
 	const defaultRequest: CreateMembershipRequest = {
@@ -37,9 +38,9 @@ export default function UserInviteModal(props: Props) {
 				setError((error as Error).message);
 				return;
 			}
-			onClose();
+			onInvited();
 		},
-		[apiClient, organization.identifier, request, onClose],
+		[apiClient, organization.identifier, request, onInvited],
 	);
 	return (
 		<Modal
