@@ -10,6 +10,7 @@ interface Props {
 
 export const getServerSideProps: GetServerSideProps<Props> = (context) =>
 	withApiClientAndPagination<Props>(context)(async (apiClient, page, pageSize, messages) => {
+		// TODO: Use apiClient.manageYourOrganizationData.getOrganizationsMemberships()
 		const response = await apiClient.users.getUsers(page, pageSize);
 		const data = response.data!;
 		return {

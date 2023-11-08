@@ -1,5 +1,4 @@
 import { User } from "@api/client/models/User";
-import useApiClient from "@hooks/useApiClient";
 import { useTranslations } from "next-intl";
 import { useMemo } from "react";
 import PopoverMenu, { MenuOption } from "../PopoverMenu";
@@ -7,11 +6,10 @@ import PopoverMenu, { MenuOption } from "../PopoverMenu";
 interface Props {
 	user: User;
 	onEdit(user: User): void;
-	onUpdated(): void;
+	onDelete(user: User): void;
 }
 
-export default function Actions({ user, onEdit, onUpdated }: Props) {
-	const apiClient = useApiClient();
+export default function Actions({ user, onEdit, onDelete }: Props) {
 	const t = useTranslations("Users");
 	const options = useMemo<MenuOption[]>(() => {
 		return [
@@ -21,13 +19,9 @@ export default function Actions({ user, onEdit, onUpdated }: Props) {
 			},
 			{
 				label: t("table-option-delete"),
-				onClick: async () => {
-					// TODO: Replace this with the api route to remove user’s membership.
-					await apiClient.users.deleteUsers(user.identifier);
-					onUpdated();
-				},
+				onClick: async () => onDelete(user),
 			},
 		].filter(Boolean) as MenuOption[];
-	}, [apiClient, user, onEdit, onUpdated, t]);
+	}, [user, onEdit, onDelete, t]);
 	return <PopoverMenu options={options} />;
 }

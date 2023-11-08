@@ -7,6 +7,8 @@ import PageTitleHeader from "@components/PageTitleHeader";
 import Pagination, { PaginationType } from "@components/Pagination";
 import Spacer from "@components/Spacer";
 import UserRoleSelect from "@components/UserRoleSelect";
+import { Role } from "@contexts/userContext";
+import useApiClient from "@hooks/useApiClient";
 import useUser from "@hooks/useUser";
 import { getLocalizedLabel } from "@utils/content";
 import { useRouter } from "next/router";
@@ -26,23 +28,42 @@ interface Props {
 export default function UsersPage(props: Props) {
 	const t = useTranslations("Users");
 	const router = useRouter();
+	const apiClient = useApiClient();
 	const [isInviteModalOpen, setInviteModalOpen] = useState(false);
 	const [isEditModalOpen, setEditModalOpen] = useState(false);
 	const [editedUser, setEditedUser] = useState<User | null>(null);
 	const { user: activeUser, activeOrganization } = useUser();
 	const { users, pagination } = props;
+	const reloadPage = useCallback(() => router.replace(router.asPath, undefined, { scroll: false }), [router]);
 	const editUser = useCallback((user: User) => {
 		setEditedUser(user);
 		setEditModalOpen(true);
 	}, []);
-	const handleChangeRole = useCallback((event: ChangeEvent<HTMLSelectElement>, user: User) => {
-		// TODO: Update role via api.
-		// const newRole = event.target.value as Role;
-	}, []);
-	const handleUpdated = useCallback(() => {
-		router.replace(router.asPath, undefined, { scroll: false });
-		// TODO: Show success message.
-	}, [router]);
+	const deleteMembership = useCallback(
+		async (user: User) => {
+			// TODO: Error handling!
+			await apiClient.manageYourOrganizationData.deleteOrganizationsMemberships(
+				activeOrganization!.identifier,
+				user.identifier,
+			);
+			reloadPage();
+		},
+		[activeOrganization, apiClient, reloadPage],
+	);
+	const handleChangeRole = useCallback(
+		async (event: ChangeEvent<HTMLSelectElement>, user: User) => {
+			const newRole = event.target.value as Role;
+			// TODO: Error handling!
+			await apiClient.manageYourOrganizationData.patchOrganizationsMemberships(
+				activeOrganization!.identifier,
+				user.identifier,
+				{ role: newRole },
+			);
+			reloadPage();
+			// TODO: Show success message.
+		},
+		[apiClient, activeOrganization, reloadPage],
+	);
 	const isCurrentUser = (user: User) => user.identifier === activeUser!.identifier;
 	return (
 		<Page metadata={{ title: t("page-title") }}>
@@ -91,7 +112,7 @@ export default function UsersPage(props: Props) {
 					},
 					{
 						header: "",
-						getContent: (user) => <Actions user={user} onEdit={editUser} onUpdated={handleUpdated} />,
+						getContent: (user) => <Actions user={user} onEdit={editUser} onDelete={deleteMembership} />,
 						canBeSorted: false,
 						headerStyle: ACTIONS_CELL_STYLE,
 						cellStyle: ACTIONS_CELL_STYLE,

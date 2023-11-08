@@ -1,21 +1,15 @@
+import { CreateMembershipRequest } from "@api/client/models/CreateMembershipRequest";
 import { Organization } from "@api/client/models/Organization";
 import { User } from "@api/client/models/User";
-import { Role } from "@contexts/userContext";
 
-// TODO: Use proper type from generated API client.
-export interface UserInviteRequest {
-	email: string;
-	role: Role;
-}
-
-export function getInitialRequest(user: User | null, organization: Organization): UserInviteRequest {
+export function getInitialRequest(user: User | null, organization: Organization): CreateMembershipRequest {
 	if (user) {
 		return {
 			email: user.email,
-			role: getRole(user, organization),
+			role: getRole(user, organization) || "unassigned",
 		};
 	}
-	const defaultRequest: UserInviteRequest = {
+	const defaultRequest: CreateMembershipRequest = {
 		email: "",
 		role: "member",
 	};
@@ -23,8 +17,11 @@ export function getInitialRequest(user: User | null, organization: Organization)
 }
 
 export function getRole(user: User, organization: Organization) {
-	const role = user.memberships.find(
+	const membership = user.memberships.find(
 		({ organizationIdentifier }) => organizationIdentifier === organization.identifier,
-	)!.role!;
-	return role;
+	);
+	if (!membership) {
+		return null;
+	}
+	return membership.role;
 }

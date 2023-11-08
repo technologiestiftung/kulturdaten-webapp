@@ -94,7 +94,11 @@
 		"invite-button": "Einladen",
 		"update-button": "Speichern",
 		"delete-button": "Löschen",
-		"cancel-button": "Abbrechen"
+		"cancel-button": "Abbrechen",
+		"error-user-is-already-a-member": "Diese:r Benutzer:in ist bereits Mitglied bei dieser Anbieter:in. Die Rolle kann in der Übersicht geändert werden.",
+		"error-user-not-exist": "Unter dieser E-Mail-Addresse wurde kein:e registrierte Benutzer:in gefunden.",
+		"error-user-not-found": "Benutzer:in konnte nicht gefunden werden und wurde ggf. schon gelöscht.",
+		"error-unknown": "Ein unbekannter Fehler ist aufgetreten."
 	},
 	"Modal": {
 		"close-button": "Schließen"

@@ -1,13 +1,16 @@
+import { CreateMembershipRequest } from "@api/client/models/CreateMembershipRequest";
 import { Organization } from "@api/client/models/Organization";
 import FormField from "@components/FormField";
 import Modal from "@components/Modal";
 import Spacer from "@components/Spacer";
 import UserRoleSelect from "@components/UserRoleSelect";
 import { Role } from "@contexts/userContext";
+import useApiClient from "@hooks/useApiClient";
 import { useTranslations } from "next-intl";
 import { FormEventHandler, useCallback, useState } from "react";
-import { UserInviteRequest, getInitialRequest } from "../service";
+import { getInitialRequest } from "../service";
 import Buttons from "./Buttons";
+import Error from "./Error";
 
 interface Props {
 	organization: Organization;
@@ -18,23 +21,33 @@ interface Props {
 export default function UserInviteModal(props: Props) {
 	const { organization, isOpen, onClose } = props;
 	const t = useTranslations("User-Details");
+	const apiClient = useApiClient();
 	const defaultRequest = getInitialRequest(null, organization);
-	const [request, setRequest] = useState<UserInviteRequest>(defaultRequest);
-	// TODO: const apiClient = useApiClient();
+	const [request, setRequest] = useState<CreateMembershipRequest>(defaultRequest);
+	const [error, setError] = useState<string | null>(null);
 	const handleSubmit = useCallback<FormEventHandler>(
 		async (event) => {
 			event.preventDefault();
-			// TODO: Invite user via apiClient (and show error message if it failed).
+			try {
+				setError(null);
+				await apiClient.manageYourOrganizationData.postOrganizationsMemberships(organization.identifier, request);
+			} catch (error) {
+				setError((error as Error).message);
+				return;
+			}
 			onClose();
 		},
-		[onClose],
+		[apiClient, organization.identifier, request, onClose],
 	);
 	return (
 		<Modal
 			modalTitle={t("invite-modal-title")}
 			isOpen={isOpen}
 			onClose={onClose}
-			onAfterClose={() => setRequest(defaultRequest)}
+			onAfterClose={() => {
+				setRequest(defaultRequest);
+				setError(null);
+			}}
 		>
 			<form onSubmit={handleSubmit}>
 				<FormField
@@ -66,6 +79,8 @@ export default function UserInviteModal(props: Props) {
 				/>
 				<Spacer size={20} />
 				<Buttons onClose={onClose} />
+				{error && <Spacer size={15} />}
+				<Error error={error} />
 			</form>
 		</Modal>
 	);
