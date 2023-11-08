@@ -15,7 +15,7 @@ import { useRouter } from "next/router";
 import { ChangeEvent, useCallback, useState } from "react";
 import { useTranslations } from "use-intl";
 import Actions from "./Actions";
-import UserEditModal from "./UserEditModal";
+import MembershipEditModal from "./MembershipEditModal";
 import UserInviteModal from "./UserInviteModal";
 import UserName from "./UserName";
 
@@ -132,7 +132,7 @@ export default function UsersPage(props: Props) {
 				}}
 			/>
 			{editedMembership && (
-				<UserEditModal
+				<MembershipEditModal
 					membership={editedMembership}
 					organization={activeOrganization!}
 					isOpen={isEditModalOpen}

@@ -21,7 +21,7 @@ interface Props {
 	onChanged(): void;
 }
 
-export default function UserEditModal(props: Props) {
+export default function MembershipEditModal(props: Props) {
 	const { membership, organization, isOpen, onClose, onChanged } = props;
 	const t = useTranslations("User-Details");
 	const apiClient = useApiClient();
