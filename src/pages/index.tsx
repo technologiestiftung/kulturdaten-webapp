@@ -1,9 +1,7 @@
-import apiClient from "@api/client";
 import { Attraction } from "@api/client/models/Attraction";
 import AttractionsPage from "@components/AttractionsPage";
 import { PaginationType } from "@components/Pagination";
-import { loadMessages } from "@utils/i18n";
-import { getPagination } from "@utils/pagination";
+import { withApiClientAndPagination } from "@utils/data";
 import withAuth from "@utils/withAuth";
 import { GetServerSideProps } from "next";
 
@@ -11,23 +9,23 @@ interface Props {
 	attractions: Attraction[];
 }
 
-export const getServerSideProps: GetServerSideProps<Props> = async (context) => {
-	const { page, pageSize } = getPagination(context.query);
-	const response = await apiClient.discoverCulturalData.getAttractions(page, pageSize, false);
-	const data = response.data!;
-	const attractions = data.attractions || [];
-	const pagination: PaginationType = {
-		page: data.page!,
-		pageSize: data.pageSize!,
-		totalCount: data.totalCount!,
-	};
-	return {
-		props: {
-			attractions,
-			pagination,
-			messages: await loadMessages(context.locale!),
-		},
-	};
-};
+export const getServerSideProps: GetServerSideProps<Props> = (context) =>
+	withApiClientAndPagination<Props>(context)(async ({ apiClient, page, pageSize, messages }) => {
+		const response = await apiClient.discoverCulturalData.getAttractions(page, pageSize, false);
+		const data = response.data!;
+		const attractions = data.attractions || [];
+		const pagination: PaginationType = {
+			page: data.page!,
+			pageSize: data.pageSize!,
+			totalCount: data.totalCount!,
+		};
+		return {
+			props: {
+				attractions,
+				pagination,
+				messages,
+			},
+		};
+	});
 
 export default withAuth(AttractionsPage);
