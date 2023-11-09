@@ -3,7 +3,7 @@ import NextLink from "next/link";
 import { AnchorHTMLAttributes, ButtonHTMLAttributes, Ref, forwardRef } from "react";
 import { borderRadiuses, colors, fontWeights, lineHeights, spacings, timings } from "../../common/styleVariables";
 
-type ButtonColor = "primary" | "neutral";
+type ButtonColor = "primary" | "neutral" | "danger";
 
 type StyleMapping = {
 	default: CSSObject;
@@ -29,6 +29,18 @@ const colorStyles: Record<ButtonColor, StyleMapping> = {
 			background: colors.neutral200,
 		},
 	},
+	danger: {
+		default: {
+			color: colors.error,
+			background: "transparent",
+			border: `1px solid ${colors.error}`,
+		},
+		hover: {
+			color: colors.white,
+			background: colors.error,
+			border: `1px solid ${colors.errorDark}`,
+		},
+	},
 };
 
 const UnstyledButton = styled.button({
@@ -44,12 +56,13 @@ const StyledButton = styled("button", {
 	display: "inline-block",
 	lineHeight: lineHeights.buttons,
 	padding: `${spacings.get(2)} ${spacings.get(3.5)}`,
-	...colorStyles[color].default,
 	fontWeight: fontWeights.default,
 	textDecoration: "none",
-	border: "none",
+	whiteSpace: "nowrap",
+	border: "1px transparent",
 	borderRadius: borderRadiuses.medium,
 	transition: `all ${timings.short} ease-in-out`,
+	...colorStyles[color].default,
 	"&:hover": {
 		...colorStyles[color].hover,
 		cursor: "pointer",

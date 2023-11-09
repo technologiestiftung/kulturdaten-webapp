@@ -1,6 +1,5 @@
 import { AdminAttraction } from "@api/client/models/AdminAttraction";
 import ROUTES from "@common/routes";
-import { spacings } from "@common/styleVariables";
 import Page from "@components/Page";
 import { getLocalizedLabel } from "@utils/content";
 import { useRouter } from "next/router";
@@ -8,7 +7,7 @@ import { useCallback } from "react";
 import { useTranslations } from "use-intl";
 import AttractionStatus from "../AttractionStatus";
 import Button from "../Button";
-import ContentTable from "../ContentTable";
+import ContentTable, { ACTIONS_CELL_STYLE } from "../ContentTable";
 import PageTitleHeader from "../PageTitleHeader";
 import Pagination, { PaginationType } from "../Pagination";
 import Spacer from "../Spacer";
@@ -71,8 +70,8 @@ export default function AdminAttractionsPage(props: Props) {
 						header: "",
 						getContent: (attraction) => <Actions attraction={attraction} onUpdated={handleUpdated} />,
 						canBeSorted: false,
-						headerStyle: { padding: `0 ${spacings.get(1)} 0 0` },
-						cellStyle: { padding: `0 ${spacings.get(1)} 0 0` },
+						headerStyle: ACTIONS_CELL_STYLE,
+						cellStyle: ACTIONS_CELL_STYLE,
 					},
 				]}
 				onClickItem={(attraction) => router.push(ROUTES.admin.attractionDetails(attraction.identifier))}

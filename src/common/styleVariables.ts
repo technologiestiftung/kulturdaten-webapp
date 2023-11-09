@@ -37,6 +37,8 @@ export const colors = {
 	mediumContrast: "#54595c",
 	highContrast: "#323536",
 	error: "#ff4f46",
+	errorDark: "#e00b00",
+	modalOverlay: "rgba(0, 0, 0, 0.5)",
 };
 
 const getSpacing = (factor: number) => {
@@ -82,3 +84,10 @@ export const timings = {
 export const boxShadows = {
 	elevation100: "0px 2px 8px 0px rgba(0, 0, 0, 0.12)",
 };
+
+export const iconSizes = {
+	16: 16,
+	24: 24,
+};
+
+export const getAsNumber = (pixelValue: string): number => Number(pixelValue.replace("px", ""));

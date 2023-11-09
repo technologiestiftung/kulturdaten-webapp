@@ -52,6 +52,8 @@ type Props<Item> = {
 	onClickItem?(item: Item): void;
 };
 
+export const ACTIONS_CELL_STYLE = { padding: "0px", width: "40px" };
+
 export default function ContentTable<Item>(props: Props<Item>) {
 	const { items, columns, onClickItem } = props;
 	return (

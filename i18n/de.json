@@ -10,7 +10,11 @@
 		"link-admin-attractions": "Angebote",
 		"link-admin-locations": "Orte",
 		"link-admin-organizations": "Anbieter:innen",
-		"link-logout": "Ausloggen"
+		"link-admin-users": "Benutzer:innen",
+		"link-logout": "Ausloggen",
+		"organization-select-label": "Aktive:r Anbieter:in",
+		"organization-select-placeholder": "Anbieter:in auswählen…",
+		"organization-select-no-options": "Kein:e Anbieter:in verfügbar"
 	},
 	"Pagination": {
 		"go-to-page": "Zu Seite {pageNumber} springen"
@@ -63,5 +67,40 @@
 		"page-title": "Anbieter:innen",
 		"create-organization": "Anbieter:in erstellen",
 		"edit-organization": "Anbieter:in bearbeiten"
+	},
+	"Users": {
+		"page-title": "Benutzer:innen",
+		"page-description": "Benutzer:innen zu {organizationName} einladen oder deren Rollen bearbeiten.",
+		"table-header-email": "E-Mail",
+		"table-header-name": "Name",
+		"table-header-role": "Rolle",
+		"table-option-edit": "Bearbeiten",
+		"table-option-delete": "Aus Anbieter:in entfernen",
+		"table-name-current-user-indicator": "Ich",
+		"invite-user": "Benutzer:in einladen",
+		"number-users": "{count, plural, =1 {# Benutzer:in} other {# Benutzer:innen}}",
+		"role-admin": "Administrator",
+		"role-editor": "Editor",
+		"role-author": "Autor",
+		"role-member": "Mitglied",
+		"role-unassigned": "Keine"
+	},
+	"User-Details": {
+		"invite-modal-title": "Benutzer:in einladen",
+		"edit-modal-title": "Benutzer:in bearbeiten",
+		"label-email": "E-Mail",
+		"label-name": "Name",
+		"label-role": "Rolle",
+		"invite-button": "Einladen",
+		"update-button": "Speichern",
+		"delete-button": "Aus Anbieter:in entfernen",
+		"cancel-button": "Abbrechen",
+		"error-user-is-already-a-member": "Diese:r Benutzer:in ist bereits Mitglied bei dieser Anbieter:in. Die Rolle kann in der Übersicht geändert werden.",
+		"error-user-not-exist": "Unter dieser E-Mail-Addresse wurde kein:e registrierte Benutzer:in gefunden.",
+		"error-user-not-found": "Benutzer:in konnte nicht gefunden werden und wurde ggf. schon gelöscht.",
+		"error-unknown": "Ein unbekannter Fehler ist aufgetreten."
+	},
+	"Modal": {
+		"close-button": "Schließen"
 	}
 }

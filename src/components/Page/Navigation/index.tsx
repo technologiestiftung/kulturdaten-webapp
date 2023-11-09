@@ -8,6 +8,7 @@ import { useRouter } from "next/router";
 import { useCallback, useMemo } from "react";
 import { useTranslations } from "use-intl";
 import NavigationLink, { NavigationButton } from "./NavigationLink";
+import OrganizationSelect from "./OrganizationSelect";
 
 type NavigationGroupType = "user" | "admin";
 
@@ -35,7 +36,8 @@ function getNavigationGroups(isAdmin: boolean): Array<NavigationGroup> {
 		links: [
 			{ href: ROUTES.admin.attractions(), i18nKey: "link-admin-attractions", icon: "star" },
 			{ href: ROUTES.admin.locations(), i18nKey: "link-admin-locations", icon: "map-pin" },
-			{ href: ROUTES.admin.organizations(), i18nKey: "link-admin-organizations", icon: "users" },
+			{ href: ROUTES.admin.organizations(), i18nKey: "link-admin-organizations", icon: "drama" },
+			{ href: ROUTES.admin.users(), i18nKey: "link-admin-users", icon: "users" },
 		],
 	};
 	return [userNavigationGroup, ...(isAdmin ? [adminNavigationGroup] : [])];
@@ -77,9 +79,9 @@ const GroupItem = styled.li({});
 
 export default function Navigation() {
 	const t = useTranslations("Navigation");
-	const { logOut } = useUser();
+	const { organizations, activeOrganization, activeRole, selectOrganization, logOut } = useUser();
 	const router = useRouter();
-	const isAdmin = true;
+	const isAdmin = activeRole === "admin";
 	const navigationGroups = useMemo(() => getNavigationGroups(isAdmin), [isAdmin]);
 	const isLinkActive = useCallback(
 		(href: string) => {
@@ -96,6 +98,12 @@ export default function Navigation() {
 		<Container>
 			<div>
 				<PageTitle>{t("title")}</PageTitle>
+				<Spacer size={20} />
+				<OrganizationSelect
+					organizations={organizations}
+					activeOrganization={activeOrganization}
+					onSelectOrganization={selectOrganization}
+				/>
 				<Spacer size={20} />
 				{navigationGroups.map((group, index) => (
 					<Group key={index}>

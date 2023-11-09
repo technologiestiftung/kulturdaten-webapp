@@ -1,19 +1,10 @@
-import { borderRadiuses, colors, fontSizes, spacings } from "@common/styleVariables";
+import { spacings } from "@common/styleVariables";
 import styled from "@emotion/styled";
 import { ReactNode } from "react";
+import Container from "./Container";
 import { IconNext, IconPrevious } from "./Icons";
 import PageEntry from "./PageEntry";
 import { getPages, getTotalPages } from "./service";
-
-const Container = styled.div({
-	display: "flex",
-	flexFlow: "row wrap",
-	justifyContent: "space-between",
-	alignItems: "center",
-	fontSize: fontSizes.small,
-	border: `1px solid ${colors.neutral200}`,
-	borderRadius: borderRadiuses.big,
-});
 
 const Info = styled.div({
 	padding: `${spacings.get(1)} ${spacings.get(3)}`,
@@ -67,6 +58,14 @@ export default function Pagination({ pagination, info }: Props) {
 					</PageEntry>
 				</ListItem>
 			</List>
+		</Container>
+	);
+}
+
+export function PaginationInfo({ info }: { info: ReactNode }) {
+	return (
+		<Container>
+			<Info>{info}</Info>
 		</Container>
 	);
 }
