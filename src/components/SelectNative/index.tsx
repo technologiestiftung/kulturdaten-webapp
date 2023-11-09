@@ -68,6 +68,8 @@ const StyledSelect = styled.select<{ variation: Variation; error?: string }>(({ 
 	color: colors.black,
 	width: "100%",
 	cursor: "pointer",
+	overflow: "hidden",
+	textOverflow: "ellipsis",
 	transition: `all ${timings.short} ease-in-out`,
 	...variationStyles[variation].default,
 	"&:hover": !disabled && {
