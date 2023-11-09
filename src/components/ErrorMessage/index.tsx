@@ -8,6 +8,7 @@ const Container = styled.div({
 
 const StyledIcon = styled(Icon)({
 	display: "inline-block",
+	verticalAlign: "-0.125em",
 });
 
 interface Props {
@@ -17,10 +18,12 @@ interface Props {
 export default function ErrorMessage(props: Props) {
 	const { error } = props;
 	return (
-		error && (
-			<Container aria-live="assertive">
-				<StyledIcon name="alert-triangle" size={iconSizes[16]} /> {error}
-			</Container>
-		)
+		<Container aria-live="assertive">
+			{error && (
+				<>
+					<StyledIcon name="alert-triangle" size={iconSizes[16]} /> {error}
+				</>
+			)}
+		</Container>
 	);
 }
