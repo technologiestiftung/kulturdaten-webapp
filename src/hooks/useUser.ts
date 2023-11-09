@@ -1,15 +1,16 @@
 import apiClient from "@api/client";
+import { Organization } from "@api/client/models/Organization";
+import ROUTES from "@common/routes";
+import { UserContext } from "@contexts/userContext";
 import { useRouter } from "next/router";
 import { useContext } from "react";
-import { Organization } from "../api/client/models/Organization";
-import { UserContext } from "../contexts/userContext";
 
 export default function useUser() {
 	const router = useRouter();
 	const { loginData, activeOrganization, activeRole, selectOrganization, storeLoginResponse, clearLoginData } =
 		useContext(UserContext);
 	const logOut = async () => {
-		await router.push("/login");
+		await router.push(ROUTES.login());
 		clearLoginData();
 	};
 	const logIn = async (email: string, password: string) => {
