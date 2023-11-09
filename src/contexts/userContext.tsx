@@ -1,8 +1,10 @@
 import { CreateMembershipRequest } from "@api/client/models/CreateMembershipRequest";
 import { LoginResponse } from "@api/client/models/LoginResponse";
 import { Organization } from "@api/client/models/Organization";
+import ROUTES from "@common/routes";
 import { clearAccessToken, getAccessToken, storeAccessToken } from "@utils/auth";
-import { FC, ReactNode, createContext, useEffect, useMemo, useState } from "react";
+import { useRouter } from "next/router";
+import { FC, ReactNode, createContext, useCallback, useEffect, useMemo, useState } from "react";
 
 type LoginData = Required<LoginResponse>["data"];
 
@@ -33,20 +35,37 @@ type UserContextProviderProps = {
 };
 
 export const UserContextProvider: FC<UserContextProviderProps> = ({ children }: UserContextProviderProps) => {
+	const router = useRouter();
 	const [loginData, setLoginData] = useState<LoginData | null>(null);
 	const [activeOrganization, setActiveOrganization] = useState<Organization | null>(null);
 	const [activeRole, setActiveRole] = useState<Role | null>(null);
 
-	const reloadFromToken = (existingAccessToken: string, loginData: LoginData) => {
-		const matchingAccessToken = loginData.accessTokens.find(
-			(accessToken) => accessToken.token === existingAccessToken,
-		)!;
-		const organizationIdentifier = matchingAccessToken.decodedToken!.organizationIdentifier;
-		const selectedOrganization = loginData.organizations!.find(
-			(organization) => organization.identifier === organizationIdentifier,
-		)!;
-		setActiveOrganization(selectedOrganization);
-		setActiveRole(matchingAccessToken.decodedToken!.role!);
+	const reloadFromToken = useCallback(
+		(existingAccessToken: string, loginData: LoginData) => {
+			const matchingAccessToken = loginData.accessTokens.find(
+				(accessToken) => accessToken.token === existingAccessToken,
+			);
+			if (!matchingAccessToken) {
+				// No matching access token found, clear data and return to login.
+				clearLoginData();
+				router.push(ROUTES.login());
+				return;
+			}
+			const organizationIdentifier = matchingAccessToken.decodedToken!.organizationIdentifier;
+			const selectedOrganization = loginData.organizations!.find(
+				(organization) => organization.identifier === organizationIdentifier,
+			)!;
+			setActiveOrganization(selectedOrganization);
+			setActiveRole(matchingAccessToken.decodedToken!.role!);
+		},
+		[router],
+	);
+
+	const clearLoginData = () => {
+		localStorage.removeItem(STORAGE_KEY);
+		setLoginData(null);
+		setActiveOrganization(null);
+		clearAccessToken();
 	};
 
 	const value = useMemo<UserContextType>(() => {
@@ -71,13 +90,6 @@ export const UserContextProvider: FC<UserContextProviderProps> = ({ children }: 
 			localStorage.setItem(STORAGE_KEY, JSON.stringify(loginData));
 			setLoginData(loginData);
 			initializeOrganizations(loginData);
-		};
-
-		const clearLoginData = () => {
-			localStorage.removeItem(STORAGE_KEY);
-			setLoginData(null);
-			setActiveOrganization(null);
-			clearAccessToken();
 		};
 
 		const selectOrganization = (organization: Organization | null) => {
@@ -112,7 +124,7 @@ export const UserContextProvider: FC<UserContextProviderProps> = ({ children }: 
 		if (existingAccessToken && loginData) {
 			reloadFromToken(existingAccessToken, loginData);
 		}
-	}, []);
+	}, [reloadFromToken]);
 
 	return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 };
