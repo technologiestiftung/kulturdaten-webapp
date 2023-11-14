@@ -946,6 +946,36 @@ paths:
       responses:
         "200":
           description: OK
+  /locations/{identifier}/publish:
+    post:
+      tags:
+        - Manage cultural data
+      parameters:
+        - name: identifier
+          in: path
+          required: true
+          schema:
+            type: string
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Published
+  /locations/{identifier}/unpublish:
+    post:
+      tags:
+        - Manage cultural data
+      parameters:
+        - name: identifier
+          in: path
+          required: true
+          schema:
+            type: string
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Unpublished
   /locations/{identifier}/claim:
     post:
       tags:
@@ -1319,8 +1349,6 @@ paths:
           application/json:
             schema:
               $ref: "#/components/schemas/CreateUserRequest"
-      security:
-        - bearerAuth: []
       responses:
         "201":
           description: OK
@@ -2735,7 +2763,7 @@ components:
             - referenceType
             - referenceId
           additionalProperties: false
-          description: The managing person of this location.
+          description: The managing organization of this location.
         contact:
           type: object
           description: The main contact person of this location.
@@ -4297,6 +4325,27 @@ components:
             required:
               - url
             additionalProperties: false
+        curator:
+          type: object
+          properties:
+            referenceType:
+              type: string
+            referenceId:
+              type: string
+            referenceLabel:
+              type: object
+              additionalProperties:
+                type: string
+              description: >-
+                A string that can be translated into multiple languages, e.g. {
+                "de": "Konzert", "en": "concert" }
+              example:
+                de: Konzert
+                en: concert
+          required:
+            - referenceType
+            - referenceId
+          additionalProperties: false
         metadata:
           type: object
           properties:
@@ -5064,7 +5113,7 @@ components:
                           - referenceType
                           - referenceId
                         additionalProperties: false
-                        description: The managing person of this location.
+                        description: The managing organization of this location.
                       contact:
                         type: object
                         description: The main contact person of this location.
@@ -5628,7 +5677,7 @@ components:
                           - referenceType
                           - referenceId
                         additionalProperties: false
-                        description: The managing person of this location.
+                        description: The managing organization of this location.
                       contact:
                         type: object
                         description: The main contact person of this location.
@@ -5924,7 +5973,7 @@ components:
                     - referenceType
                     - referenceId
                   additionalProperties: false
-                  description: The managing person of this location.
+                  description: The managing organization of this location.
                 contact:
                   type: object
                   description: The main contact person of this location.
@@ -6696,7 +6745,6 @@ components:
         - schedule
         - locations
         - attractions
-        - organizer
       additionalProperties: false
     CreateEventResponse:
       type: object
