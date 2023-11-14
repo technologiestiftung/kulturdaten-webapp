@@ -140,7 +140,6 @@ export default function LocationEditor(props: Props) {
 				}}
 			/>
 			<Spacer size={20} />
-			{JSON.stringify(locationRequest)}
 			<Buttons location={location} onUpdated={handleUpdatedStatus} submitLabel={submitLabel} />
 		</form>
 	);
