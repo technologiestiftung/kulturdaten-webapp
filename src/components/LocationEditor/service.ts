@@ -12,10 +12,7 @@ function createLanguagesObject(languages: Array<string>, existingValues: Record<
 }
 
 // TODO: adapt to locations
-export function getInitialRequest(
-	location: Location | null,
-	languages: Array<string>,
-): CreateLocationRequest {
+export function getInitialRequest(location: Location | null, languages: Array<string>): CreateLocationRequest {
 	return {
 		title: createLanguagesObject(languages, location?.title),
 		description: createLanguagesObject(languages, location?.description),
@@ -23,5 +20,6 @@ export function getInitialRequest(
 		inLanguages: languages,
 		tags: location?.tags || [],
 		externalLinks: location?.externalLinks || [],
+		address: location?.address || {},
 	};
 }

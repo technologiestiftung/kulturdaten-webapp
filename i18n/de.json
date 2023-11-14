@@ -68,7 +68,8 @@
 		"status-update-publish": "Veröffentlichen",
 		"status-update-unpublish": "Veröffentlichung aufheben",
 		"label-title": "Titel",
-		"label-description": "Beschreibung"
+		"label-description": "Beschreibung",
+		"label-website": "Website"
 	},
 	"Locations": {
 		"page-title": "Orte",
@@ -117,5 +118,12 @@
 	},
 	"Modal": {
 		"close-button": "Schließen"
+	},
+	"Address-Details": {
+		"label-address": "Adresse",
+		"label-streetAddress": "Straße und Hausnummer",
+		"label-addressLocality": "Ortschaft",
+		"label-postalCode": "Postleitzahl",
+		"label-description": "Zusatz"
 	}
 }
