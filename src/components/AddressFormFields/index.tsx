@@ -1,4 +1,3 @@
-import { spacings } from "@common/styleVariables";
 import styled from "@emotion/styled";
 import { useTranslations } from "next-intl";
 
@@ -7,12 +6,11 @@ import Input from "../Input";
 import Spacer from "../Spacer";
 import { ChangeEventHandler } from "react";
 
-const Label = styled.label({});
+const Legend = styled.legend({});
 
-const Container = styled.div({
-	justifyContent: "space-between",
-	flexWrap: "wrap",
-	gap: spacings.get(2),
+const Fieldset = styled.fieldset({
+	border: "none",
+	padding: 0,
 });
 
 interface Props {
@@ -39,8 +37,8 @@ export default function AddressFormFields({
 	const t = useTranslations("Address-Details");
 
 	return (
-		<Container>
-			<Label>{t("label-address")}</Label>
+		<Fieldset>
+			<Legend>{t("label-address")}</Legend>
 			<Spacer size={5} />
 			<FormField
 				component={Input}
@@ -77,6 +75,6 @@ export default function AddressFormFields({
 				onChange={onDescriptionChange}
 				required={false}
 			/>
-		</Container>
+		</Fieldset>
 	);
 }
