@@ -24,14 +24,14 @@ export function clearAccessToken() {
 export function getAccessTokenFromContext(context: GetServerSidePropsContext) {
 	const cookieString = context.req.headers.cookie;
 	if (!cookieString) {
-		throw new Error("No cookie string found");
+		return null;
 	}
 	const accessToken = cookieString
 		.split("; ")
 		.find((c) => c.startsWith(`${ACCESS_TOKEN_COOKIE_NAME}=`))
 		?.split("=")[1];
 	if (!accessToken) {
-		throw new Error("No access token found");
+		return null;
 	}
 	return accessToken;
 }
