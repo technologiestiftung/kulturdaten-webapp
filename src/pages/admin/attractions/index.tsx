@@ -9,7 +9,7 @@ interface Props {
 }
 
 export const getServerSideProps: GetServerSideProps<Props> = (context) =>
-	withApiClientAndPagination<Props>(context)(async (apiClient, page, pageSize, messages) => {
+	withApiClientAndPagination<Props>(context)(async ({ apiClient, page, pageSize, messages }) => {
 		const response = await apiClient.admin.getAdminAttractions(page, pageSize);
 		const data = response.data!;
 		return {

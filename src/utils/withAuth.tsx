@@ -1,3 +1,4 @@
+import ROUTES from "@common/routes";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
 import { ComponentType, useEffect, useState } from "react";
@@ -12,7 +13,7 @@ export default function withAuth<Props>(wrappedComponent: ComponentType<Props>) 
 		useEffect(() => {
 			const accessToken = getAccessToken();
 			if (!accessToken) {
-				router.push("/login");
+				router.push(ROUTES.login());
 			} else {
 				setLoading(false);
 			}
