@@ -58,10 +58,26 @@
 		"label-please-note": "Bitte beachten",
 		"label-website": "Website"
 	},
+	"Location-Details": {
+		"page-title-add": "Neuen Ort erstellen",
+		"page-title-edit": "{locationTitle} bearbeiten",
+		"save-button-add": "Ort erstellen",
+		"save-button-edit": "Ort speichern",
+		"status-update-archive": "Archivieren",
+		"status-update-unarchive": "Wiederherstellen",
+		"status-update-publish": "Veröffentlichen",
+		"status-update-unpublish": "Veröffentlichung aufheben",
+		"label-title": "Titel",
+		"label-description": "Beschreibung",
+		"label-website": "Website"
+	},
 	"Locations": {
 		"page-title": "Orte",
 		"create-location": "Ort erstellen",
-		"edit-location": "Ort bearbeiten"
+		"edit-location": "Ort bearbeiten",
+		"status-published": "Öffentlich",
+		"status-unpublished": "Entwurf",
+		"status-archived": "Archiviert"
 	},
 	"Organizations": {
 		"page-title": "Anbieter:innen",
@@ -102,5 +118,12 @@
 	},
 	"Modal": {
 		"close-button": "Schließen"
+	},
+	"Address-Details": {
+		"label-address": "Adresse",
+		"label-streetAddress": "Straße und Hausnummer",
+		"label-addressLocality": "Ortschaft",
+		"label-postalCode": "Postleitzahl",
+		"label-description": "Zusatz"
 	}
 }

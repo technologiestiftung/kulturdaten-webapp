@@ -1,15 +1,7 @@
+import { createLanguagesObject } from "@/src/utils/content";
 import { AdminAttraction } from "@api/client/models/AdminAttraction";
 import { CreateAttractionRequest } from "@api/client/models/CreateAttractionRequest";
 
-function createLanguagesObject(languages: Array<string>, existingValues: Record<string, string> | undefined) {
-	return languages.reduce(
-		(result, lang) => {
-			result[lang] = existingValues?.[lang] ?? "";
-			return result;
-		},
-		{} as Record<string, string>,
-	);
-}
 
 export function getInitialRequest(
 	attraction: AdminAttraction | null,

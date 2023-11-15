@@ -1,120 +1,146 @@
-import { CreateLocationRequest } from "@api/client/models/CreateLocationRequest";
 import { Location } from "@api/client/models/Location";
-import _ from "lodash";
-import React, { FC, FormEvent, useEffect, useState } from "react";
-import Button from "../../components/Button";
-import { Input } from "../../components/InputField";
-import Dropdown from "../Dropdown";
+import useApiClient from "@hooks/useApiClient";
+import { useTranslations } from "next-intl";
+import { useRouter } from "next/router";
+import { FormEventHandler, useCallback, useState } from "react";
+import FormField from "../FormField";
+import Input from "../Input";
+import Spacer from "../Spacer";
+import Textarea from "../Textarea";
+import Buttons from "./Buttons";
+import { getInitialRequest } from "./service";
+import AddressFormFields from "../AddressFormFields";
 
-interface ErrorMessages {
-	postalCode: string | undefined;
-	general: string | undefined;
+interface Props {
+	location: Location | null;
+	onAfterSubmit(): void;
 }
 
-const initialerrorMessages: ErrorMessages = {
-	postalCode: undefined,
-	general: undefined,
-};
-
-interface LocationEditorProps {
-	location?: Location;
-	submitHandler: (e: FormEvent<HTMLFormElement>, newLocation: CreateLocationRequest | Location) => void;
-	submitLabel: string;
-}
-
-const berlinDistricts: Array<CreateLocationRequest["borough"]> = [
-	"Mitte",
-	"Friedrichshain-Kreuzberg",
-	"Pankow",
-	"Charlottenburg-Wilmersdorf",
-	"Spandau",
-	"Steglitz-Zehlendorf",
-	"Tempelhof-Schöneberg",
-	"Neukölln",
-	"Treptow-Köpenick",
-	"Marzahn-Hellersdorf",
-	"Lichtenberg",
-	"Reinickendorf",
-	"außerhalb",
-];
-
-const LocationEditor: FC<LocationEditorProps> = ({ location, submitHandler, submitLabel }) => {
-	const [locationObject, locationObjectSet] = useState<CreateLocationRequest | Location | undefined>(
-		location || undefined,
+export default function LocationEditor(props: Props) {
+	const { location, onAfterSubmit } = props;
+	const router = useRouter();
+	const isNew = location === null;
+	const t = useTranslations("Location-Details");
+	const submitLabel = t(isNew ? "save-button-add" : "save-button-edit");
+	// TODO: Offer more languages.
+	const languages = ["de"];
+	const currentLanguage = languages[0];
+	const [locationRequest, setLocationRequest] = useState(getInitialRequest(location, languages));
+	const apiClient = useApiClient();
+	const handleUpdatedStatus = useCallback(() => {
+		router.replace(router.asPath, undefined, { scroll: false });
+		// TODO: Show success message.
+	}, [router]);
+	const handleSubmit = useCallback<FormEventHandler>(
+		async (event) => {
+			event.preventDefault();
+			if (isNew) {
+				await apiClient.manageCulturalData.postLocations(locationRequest);
+			} else {
+				await apiClient.manageCulturalData.patchLocations(location.identifier, locationRequest);
+			}
+			onAfterSubmit();
+		},
+		[apiClient, location?.identifier, locationRequest, isNew, onAfterSubmit],
 	);
-	const [errorMessages, errorMessagesSet] = React.useState<ErrorMessages>(initialerrorMessages);
-	const [formValid, formValidSet] = useState<boolean>(true);
-
-	const districtOptions = berlinDistricts.map((berlinDistrict) => ({
-		value: berlinDistrict as string,
-		label: berlinDistrict as string,
-	}));
-
-	useEffect(() => {
-		// check for error messages and required fields
-		const locationName = locationObject?.title?.de || "";
-		if (
-			locationName.length > 0 &&
-			Object.values(errorMessages)
-				//exclude the general error from the check
-				.filter((error) => error !== errorMessages.general)
-				.reduce((acc, curr) => acc + curr, "").length === 0
-		) {
-			formValidSet(true);
-			errorMessagesSet(initialerrorMessages);
-		} else {
-			formValidSet(false);
-		}
-	}, [locationObject, errorMessages]);
-
-	const onChange = (value: string, id: string) => {
-		const newLocation = { ...locationObject } as CreateLocationRequest | Location;
-		_.set(newLocation, id, value);
-		locationObjectSet(newLocation);
-	};
-
-	const onSubmit = (e: FormEvent<HTMLFormElement> | React.ChangeEvent<HTMLSelectElement>) => {
-		e.preventDefault();
-		if (formValid) {
-			submitHandler(e as FormEvent<HTMLFormElement>, locationObject as CreateLocationRequest | Location);
-		} else {
-			errorMessagesSet((prev) => ({
-				...prev,
-				general: "Bitte alle Pflichtfelder korrekt ausfüllen",
-			}));
-		}
-	};
 
 	return (
-		<form onSubmit={(e) => onSubmit(e)}>
-			<Input
-				type="text"
-				id="title.de"
-				initialValue={locationObject?.title?.de || ""}
-				label="Name (Pflichtfeld)"
-				required
-				placeholder={"Hier bitte Name eingeben … "}
-				onChange={onChange}
+		<form onSubmit={handleSubmit}>
+			<FormField
+				component={Input}
+				label={t("label-title")}
+				id={`title.${currentLanguage}`}
+				value={locationRequest.title[currentLanguage]}
+				onChange={(event) => {
+					setLocationRequest((prev) => ({
+						...prev,
+						title: {
+							...prev.title,
+							[currentLanguage]: event.target.value,
+						},
+					}));
+				}}
+				required={true}
 			/>
-			<Input
-				type="text"
+			<Spacer size={15} />
+			<FormField
+				component={Textarea}
+				label={t("label-description")}
+				id={`description.${currentLanguage}`}
+				value={locationRequest.description![currentLanguage]}
+				onChange={(event) => {
+					setLocationRequest((prev) => ({
+						...prev,
+						description: {
+							...prev.description,
+							[currentLanguage]: event.target.value,
+						},
+					}));
+				}}
+				rows={8}
+				required={true}
+			/>
+			<Spacer size={15} />
+			<FormField
+				component={Input}
+				type="url"
+				label={t("label-website")}
+				placeholder="https://example.com"
 				id="website"
-				initialValue={locationObject?.website || ""}
-				label="Webseite"
-				placeholder={"www.my-location.com"}
-				onChange={onChange}
+				value={locationRequest.website}
+				onChange={(event) => {
+					setLocationRequest((prev) => ({
+						...prev,
+						website: event.target.value,
+					}));
+				}}
+				required={false}
 			/>
-			<Dropdown
-				label="Bezirk"
-				id="borough"
-				options={districtOptions}
-				value={locationObject?.borough || ""}
-				onChange={onChange}
+			<Spacer size={15} />
+			<AddressFormFields
+				streetAddress={locationRequest.address?.streetAddress}
+				addressLocality={locationRequest.address?.addressLocality}
+				postalCode={locationRequest.address?.postalCode}
+				description={locationRequest.address?.description}
+				onStreetAddressChange={(event) => {
+					setLocationRequest((prev) => ({
+						...prev,
+						address: {
+							...prev.address,
+							streetAddress: event.target.value,
+						},
+					}));
+				}}
+				onAddressLocalityChange={(event) => {
+					setLocationRequest((prev) => ({
+						...prev,
+						address: {
+							...prev.address,
+							addressLocality: event.target.value,
+						},
+					}));
+				}}
+				onPostalCodeChange={(event) => {
+					setLocationRequest((prev) => ({
+						...prev,
+						address: {
+							...prev.address,
+							postalCode: event.target.value,
+						},
+					}));
+				}}
+				onDescriptionChange={(event) => {
+					setLocationRequest((prev) => ({
+						...prev,
+						address: {
+							...prev.address,
+							description: event.target.value,
+						},
+					}));
+				}}
 			/>
-			<Button type="submit">{submitLabel}</Button>
-			{errorMessages.general && <span aria-live="assertive">{errorMessages.general}</span>}
+			<Spacer size={20} />
+			<Buttons location={location} onUpdated={handleUpdatedStatus} submitLabel={submitLabel} />
 		</form>
 	);
-};
-
-export default LocationEditor;
+}

@@ -6,3 +6,13 @@ export function getLocalizedLabel(labels: Record<string, string>) {
 	}
 	return labels[availableLanguage];
 }
+
+export function createLanguagesObject(languages: Array<string>, existingValues: Record<string, string> | undefined) {
+	return languages.reduce(
+		(result, lang) => {
+			result[lang] = existingValues?.[lang] ?? "";
+			return result;
+		},
+		{} as Record<string, string>,
+	);
+}
