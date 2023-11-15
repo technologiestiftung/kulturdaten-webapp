@@ -1,17 +1,8 @@
 import { Location } from "@api/client/models/Location";
 import { CreateLocationRequest } from "@api/client/models/CreateLocationRequest";
+import { createLanguagesObject } from "@/src/utils/content";
 
-function createLanguagesObject(languages: Array<string>, existingValues: Record<string, string> | undefined) {
-	return languages.reduce(
-		(result, lang) => {
-			result[lang] = existingValues?.[lang] ?? "";
-			return result;
-		},
-		{} as Record<string, string>,
-	);
-}
 
-// TODO: adapt to locations
 export function getInitialRequest(location: Location | null, languages: Array<string>): CreateLocationRequest {
 	return {
 		title: createLanguagesObject(languages, location?.title),
