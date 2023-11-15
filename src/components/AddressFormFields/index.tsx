@@ -46,7 +46,7 @@ export default function AddressFormFields({
 				id={"streetAddress"}
 				value={streetAddress}
 				onChange={onStreetAddressChange}
-				required={true}
+				required={false}
 			/>
 			<Spacer size={15} />
 			<FormField
@@ -55,7 +55,7 @@ export default function AddressFormFields({
 				id={"postalCode"}
 				value={postalCode}
 				onChange={onPostalCodeChange}
-				required={true}
+				required={false}
 			/>
 			<Spacer size={15} />
 			<FormField
@@ -64,7 +64,7 @@ export default function AddressFormFields({
 				id={"addressLocality"}
 				value={addressLocality}
 				onChange={onAddressLocalityChange}
-				required={true}
+				required={false}
 			/>
 			<Spacer size={15} />
 			<FormField
