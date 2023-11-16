@@ -29,7 +29,9 @@
 		"label-email": "E-Mail",
 		"label-password": "Passwort",
 		"login-button": "Einloggen",
-		"register-button": "Neu registrieren"
+		"register-button": "Neu registrieren",
+        "error-with-code": "Login fehlgeschlagen, {code}",
+        "error-generic": "Verbindung fehlgeschlagen"
 	},
 	"Attractions": {
 		"page-title": "Angebote",

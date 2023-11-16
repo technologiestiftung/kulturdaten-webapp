@@ -81,14 +81,10 @@ export default function LoginPage() {
 			await logIn(email, password);
 		} catch (error) {
 			const apiError = error as ApiError;
-			if (apiError?.status) {
-				setErrorMessages({
-					...errorMessages,
-					general: `Login fehlgeschlagen, ${apiError.status}`,
-				});
-			} else {
-				setErrorMessages({ ...errorMessages, general: "Verbindung fehlgeschlagen" });
-			}
+			setErrorMessages({
+				...errorMessages,
+				general: apiError?.status ? t("error-with-code", { code: apiError.status }) : t("error-generic"),
+			});
 		} finally {
 			setSubmitting(false);
 		}
