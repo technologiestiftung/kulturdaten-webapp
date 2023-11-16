@@ -54,39 +54,43 @@ const initialErrorMessages: ErrorMessages = {
 export default function LoginPage() {
 	const t = useTranslations("Login");
 	const [email, emailSet] = useState<string>("");
-	const [password, passwordSet] = useState<string>("");
-	const [errorMessages, errorMessagesSet] = useState<ErrorMessages>(initialErrorMessages);
-	const [emailPristine, emailPristineSet] = useState<boolean>(true);
+	const [password, setPassword] = useState<string>("");
+	const [errorMessages, setErrorMessages] = useState<ErrorMessages>(initialErrorMessages);
+	const [emailPristine, setEmailPristine] = useState(true);
+	const [submitting, setSubmitting] = useState(false);
 	const { logIn } = useUser();
 
 	const onEmailChange = (value: string) => {
 		const emailValid = validateEmail(value);
-		errorMessagesSet({ ...errorMessages, email: emailValid });
+		setErrorMessages({ ...errorMessages, email: emailValid });
 		emailSet(value);
-		emailPristineSet(false);
+		setEmailPristine(false);
 	};
 
 	const onPasswordChange = (value: string) => {
-		errorMessagesSet(initialErrorMessages);
-		passwordSet(value);
+		setErrorMessages(initialErrorMessages);
+		setPassword(value);
 	};
 
 	const handleLogin = async (event: FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
+		setSubmitting(true);
 		const emailValid = validateEmail(email);
-		errorMessagesSet({ ...initialErrorMessages, email: emailValid || null });
+		setErrorMessages({ ...initialErrorMessages, email: emailValid || null });
 		try {
 			await logIn(email, password);
 		} catch (error) {
 			const apiError = error as ApiError;
 			if (apiError?.status) {
-				errorMessagesSet({
+				setErrorMessages({
 					...errorMessages,
 					general: `Login fehlgeschlagen, ${apiError.status}`,
 				});
 			} else {
-				errorMessagesSet({ ...errorMessages, general: "Verbindung fehlgeschlagen" });
+				setErrorMessages({ ...errorMessages, general: "Verbindung fehlgeschlagen" });
 			}
+		} finally {
+			setSubmitting(false);
 		}
 	};
 
@@ -108,6 +112,7 @@ export default function LoginPage() {
 						value={email}
 						onChange={(event) => onEmailChange(event.target.value)}
 						required={true}
+						disabled={submitting}
 						error={!emailPristine ? errorMessages.email : null}
 					/>
 					<Spacer size={15} />
@@ -120,16 +125,20 @@ export default function LoginPage() {
 						value={password}
 						onChange={(event) => onPasswordChange(event.target.value)}
 						required={true}
+						disabled={submitting}
 					/>
 					<Spacer size={20} />
 					<Buttons>
-						<Button type="submit">{t("login-button")}</Button>
+						<Button type="submit" disabled={submitting}>
+							{t("login-button")}
+						</Button>
 						<Button as="a" href={ROUTES.registration()} color="neutral">
 							{t("register-button")}
 						</Button>
 					</Buttons>
+					<Spacer size={15} />
+					<ErrorMessage error={errorMessages.general || ""} />
 				</form>
-				<ErrorMessage error={errorMessages.general || ""} />
 			</Content>
 		</PageBackground>
 	);
