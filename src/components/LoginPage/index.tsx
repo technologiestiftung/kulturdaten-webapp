@@ -1,6 +1,14 @@
 import { ApiError } from "@api/client/core/ApiError";
 import ROUTES from "@common/routes";
-import { borderRadiuses, boxShadows, colors, mediaQueries, spacings } from "@common/styleVariables";
+import {
+	borderRadiuses,
+	boxShadows,
+	colors,
+	fontSizes,
+	lineHeights,
+	mediaQueries,
+	spacings,
+} from "@common/styleVariables";
 import Button from "@components/Button";
 import ErrorMessage from "@components/ErrorMessage";
 import FormField from "@components/FormField";
@@ -18,11 +26,8 @@ const PageBackground = styled.div({
 	minHeight: "100vh",
 	display: "flex",
 	justifyContent: "center",
-	alignItems: "flex-start",
-	padding: spacings.get(1),
-	[mediaQueries.m]: {
-		alignItems: "center",
-	},
+	alignItems: "center",
+	padding: spacings.get(2),
 });
 
 const Content = styled.main({
@@ -34,6 +39,11 @@ const Content = styled.main({
 	[mediaQueries.s]: {
 		padding: spacings.get(4),
 	},
+});
+
+const Header = styled.h1({
+	fontSize: fontSizes.large,
+	lineHeight: lineHeights.headline,
 });
 
 const Buttons = styled.div({
@@ -94,7 +104,7 @@ export default function LoginPage() {
 		<PageBackground>
 			<Head metadata={{ title: t("page-title") }} />
 			<Content>
-				<h1>{t("page-header")}</h1>
+				<Header>{t("page-header")}</Header>
 				<Spacer size={10} />
 				<p>{t("page-description")}</p>
 				<Spacer size={15} />
@@ -132,7 +142,7 @@ export default function LoginPage() {
 							{t("register-button")}
 						</Button>
 					</Buttons>
-					<Spacer size={15} />
+					{errorMessages.general && <Spacer size={15} />}
 					<ErrorMessage error={errorMessages.general || ""} />
 				</form>
 			</Content>
