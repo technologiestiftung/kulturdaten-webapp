@@ -1,21 +1,48 @@
 import { ApiError } from "@api/client/core/ApiError";
+import { borderRadiuses, boxShadows, colors, mediaQueries, spacings } from "@common/styleVariables";
 import Button from "@components/Button";
-import FormWrapper from "@components/FormWrapper";
-import { Input } from "@components/InputField";
-import Page from "@components/Page";
+import ErrorMessage from "@components/ErrorMessage";
+import FormField from "@components/FormField";
+import Input from "@components/Input";
+import Head from "@components/Page/Head";
+import Spacer from "@components/Spacer";
+import styled from "@emotion/styled";
 import useUser from "@hooks/useUser";
 import { validateEmail } from "@utils/validation";
-import React, { useState } from "react";
+import { FormEvent, useState } from "react";
 import { useTranslations } from "use-intl";
 
+const PageBackground = styled.div({
+	backgroundColor: colors.blueDark,
+	minHeight: "100vh",
+	display: "flex",
+	justifyContent: "center",
+	alignItems: "flex-start",
+	padding: spacings.get(1),
+	[mediaQueries.m]: {
+		alignItems: "center",
+	},
+});
+
+const Content = styled.main({
+	maxWidth: "600px",
+	backgroundColor: colors.white,
+	borderRadius: borderRadiuses.big,
+	boxShadow: boxShadows.elevation100,
+	padding: `${spacings.get(4)} ${spacings.get(3)}`,
+	[mediaQueries.s]: {
+		padding: spacings.get(4),
+	},
+});
+
 interface ErrorMessages {
-	general: string | undefined;
-	email: string | undefined;
+	general: string | null;
+	email: string | null;
 }
 
 const initialErrorMessages: ErrorMessages = {
-	general: undefined,
-	email: undefined,
+	general: null,
+	email: null,
 };
 
 export default function LoginPage() {
@@ -30,6 +57,7 @@ export default function LoginPage() {
 		const emailValid = validateEmail(value);
 		errorMessagesSet({ ...errorMessages, email: emailValid });
 		emailSet(value);
+		emailPristineSet(false);
 	};
 
 	const onPasswordChange = (value: string) => {
@@ -37,10 +65,10 @@ export default function LoginPage() {
 		passwordSet(value);
 	};
 
-	const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
-		e.preventDefault();
+	const handleLogin = async (event: FormEvent<HTMLFormElement>) => {
+		event.preventDefault();
 		const emailValid = validateEmail(email);
-		errorMessagesSet({ ...initialErrorMessages, email: emailValid ? emailValid : undefined });
+		errorMessagesSet({ ...initialErrorMessages, email: emailValid || null });
 		try {
 			await logIn(email, password);
 		} catch (error) {
@@ -57,35 +85,41 @@ export default function LoginPage() {
 	};
 
 	return (
-		<Page metadata={{ title: t("page-title") }} showNavigation={false}>
-			<FormWrapper>
-				<h1>Bei kulturdaten.berlin einloggen</h1>
-				<p className="mt-2 mb-8">
-					kulturdaten.berlin ist kostenlos - und macht deine Programminfos einfacher zugänglich!
-				</p>
+		<PageBackground>
+			<Head metadata={{ title: t("page-title") }} />
+			<Content>
+				<h1>{t("page-header")}</h1>
+				<Spacer size={10} />
+				<p>{t("page-description")}</p>
+				<Spacer size={15} />
 				<form onSubmit={handleLogin}>
-					<Input
+					<FormField
+						component={Input}
 						type="email"
+						autoComplete="email"
+						label={t("label-email")}
 						id="email"
-						label={"Email"}
-						required
-						placeholder={"Hier bitte Email eingeben … "}
-						errorMessage={emailPristine ? undefined : errorMessages.email}
-						onChange={(value) => onEmailChange(value)}
-						setPristine={emailPristineSet}
+						value={email}
+						onChange={(event) => onEmailChange(event.target.value)}
+						required={true}
+						error={!emailPristine ? errorMessages.email : null}
 					/>
-					<Input
+					<Spacer size={15} />
+					<FormField
+						component={Input}
 						type="password"
+						autoComplete="password"
+						label={t("label-password")}
 						id="password"
-						label={"Password"}
-						required
-						placeholder={"Hier bitte Passwort eingeben … "}
-						onChange={(value) => onPasswordChange(value)}
+						value={password}
+						onChange={(event) => onPasswordChange(event.target.value)}
+						required={true}
 					/>
-					<Button type="submit">Login</Button>
+					<Spacer size={20} />
+					<Button type="submit">{t("login-button")}</Button>
 				</form>
-				{errorMessages.general && <p aria-live="assertive">{errorMessages.general}</p>}
-			</FormWrapper>
-		</Page>
+				<ErrorMessage error={errorMessages.general || ""} />
+			</Content>
+		</PageBackground>
 	);
 }
