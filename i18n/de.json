@@ -28,7 +28,8 @@
 		"page-description": "kulturdaten.berlin ist kostenlos und macht deine Programminfos einfacher zugänglich.",
 		"label-email": "E-Mail",
 		"label-password": "Passwort",
-		"login-button": "Einloggen"
+		"login-button": "Einloggen",
+		"register-button": "Neu registrieren"
 	},
 	"Attractions": {
 		"page-title": "Angebote",

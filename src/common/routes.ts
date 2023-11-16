@@ -1,5 +1,6 @@
 const ROUTES = {
 	login: () => "/login",
+	registration: () => "/registration",
 	user: {
 		attractions: () => "/",
 	},

@@ -1,4 +1,5 @@
 import { ApiError } from "@api/client/core/ApiError";
+import ROUTES from "@common/routes";
 import { borderRadiuses, boxShadows, colors, mediaQueries, spacings } from "@common/styleVariables";
 import Button from "@components/Button";
 import ErrorMessage from "@components/ErrorMessage";
@@ -33,6 +34,11 @@ const Content = styled.main({
 	[mediaQueries.s]: {
 		padding: spacings.get(4),
 	},
+});
+
+const Buttons = styled.div({
+	display: "flex",
+	gap: spacings.get(2),
 });
 
 interface ErrorMessages {
@@ -116,7 +122,12 @@ export default function LoginPage() {
 						required={true}
 					/>
 					<Spacer size={20} />
-					<Button type="submit">{t("login-button")}</Button>
+					<Buttons>
+						<Button type="submit">{t("login-button")}</Button>
+						<Button as="a" href={ROUTES.registration()} color="neutral">
+							{t("register-button")}
+						</Button>
+					</Buttons>
 				</form>
 				<ErrorMessage error={errorMessages.general || ""} />
 			</Content>
