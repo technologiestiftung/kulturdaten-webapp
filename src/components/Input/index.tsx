@@ -35,7 +35,7 @@ const StyledInput = styled.input<Props>(({ error, disabled, readOnly }) => ({
 }));
 
 export interface Props extends DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement> {
-	error?: string;
+	error?: string | null;
 }
 
 export default function Input(props: Props) {

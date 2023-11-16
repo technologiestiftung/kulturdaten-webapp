@@ -14,7 +14,7 @@ const Error = styled.span({
 type Props<Component extends ComponentType> = ComponentProps<Component> & {
 	component?: Component;
 	label: ReactNode;
-	error?: string;
+	error?: string | null;
 };
 
 const DEFAULT_COMPONENT = Input;

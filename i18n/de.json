@@ -23,7 +23,15 @@
 		"page-title": "Registrierung"
 	},
 	"Login": {
-		"page-title": "Login"
+		"page-title": "Login",
+		"page-header": "kulturdaten.berlin App",
+		"page-description": "kulturdaten.berlin ist kostenlos und macht deine Programminfos einfacher zugänglich.",
+		"label-email": "E-Mail",
+		"label-password": "Passwort",
+		"login-button": "Einloggen",
+		"register-button": "Neu registrieren",
+        "error-with-code": "Login fehlgeschlagen, {code}",
+        "error-generic": "Verbindung fehlgeschlagen"
 	},
 	"Attractions": {
 		"page-title": "Angebote",
