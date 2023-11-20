@@ -1,4 +1,4 @@
-import { colors, fontSizes } from "@common/styleVariables";
+import { colors, fontSizes, mediaQueries } from "@common/styleVariables";
 import { Borough } from "@common/types";
 import FormField from "@components/FormField";
 import Input from "@components/Input";
@@ -17,6 +17,26 @@ const Legend = styled.legend({
 const Fieldset = styled.fieldset({
 	border: "none",
 	padding: 0,
+});
+
+const Columns = styled.div({
+	display: "flex",
+	flexDirection: "column",
+	[mediaQueries.m]: {
+		flexDirection: "row",
+	},
+});
+
+const ColumnPostalCode = styled.div({
+	flexGrow: 1,
+	[mediaQueries.m]: {
+		flexGrow: 0,
+		flexBasis: 150,
+	},
+});
+
+const ColumnLocality = styled.div({
+	flexGrow: 1,
 });
 
 interface Props {
@@ -59,23 +79,29 @@ export default function AddressFormFields({
 				required={false}
 			/>
 			<Spacer size={15} />
-			<FormField
-				component={Input}
-				label={t("label-postalCode")}
-				id={"postalCode"}
-				value={postalCode}
-				onChange={onPostalCodeChange}
-				required={false}
-			/>
-			<Spacer size={15} />
-			<FormField
-				component={Input}
-				label={t("label-addressLocality")}
-				id={"addressLocality"}
-				value={addressLocality}
-				onChange={onAddressLocalityChange}
-				required={false}
-			/>
+			<Columns>
+				<ColumnPostalCode>
+					<FormField
+						component={Input}
+						label={t("label-postalCode")}
+						id={"postalCode"}
+						value={postalCode}
+						onChange={onPostalCodeChange}
+						required={false}
+					/>
+				</ColumnPostalCode>
+				<Spacer size={15} />
+				<ColumnLocality>
+					<FormField
+						component={Input}
+						label={t("label-addressLocality")}
+						id={"addressLocality"}
+						value={addressLocality}
+						onChange={onAddressLocalityChange}
+						required={false}
+					/>
+				</ColumnLocality>
+			</Columns>
 			<Spacer size={15} />
 			<FormField
 				component={BoroughSelect}
