@@ -1,12 +1,16 @@
+import { colors, fontSizes } from "@common/styleVariables";
+import FormField from "@components/FormField";
+import Input from "@components/Input";
+import Spacer from "@components/Spacer";
 import styled from "@emotion/styled";
 import { useTranslations } from "next-intl";
-
-import FormField from "../FormField";
-import Input from "../Input";
-import Spacer from "../Spacer";
 import { ChangeEventHandler } from "react";
 
-const Legend = styled.legend({});
+const Legend = styled.legend({
+	fontSize: fontSizes.medium,
+	color: colors.black,
+	padding: 0,
+});
 
 const Fieldset = styled.fieldset({
 	border: "none",
