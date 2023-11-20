@@ -1,18 +1,13 @@
-import { colors, fontSizes, mediaQueries } from "@common/styleVariables";
+import { mediaQueries } from "@common/styleVariables";
 import { Borough } from "@common/types";
 import FormField from "@components/FormField";
+import FormLegend from "@components/FormLegend";
 import Input from "@components/Input";
 import Spacer from "@components/Spacer";
 import styled from "@emotion/styled";
 import { useTranslations } from "next-intl";
 import { ChangeEventHandler } from "react";
 import BoroughSelect from "./BoroughSelect";
-
-const Legend = styled.legend({
-	fontSize: fontSizes.medium,
-	color: colors.black,
-	padding: 0,
-});
 
 const Fieldset = styled.fieldset({
 	border: "none",
@@ -68,7 +63,7 @@ export default function AddressFormFields({
 
 	return (
 		<Fieldset>
-			<Legend>{t("label-address")}</Legend>
+			<FormLegend>{t("label-address")}</FormLegend>
 			<Spacer size={5} />
 			<FormField
 				component={Input}
