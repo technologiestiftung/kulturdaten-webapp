@@ -18,5 +18,10 @@ export function getInitialRequest(location: Location | null, languages: Array<st
 		},
 		borough: location?.borough,
 		isVirtual: location?.isVirtual || false,
+		contact: {
+			name: location?.contact?.name || "",
+			email: location?.contact?.email || "",
+			telephone: location?.contact?.telephone || "",
+		},
 	};
 }
