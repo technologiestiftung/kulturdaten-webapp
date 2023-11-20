@@ -30,8 +30,8 @@
 		"label-password": "Passwort",
 		"login-button": "Einloggen",
 		"register-button": "Neu registrieren",
-        "error-with-code": "Login fehlgeschlagen, {code}",
-        "error-generic": "Verbindung fehlgeschlagen"
+		"error-with-code": "Login fehlgeschlagen, {code}",
+		"error-generic": "Verbindung fehlgeschlagen"
 	},
 	"Attractions": {
 		"page-title": "Angebote",
@@ -91,7 +91,21 @@
 	"Organizations": {
 		"page-title": "Anbieter:innen",
 		"create-organization": "Anbieter:in erstellen",
-		"edit-organization": "Anbieter:in bearbeiten"
+		"edit-organization": "Anbieter:in bearbeiten",
+		"status-published": "Öffentlich",
+		"status-unpublished": "Entwurf",
+		"status-archived": "Archiviert"
+	},
+	"Organization-Details": {
+		"page-title-add": "Neue:n Anbieter:in erstellen",
+		"page-title-edit": "{organizationTitle} bearbeiten",
+		"save-button-add": "Anbieter:in erstellen",
+		"save-button-edit": "Anbieter:in speichern",
+		"label-title": "Titel",
+		"label-description": "Beschreibung",
+		"label-website": "Website",
+		"status-update-archive": "Archivieren",
+		"status-update-unarchive": "Wiederherstellen"
 	},
 	"Users": {
 		"page-title": "Benutzer:innen",
