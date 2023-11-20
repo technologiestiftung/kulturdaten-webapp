@@ -20,6 +20,20 @@ export default function StatusButtons({ organization, onUpdated }: Props) {
 	const buttons = useMemo<ButtonProps[]>(() => {
 		const allowedStatusUpdates = getAllowedStatusUpdates(organization.status);
 		return [
+			allowedStatusUpdates.publish && {
+				children: t("status-update-publish"),
+				onClick: async () => {
+					await apiClient.manageCulturalData.postOrganizationsPublish(organization.identifier);
+					onUpdated();
+				},
+			},
+			allowedStatusUpdates.unpublish && {
+				children: t("status-update-unpublish"),
+				onClick: async () => {
+					await apiClient.manageCulturalData.postOrganizationsUnpublish(organization.identifier);
+					onUpdated();
+				},
+			},
 			allowedStatusUpdates.archive && {
 				children: t("status-update-archive"),
 				onClick: async () => {
