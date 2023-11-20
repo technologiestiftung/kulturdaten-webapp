@@ -133,6 +133,8 @@
 		"label-streetAddress": "Straße und Hausnummer",
 		"label-addressLocality": "Ortschaft",
 		"label-postalCode": "Postleitzahl",
-		"label-description": "Zusatz"
+		"label-borough": "Bezirk",
+		"label-description": "Zusatz",
+        "borough-none": "(Kein Bezirk)"
 	}
 }

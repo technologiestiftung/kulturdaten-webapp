@@ -1,10 +1,12 @@
 import { colors, fontSizes } from "@common/styleVariables";
+import { Borough } from "@common/types";
 import FormField from "@components/FormField";
 import Input from "@components/Input";
 import Spacer from "@components/Spacer";
 import styled from "@emotion/styled";
 import { useTranslations } from "next-intl";
 import { ChangeEventHandler } from "react";
+import BoroughSelect from "./BoroughSelect";
 
 const Legend = styled.legend({
 	fontSize: fontSizes.medium,
@@ -21,10 +23,12 @@ interface Props {
 	streetAddress?: string;
 	addressLocality?: string;
 	postalCode?: string;
+	borough?: Borough;
 	description?: string;
 	onStreetAddressChange?: ChangeEventHandler<HTMLInputElement>;
 	onAddressLocalityChange?: ChangeEventHandler<HTMLInputElement>;
 	onPostalCodeChange?: ChangeEventHandler<HTMLInputElement>;
+	onBoroughChange?: ChangeEventHandler<HTMLSelectElement>;
 	onDescriptionChange?: ChangeEventHandler<HTMLInputElement>;
 }
 
@@ -32,10 +36,12 @@ export default function AddressFormFields({
 	streetAddress,
 	addressLocality,
 	postalCode,
+	borough,
 	description,
 	onStreetAddressChange,
 	onAddressLocalityChange,
 	onPostalCodeChange,
+	onBoroughChange,
 	onDescriptionChange,
 }: Props) {
 	const t = useTranslations("Address-Details");
@@ -68,6 +74,15 @@ export default function AddressFormFields({
 				id={"addressLocality"}
 				value={addressLocality}
 				onChange={onAddressLocalityChange}
+				required={false}
+			/>
+			<Spacer size={15} />
+			<FormField
+				component={BoroughSelect}
+				label={t("label-borough")}
+				id={"borough"}
+				value={borough}
+				onChange={onBoroughChange}
 				required={false}
 			/>
 			<Spacer size={15} />
