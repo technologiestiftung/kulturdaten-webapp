@@ -1,6 +1,7 @@
 import { Organization } from "@api/client/models/Organization";
 import { Borough } from "@common/types";
 import AddressFormFields from "@components/AddressFormFields";
+import ContactFormFields from "@components/ContactFormFields";
 import FormField from "@components/FormField";
 import Input from "@components/Input";
 import Spacer from "@components/Spacer";
@@ -97,7 +98,7 @@ export default function OrganizationEditor(props: Props) {
 				}}
 				required={false}
 			/>
-			<Spacer size={50} />
+			<Spacer size={30} />
 			<AddressFormFields
 				streetAddress={organizationRequest.address?.streetAddress}
 				addressLocality={organizationRequest.address?.addressLocality}
@@ -147,7 +148,40 @@ export default function OrganizationEditor(props: Props) {
 					}));
 				}}
 			/>
-			<Spacer size={50} />
+			<Spacer size={30} />
+			<ContactFormFields
+				name={organizationRequest.contact?.name}
+				email={organizationRequest.contact?.email}
+				telephone={organizationRequest.contact?.telephone}
+				onNameChange={(event) => {
+					setOrganizationRequest((prev) => ({
+						...prev,
+						contact: {
+							...prev.contact,
+							name: event.target.value,
+						},
+					}));
+				}}
+				onEmailChange={(event) => {
+					setOrganizationRequest((prev) => ({
+						...prev,
+						contact: {
+							...prev.contact,
+							email: event.target.value,
+						},
+					}));
+				}}
+				onTelephoneChange={(event) => {
+					setOrganizationRequest((prev) => ({
+						...prev,
+						contact: {
+							...prev.contact,
+							telephone: event.target.value,
+						},
+					}));
+				}}
+			/>
+			<Spacer size={30} />
 			<Buttons organization={organization} onUpdated={handleUpdatedStatus} submitLabel={submitLabel} />
 		</form>
 	);

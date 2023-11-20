@@ -149,6 +149,13 @@
 		"label-postalCode": "Postleitzahl",
 		"label-borough": "Bezirk",
 		"label-description": "Zusatz",
-        "borough-none": "(Kein Bezirk)"
+		"borough-none": "(Kein Bezirk)"
+	},
+	"Contact-Details": {
+		"contact": "Kontakt",
+		"label-name": "Name",
+		"label-email": "E-Mail",
+		"label-telephone": "Telefon",
+		"placeholder-telephone": "+49 1234 1234567"
 	}
 }

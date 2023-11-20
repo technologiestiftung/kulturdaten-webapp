@@ -12,9 +12,18 @@ export function getInitialRequest(
 		website: organization?.website ?? "",
 		inLanguages: languages,
 		tags: organization?.tags || [],
-		address: organization?.address || {},
+		address: {
+			streetAddress: organization?.address?.streetAddress || "",
+			addressLocality: organization?.address?.addressLocality || "",
+			postalCode: organization?.address?.postalCode || "",
+			description: organization?.address?.description || "",
+		},
 		borough: organization?.borough,
 		coordinates: organization?.coordinates,
-		contact: organization?.contact,
+		contact: {
+			name: organization?.contact?.name || "",
+			email: organization?.contact?.email || "",
+			telephone: organization?.contact?.telephone || "",
+		},
 	};
 }
