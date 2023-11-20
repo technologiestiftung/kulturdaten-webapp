@@ -1,4 +1,5 @@
 import { Location } from "@api/client/models/Location";
+import { Borough } from "@common/types";
 import useApiClient from "@hooks/useApiClient";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/router";
@@ -116,6 +117,7 @@ export default function LocationEditor(props: Props) {
 						streetAddress={locationRequest.address?.streetAddress}
 						addressLocality={locationRequest.address?.addressLocality}
 						postalCode={locationRequest.address?.postalCode}
+						borough={locationRequest.borough}
 						description={locationRequest.address?.description}
 						onStreetAddressChange={(event) => {
 							setLocationRequest((prev) => ({
@@ -142,6 +144,12 @@ export default function LocationEditor(props: Props) {
 									...prev.address,
 									postalCode: event.target.value,
 								},
+							}));
+						}}
+						onBoroughChange={(event) => {
+							setLocationRequest((prev) => ({
+								...prev,
+								borough: event.target.value as Borough | undefined,
 							}));
 						}}
 						onDescriptionChange={(event) => {
