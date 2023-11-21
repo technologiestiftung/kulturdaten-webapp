@@ -105,7 +105,7 @@
 		"label-description": "Beschreibung",
 		"label-website": "Website",
 		"status-update-publish": "Veröffentlichen",
-        "status-update-unpublish": "Veröffentlichung aufheben",
+		"status-update-unpublish": "Veröffentlichung aufheben",
 		"status-update-archive": "Archivieren",
 		"status-update-unarchive": "Wiederherstellen"
 	},
