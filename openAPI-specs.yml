@@ -118,6 +118,12 @@ paths:
         - $ref: "#/components/parameters/page"
         - $ref: "#/components/parameters/pageSize"
         - $ref: "#/components/parameters/asReference"
+        - name: curatedBy
+          in: query
+          required: false
+          description: Returns only the Attractions curated by the entered Organization-ID
+          schema:
+            type: string
       responses:
         "200":
           description: OK
@@ -378,6 +384,12 @@ paths:
         - $ref: "#/components/parameters/page"
         - $ref: "#/components/parameters/pageSize"
         - $ref: "#/components/parameters/asReference"
+        - name: organizedBy
+          in: query
+          required: false
+          description: Returns only the events organized by the entered Organization-ID
+          schema:
+            type: string
       responses:
         "200":
           description: OK
@@ -732,6 +744,12 @@ paths:
         - $ref: "#/components/parameters/page"
         - $ref: "#/components/parameters/pageSize"
         - $ref: "#/components/parameters/asReference"
+        - name: managedBy
+          in: query
+          required: false
+          description: Returns only the locations managed by the entered Organization-ID
+          schema:
+            type: string
       responses:
         "200":
           description: OK
@@ -1281,6 +1299,36 @@ paths:
         "200":
           description: OK
   /organizations/{identifier}/retire:
+    post:
+      tags:
+        - Manage cultural data
+      parameters:
+        - name: identifier
+          in: path
+          required: true
+          schema:
+            type: string
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: OK
+  /organizations/{identifier}/publish:
+    post:
+      tags:
+        - Manage cultural data
+      parameters:
+        - name: identifier
+          in: path
+          required: true
+          schema:
+            type: string
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: OK
+  /organizations/{identifier}/unpublish:
     post:
       tags:
         - Manage cultural data
@@ -2636,6 +2684,10 @@ components:
           example: https://example.com/
         isVirtual:
           type: boolean
+          description: >-
+            Indicates that the place exists only in a digital format and can be
+            accessed or experienced online, rather than being a physical
+            location in the real world.
         address:
           type: object
           properties:
@@ -4351,6 +4403,27 @@ components:
             required:
               - url
             additionalProperties: false
+        curator:
+          type: object
+          properties:
+            referenceType:
+              type: string
+            referenceId:
+              type: string
+            referenceLabel:
+              type: object
+              additionalProperties:
+                type: string
+              description: >-
+                A string that can be translated into multiple languages, e.g. {
+                "de": "Konzert", "en": "concert" }
+              example:
+                de: Konzert
+                en: concert
+          required:
+            - referenceType
+            - referenceId
+          additionalProperties: false
         metadata:
           type: object
           properties:
@@ -4960,6 +5033,11 @@ components:
                         example: https://example.com/
                       isVirtual:
                         type: boolean
+                        description: >-
+                          Indicates that the place exists only in a digital
+                          format and can be accessed or experienced online,
+                          rather than being a physical location in the real
+                          world.
                       address:
                         type: object
                         properties:
@@ -5197,6 +5275,10 @@ components:
           type: string
         isVirtual:
           type: boolean
+          description: >-
+            Indicates that the place exists only in a digital format and can be
+            accessed or experienced online, rather than being a physical
+            location in the real world.
         address:
           type: object
           properties:
@@ -5528,6 +5610,11 @@ components:
                         example: https://example.com/
                       isVirtual:
                         type: boolean
+                        description: >-
+                          Indicates that the place exists only in a digital
+                          format and can be accessed or experienced online,
+                          rather than being a physical location in the real
+                          world.
                       address:
                         type: object
                         properties:
@@ -5827,6 +5914,10 @@ components:
                   example: https://example.com/
                 isVirtual:
                   type: boolean
+                  description: >-
+                    Indicates that the place exists only in a digital format and
+                    can be accessed or experienced online, rather than being a
+                    physical location in the real world.
                 address:
                   type: object
                   properties:
@@ -6062,6 +6153,10 @@ components:
           type: string
         isVirtual:
           type: boolean
+          description: >-
+            Indicates that the place exists only in a digital format and can be
+            accessed or experienced online, rather than being a physical
+            location in the real world.
         address:
           type: object
           properties:
@@ -6758,7 +6853,6 @@ components:
         - schedule
         - locations
         - attractions
-        - organizer
       additionalProperties: false
     CreateEventResponse:
       type: object

@@ -1,10 +1,12 @@
 import { Location } from "@api/client/models/Location";
+import { Borough } from "@common/types";
 import useApiClient from "@hooks/useApiClient";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/router";
 import { FormEventHandler, useCallback, useState } from "react";
 import AddressFormFields from "../AddressFormFields";
 import Checkbox from "../Checkbox";
+import ContactFormFields from "../ContactFormFields";
 import FormField from "../FormField";
 import Input from "../Input";
 import Spacer from "../Spacer";
@@ -116,6 +118,7 @@ export default function LocationEditor(props: Props) {
 						streetAddress={locationRequest.address?.streetAddress}
 						addressLocality={locationRequest.address?.addressLocality}
 						postalCode={locationRequest.address?.postalCode}
+						borough={locationRequest.borough}
 						description={locationRequest.address?.description}
 						onStreetAddressChange={(event) => {
 							setLocationRequest((prev) => ({
@@ -144,6 +147,12 @@ export default function LocationEditor(props: Props) {
 								},
 							}));
 						}}
+						onBoroughChange={(event) => {
+							setLocationRequest((prev) => ({
+								...prev,
+								borough: event.target.value as Borough | undefined,
+							}));
+						}}
 						onDescriptionChange={(event) => {
 							setLocationRequest((prev) => ({
 								...prev,
@@ -156,7 +165,40 @@ export default function LocationEditor(props: Props) {
 					/>
 				</>
 			)}
-			<Spacer size={20} />
+			<Spacer size={30} />
+			<ContactFormFields
+				name={locationRequest.contact?.name}
+				email={locationRequest.contact?.email}
+				telephone={locationRequest.contact?.telephone}
+				onNameChange={(event) => {
+					setLocationRequest((prev) => ({
+						...prev,
+						contact: {
+							...prev.contact,
+							name: event.target.value,
+						},
+					}));
+				}}
+				onEmailChange={(event) => {
+					setLocationRequest((prev) => ({
+						...prev,
+						contact: {
+							...prev.contact,
+							email: event.target.value,
+						},
+					}));
+				}}
+				onTelephoneChange={(event) => {
+					setLocationRequest((prev) => ({
+						...prev,
+						contact: {
+							...prev.contact,
+							telephone: event.target.value,
+						},
+					}));
+				}}
+			/>
+			<Spacer size={30} />
 			<Buttons location={location} onUpdated={handleUpdatedStatus} submitLabel={submitLabel} />
 		</form>
 	);
