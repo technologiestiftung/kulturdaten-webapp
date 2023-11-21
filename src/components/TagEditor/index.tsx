@@ -9,6 +9,10 @@ import { TagGroup, groupTags } from "@utils/tags";
 import { useTranslations } from "next-intl";
 import { ChangeEvent, useMemo } from "react";
 
+const NoTags = styled.div({
+	color: colors.mediumContrast,
+});
+
 const GroupList = styled.ul({
 	display: "flex",
 	flexDirection: "column",
@@ -75,6 +79,7 @@ export default function TagEditor(props: Props) {
 		<FormFieldset>
 			<FormLegend>{t("title")}</FormLegend>
 			<Spacer size={10} />
+			{!groups.length && <NoTags>{t("no-tags-available")}</NoTags>}
 			<GroupList>
 				{groups.map((group) => (
 					<Group key={group.identifier}>
