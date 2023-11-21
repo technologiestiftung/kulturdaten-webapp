@@ -7,6 +7,7 @@ const errorStyle: CSSObject = {
 };
 
 const StyledCheckbox = styled.input<Props>(({ error, disabled, readOnly }) => ({
+	appearance: "none",
 	margin: "0 0.5em 0.2em 0",
 	verticalAlign: "middle",
 	width: "1.2em",
