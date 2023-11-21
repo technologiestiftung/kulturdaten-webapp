@@ -3,14 +3,14 @@ import useApiClient from "@hooks/useApiClient";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/router";
 import { FormEventHandler, useCallback, useState } from "react";
+import AddressFormFields from "../AddressFormFields";
+import Checkbox from "../Checkbox";
 import FormField from "../FormField";
 import Input from "../Input";
 import Spacer from "../Spacer";
 import Textarea from "../Textarea";
 import Buttons from "./Buttons";
 import { getInitialRequest } from "./service";
-import AddressFormFields from "../AddressFormFields";
-import Checkbox from "../CheckBox";
 
 interface Props {
 	location: Location | null;
@@ -97,14 +97,10 @@ export default function LocationEditor(props: Props) {
 				}}
 				required={false}
 			/>
-			<Spacer size={15} />
-			<FormField
-				component={Checkbox}
-				type="checkbox"
+			<Spacer size={30} />
+			<Checkbox
 				label={t("label-isVirtual")}
-				id="isVirtual"
 				checked={locationRequest.isVirtual}
-				labelPosition="after"
 				onChange={(event) => {
 					setLocationRequest((prev) => ({
 						...prev,

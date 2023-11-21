@@ -15,18 +15,16 @@ type Props<Component extends ComponentType> = ComponentProps<Component> & {
 	component?: Component;
 	label: ReactNode;
 	error?: string | null;
-	labelPosition?: "before" | "after";
 };
 
 const DEFAULT_COMPONENT = Input;
 
 export default function FormField<Component extends ComponentType = typeof DEFAULT_COMPONENT>(props: Props<Component>) {
-	const { component: Component = DEFAULT_COMPONENT, label, error, labelPosition = "before", ...otherProps } = props;
+	const { component: Component = DEFAULT_COMPONENT, label, error, ...otherProps } = props;
 	return (
 		<Label>
-			{labelPosition === "before" && label}
+			{label}
 			<Component error={error} {...otherProps} />
-			{labelPosition === "after" && label}
 			{error && <Error aria-live="assertive">{error}</Error>}
 		</Label>
 	);
