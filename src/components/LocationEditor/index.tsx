@@ -3,13 +3,14 @@ import useApiClient from "@hooks/useApiClient";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/router";
 import { FormEventHandler, useCallback, useState } from "react";
+import AddressFormFields from "../AddressFormFields";
+import Checkbox from "../Checkbox";
 import FormField from "../FormField";
 import Input from "../Input";
 import Spacer from "../Spacer";
 import Textarea from "../Textarea";
 import Buttons from "./Buttons";
 import { getInitialRequest } from "./service";
-import AddressFormFields from "../AddressFormFields";
 
 interface Props {
 	location: Location | null;
@@ -96,49 +97,65 @@ export default function LocationEditor(props: Props) {
 				}}
 				required={false}
 			/>
-			<Spacer size={15} />
-			<AddressFormFields
-				streetAddress={locationRequest.address?.streetAddress}
-				addressLocality={locationRequest.address?.addressLocality}
-				postalCode={locationRequest.address?.postalCode}
-				description={locationRequest.address?.description}
-				onStreetAddressChange={(event) => {
+			<Spacer size={30} />
+			<Checkbox
+				label={t("label-isVirtual")}
+				checked={locationRequest.isVirtual}
+				onChange={(event) => {
 					setLocationRequest((prev) => ({
 						...prev,
-						address: {
-							...prev.address,
-							streetAddress: event.target.value,
-						},
-					}));
-				}}
-				onAddressLocalityChange={(event) => {
-					setLocationRequest((prev) => ({
-						...prev,
-						address: {
-							...prev.address,
-							addressLocality: event.target.value,
-						},
-					}));
-				}}
-				onPostalCodeChange={(event) => {
-					setLocationRequest((prev) => ({
-						...prev,
-						address: {
-							...prev.address,
-							postalCode: event.target.value,
-						},
-					}));
-				}}
-				onDescriptionChange={(event) => {
-					setLocationRequest((prev) => ({
-						...prev,
-						address: {
-							...prev.address,
-							description: event.target.value,
-						},
+						isVirtual: event.target.checked,
 					}));
 				}}
 			/>
+
+			{!locationRequest.isVirtual && (
+				<>
+					<Spacer size={15} />
+					<AddressFormFields
+						streetAddress={locationRequest.address?.streetAddress}
+						addressLocality={locationRequest.address?.addressLocality}
+						postalCode={locationRequest.address?.postalCode}
+						description={locationRequest.address?.description}
+						onStreetAddressChange={(event) => {
+							setLocationRequest((prev) => ({
+								...prev,
+								address: {
+									...prev.address,
+									streetAddress: event.target.value,
+								},
+							}));
+						}}
+						onAddressLocalityChange={(event) => {
+							setLocationRequest((prev) => ({
+								...prev,
+								address: {
+									...prev.address,
+									addressLocality: event.target.value,
+								},
+							}));
+						}}
+						onPostalCodeChange={(event) => {
+							setLocationRequest((prev) => ({
+								...prev,
+								address: {
+									...prev.address,
+									postalCode: event.target.value,
+								},
+							}));
+						}}
+						onDescriptionChange={(event) => {
+							setLocationRequest((prev) => ({
+								...prev,
+								address: {
+									...prev.address,
+									description: event.target.value,
+								},
+							}));
+						}}
+					/>
+				</>
+			)}
 			<Spacer size={20} />
 			<Buttons location={location} onUpdated={handleUpdatedStatus} submitLabel={submitLabel} />
 		</form>

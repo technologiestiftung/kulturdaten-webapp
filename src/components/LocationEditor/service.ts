@@ -11,5 +11,6 @@ export function getInitialRequest(location: Location | null, languages: Array<st
 		tags: location?.tags || [],
 		externalLinks: location?.externalLinks || [],
 		address: location?.address || {},
+		isVirtual: location?.isVirtual || false,
 	};
 }

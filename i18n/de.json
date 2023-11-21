@@ -77,7 +77,8 @@
 		"status-update-unpublish": "Veröffentlichung aufheben",
 		"label-title": "Titel",
 		"label-description": "Beschreibung",
-		"label-website": "Website"
+		"label-website": "Website",
+		"label-isVirtual": "Ist ein virtueller Ort"
 	},
 	"Locations": {
 		"page-title": "Orte",
