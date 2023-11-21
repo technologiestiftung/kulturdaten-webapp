@@ -104,6 +104,7 @@ export default function LocationEditor(props: Props) {
 				label={t("label-isVirtual")}
 				id="isVirtual"
 				checked={locationRequest.isVirtual}
+				labelPosition="after"
 				onChange={(event) => {
 					setLocationRequest((prev) => ({
 						...prev,

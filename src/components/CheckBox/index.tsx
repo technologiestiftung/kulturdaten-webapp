@@ -7,9 +7,7 @@ const errorStyle: CSSObject = {
 };
 
 const StyledCheckbox = styled.input<Props>(({ error, disabled, readOnly }) => ({
-	appearance: "none",
-	margin: 0,
-	marginLeft: "0.5em",
+	margin: "0 0.5em 0.2em 0",
 	verticalAlign: "middle",
 	width: "1.2em",
 	height: "1.2em",
@@ -36,6 +34,5 @@ export interface Props extends DetailedHTMLProps<InputHTMLAttributes<HTMLInputEl
 }
 
 export default function Checkbox(props: Props) {
-	const { type = "checkbox", ...otherProps } = props;
-	return <StyledCheckbox type={type} {...otherProps} />;
+	return <StyledCheckbox type="checkbox" {...props} />;
 }
