@@ -1,5 +1,6 @@
 import { Organization } from "@api/client/models/Organization";
 import ROUTES from "@common/routes";
+import { Tag } from "@common/types";
 import OrganizationEditor from "@components/OrganizationEditor";
 import OrganizationStatus from "@components/OrganizationStatus";
 import Page from "@components/Page";
@@ -12,10 +13,11 @@ import { useTranslations } from "use-intl";
 
 interface Props {
 	organization: Organization | null;
+	tags: Tag[];
 }
 
 export default function OrganizationDetailsPage(props: Props) {
-	const { organization } = props;
+	const { organization, tags } = props;
 	const router = useRouter();
 	const t = useTranslations("Organization-Details");
 	const isNew = organization === null;
@@ -30,7 +32,7 @@ export default function OrganizationDetailsPage(props: Props) {
 			<PageTitle>{pageTitle}</PageTitle>
 			{organization && <OrganizationStatus status={organization.status} />}
 			<Spacer size={20} />
-			<OrganizationEditor organization={organization} onAfterSubmit={handleAfterSubmit} />
+			<OrganizationEditor organization={organization} tags={tags} onAfterSubmit={handleAfterSubmit} />
 		</Page>
 	);
 }

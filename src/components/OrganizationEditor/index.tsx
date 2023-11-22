@@ -1,10 +1,11 @@
 import { Organization } from "@api/client/models/Organization";
-import { Borough } from "@common/types";
+import { Borough, Tag } from "@common/types";
 import AddressFormFields from "@components/AddressFormFields";
 import ContactFormFields from "@components/ContactFormFields";
 import FormField from "@components/FormField";
 import Input from "@components/Input";
 import Spacer from "@components/Spacer";
+import TagEditor from "@components/TagEditor";
 import Textarea from "@components/Textarea";
 import useApiClient from "@hooks/useApiClient";
 import { useTranslations } from "next-intl";
@@ -15,11 +16,12 @@ import { getInitialRequest } from "./service";
 
 interface Props {
 	organization: Organization | null;
+	tags: Tag[];
 	onAfterSubmit(): void;
 }
 
 export default function OrganizationEditor(props: Props) {
-	const { organization, onAfterSubmit } = props;
+	const { organization, tags, onAfterSubmit } = props;
 	const router = useRouter();
 	const isNew = organization === null;
 	const t = useTranslations("Organization-Details");
@@ -180,6 +182,18 @@ export default function OrganizationEditor(props: Props) {
 						},
 					}));
 				}}
+			/>
+			<Spacer size={30} />
+			<TagEditor
+				tags={tags}
+				selectedTagIdentifiers={organizationRequest.tags!}
+				language={currentLanguage}
+				onChange={(tags) =>
+					setOrganizationRequest((prev) => ({
+						...prev,
+						tags,
+					}))
+				}
 			/>
 			<Spacer size={30} />
 			<Buttons organization={organization} onUpdated={handleUpdatedStatus} submitLabel={submitLabel} />

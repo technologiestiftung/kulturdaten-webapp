@@ -109,6 +109,10 @@
 		"status-update-archive": "Archivieren",
 		"status-update-unarchive": "Wiederherstellen"
 	},
+	"Tags": {
+		"title": "Kategorisierung",
+		"no-tags-available": "(Keine Kategorien verfügbar)"
+	},
 	"Users": {
 		"page-title": "Benutzer:innen",
 		"page-description": "Benutzer:innen zu {organizationName} einladen oder deren Rollen bearbeiten.",
