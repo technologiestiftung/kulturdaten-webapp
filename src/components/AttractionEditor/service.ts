@@ -2,7 +2,6 @@ import { createLanguagesObject } from "@/src/utils/content";
 import { AdminAttraction } from "@api/client/models/AdminAttraction";
 import { CreateAttractionRequest } from "@api/client/models/CreateAttractionRequest";
 
-
 export function getInitialRequest(
 	attraction: AdminAttraction | null,
 	languages: Array<string>,
