@@ -1,4 +1,4 @@
-import { Role } from "@contexts/userContext";
+import { Role } from "@contexts/UserContext";
 import { useTranslations } from "next-intl";
 
 interface Props {

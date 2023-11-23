@@ -7,7 +7,7 @@ import PageTitleHeader from "@components/PageTitleHeader";
 import { PaginationInfo } from "@components/Pagination";
 import Spacer from "@components/Spacer";
 import UserRoleSelect from "@components/UserRoleSelect";
-import { Role } from "@contexts/userContext";
+import { Role } from "@contexts/UserContext";
 import useApiClient from "@hooks/useApiClient";
 import useUser from "@hooks/useUser";
 import { getLocalizedLabel } from "@services/content";

@@ -1,7 +1,7 @@
 import apiClient from "@api/client";
 import { Organization } from "@api/client/models/Organization";
 import ROUTES from "@common/routes";
-import { UserContext } from "@contexts/userContext";
+import { UserContext } from "@contexts/UserContext";
 import { useRouter } from "next/router";
 import { useContext } from "react";
 

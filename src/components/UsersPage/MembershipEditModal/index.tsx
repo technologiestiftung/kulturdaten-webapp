@@ -5,7 +5,7 @@ import FormField from "@components/FormField";
 import Modal from "@components/Modal";
 import Spacer from "@components/Spacer";
 import UserRoleSelect from "@components/UserRoleSelect";
-import { Role } from "@contexts/userContext";
+import { Role } from "@contexts/UserContext";
 import useApiClient from "@hooks/useApiClient";
 import { getFullName } from "@services/users";
 import { useTranslations } from "next-intl";
