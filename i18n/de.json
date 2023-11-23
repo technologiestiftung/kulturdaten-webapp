@@ -4,9 +4,6 @@
 	},
 	"Navigation": {
 		"title": "kulturdaten.berlin",
-		"group-user": "User",
-		"group-admin": "Admininistration",
-		"link-user-attractions": "Angebote",
 		"link-admin-attractions": "Angebote",
 		"link-admin-locations": "Orte",
 		"link-admin-organizations": "Anbieter:innen",
