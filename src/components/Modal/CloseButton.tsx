@@ -1,8 +1,8 @@
 import { spacings } from "@common/styleVariables";
+import Button from "@components/Button";
+import Icon from "@components/Icon";
 import styled from "@emotion/styled";
 import { useTranslations } from "next-intl";
-import Button from "../Button";
-import Icon from "../Icon";
 
 const StyledButton = styled(Button)({
 	padding: spacings.get(2),

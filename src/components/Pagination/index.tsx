@@ -1,4 +1,5 @@
 import { spacings } from "@common/styleVariables";
+import { PaginationType } from "@common/types";
 import styled from "@emotion/styled";
 import { ReactNode } from "react";
 import Container from "./Container";
@@ -21,12 +22,6 @@ const ListItem = styled.li({
 	justifyContent: "center",
 	alignItems: "center",
 });
-
-export interface PaginationType {
-	page: number;
-	pageSize: number;
-	totalCount: number;
-}
 
 interface Props {
 	pagination: PaginationType;

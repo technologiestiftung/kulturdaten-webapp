@@ -1,9 +1,9 @@
 import { borderRadiuses, colors, iconSizes, spacings } from "@common/styleVariables";
+import Button from "@components/Button";
+import Icon from "@components/Icon";
+import Popover from "@components/Popover";
 import styled from "@emotion/styled";
 import { MouseEvent, ReactEventHandler, ReactNode, useState } from "react";
-import Button from "../Button";
-import Icon from "../Icon";
-import Popover from "../Popover";
 
 const Options = styled.ul({
 	listStyle: "none",

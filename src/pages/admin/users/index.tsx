@@ -1,8 +1,8 @@
 import { Membership } from "@common/types";
-import UsersPage from "@components/UsersPage";
-import { decodeAccessToken } from "@utils/auth";
-import { withApiClientAndPagination } from "@utils/data";
-import withAuth from "@utils/withAuth";
+import UsersPage from "@components/pages/UsersPage";
+import { decodeAccessToken } from "@services/auth";
+import withApiClientAndPagination from "@services/withApiClientAndPagination";
+import withAuth from "@services/withAuth";
 import { GetServerSideProps } from "next";
 
 interface Props {

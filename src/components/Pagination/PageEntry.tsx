@@ -1,6 +1,6 @@
 import { borderRadiuses, colors, spacings } from "@common/styleVariables";
 import styled, { CSSObject } from "@emotion/styled";
-import { getQuery } from "@utils/pagination";
+import { getQuery } from "@services/pagination";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { useRouter } from "next/router";

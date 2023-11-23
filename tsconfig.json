@@ -17,13 +17,12 @@
 		"downlevelIteration": true,
 		"incremental": true,
 		"paths": {
-			"@/*": ["./*"],
 			"@api/*": ["./src/api/*"],
 			"@common/*": ["./src/common/*"],
 			"@components/*": ["./src/components/*"],
 			"@contexts/*": ["./src/contexts/*"],
 			"@hooks/*": ["./src/hooks/*"],
-			"@utils/*": ["./src/utils/*"]
+			"@services/*": ["./src/services/*"]
 		}
 	},
 	"include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],

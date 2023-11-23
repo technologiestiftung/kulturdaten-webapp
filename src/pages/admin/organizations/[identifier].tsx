@@ -1,8 +1,8 @@
 import { Organization } from "@api/client/models/Organization";
 import { Tag } from "@common/types";
-import OrganizationDetailsPage from "@components/OrganizationDetailsPage";
-import { withApiClientAndPagination } from "@utils/data";
-import withAuth from "@utils/withAuth";
+import OrganizationDetailsPage from "@components/pages/OrganizationDetailsPage";
+import withApiClientAndPagination from "@services/withApiClientAndPagination";
+import withAuth from "@services/withAuth";
 import { GetServerSideProps } from "next";
 
 interface Props {

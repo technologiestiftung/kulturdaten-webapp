@@ -1,7 +1,7 @@
 import { borderRadiuses, colors, fontSizes, iconSizes, lineHeights, spacings, timings } from "@common/styleVariables";
+import Icon from "@components/Icon";
 import styled, { CSSObject } from "@emotion/styled";
 import { SelectHTMLAttributes } from "react";
-import Icon from "../Icon";
 
 type Variation = "default" | "table";
 

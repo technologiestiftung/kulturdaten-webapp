@@ -1,7 +1,7 @@
 import { colors, fontSizes } from "@common/styleVariables";
+import Input from "@components/Input";
 import styled from "@emotion/styled";
 import { ComponentProps, ComponentType, ReactNode } from "react";
-import Input from "../Input";
 
 const Label = styled.label({
 	fontSize: fontSizes.small,

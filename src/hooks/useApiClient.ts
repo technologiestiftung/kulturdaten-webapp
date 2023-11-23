@@ -1,5 +1,5 @@
 import { createAuthorizedClient } from "@api/client";
-import { getAccessToken } from "@utils/auth";
+import { getAccessToken } from "@services/auth";
 import { useMemo } from "react";
 
 export default function useApiClient() {

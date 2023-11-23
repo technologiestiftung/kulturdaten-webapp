@@ -1,6 +1,6 @@
-import LocationDetailsPage from "@components/LocationDetailsPage";
-import { loadMessages } from "@utils/i18n";
-import withAuth from "@utils/withAuth";
+import LocationDetailsPage from "@components/pages/LocationDetailsPage";
+import { loadMessages } from "@services/i18n";
+import withAuth from "@services/withAuth";
 import { GetServerSideProps } from "next";
 
 interface Props {

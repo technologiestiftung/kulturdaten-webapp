@@ -1,6 +1,6 @@
+import { Role } from "@common/types";
 import SelectNative from "@components/SelectNative";
 import UserRole from "@components/UserRole";
-import { Role } from "@contexts/userContext";
 import { ComponentPropsWithoutRef } from "react";
 
 type Props = ComponentPropsWithoutRef<typeof SelectNative>;

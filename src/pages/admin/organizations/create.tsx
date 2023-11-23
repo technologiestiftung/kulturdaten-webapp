@@ -1,7 +1,7 @@
-import OrganizationDetailsPage from "@components/OrganizationDetailsPage";
-import { withApiClientAndPagination } from "@utils/data";
-import { loadMessages } from "@utils/i18n";
-import withAuth from "@utils/withAuth";
+import OrganizationDetailsPage from "@components/pages/OrganizationDetailsPage";
+import { loadMessages } from "@services/i18n";
+import withApiClientAndPagination from "@services/withApiClientAndPagination";
+import withAuth from "@services/withAuth";
 import { GetServerSideProps } from "next";
 
 interface Props {

@@ -1,6 +1,6 @@
-import OrganizationsPage from "@components/OrganizationsPage";
-import { loadMessages } from "@utils/i18n";
-import withAuth from "@utils/withAuth";
+import OrganizationsPage from "@components/pages/OrganizationsPage";
+import { loadMessages } from "@services/i18n";
+import withAuth from "@services/withAuth";
 import { GetStaticProps } from "next";
 
 export const getStaticProps: GetStaticProps = async (context) => ({

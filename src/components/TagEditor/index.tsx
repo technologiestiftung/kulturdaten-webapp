@@ -5,7 +5,7 @@ import FormFieldset from "@components/FormFieldset";
 import FormLegend from "@components/FormLegend";
 import Spacer from "@components/Spacer";
 import styled from "@emotion/styled";
-import { TagGroup, groupTags } from "@utils/tags";
+import { TagGroup, groupTags } from "@services/tags";
 import { useTranslations } from "next-intl";
 import { ChangeEvent, useMemo } from "react";
 
