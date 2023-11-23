@@ -1,6 +1,7 @@
 import { AdminAttraction } from "@api/client/models/AdminAttraction";
 import AdminAttractionsPage from "@components/pages/AdminAttractionsPage";
-import { getPaginationProps, withApiClientAndPagination } from "@services/data";
+import { getPaginationProps } from "@services/data";
+import withApiClientAndPagination from "@services/withApiClientAndPagination";
 import withAuth from "@services/withAuth";
 import { GetServerSideProps } from "next";
 
