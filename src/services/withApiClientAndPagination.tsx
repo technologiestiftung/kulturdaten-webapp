@@ -3,7 +3,7 @@ import { APIClient } from "@api/client/APIClient";
 import ROUTES from "@common/routes";
 import { decodeAccessToken, getAccessTokenFromContext } from "@services/auth";
 import { loadMessages } from "@services/i18n";
-import { getPagination } from "@services/pagination";
+import { getPaginationFromQuery } from "@services/pagination";
 import { GetServerSidePropsContext, GetServerSidePropsResult, Redirect } from "next";
 
 /**
@@ -17,7 +17,7 @@ export default function withApiClientAndPagination<Props>(context: GetServerSide
 			return LOGIN_REDIRECT;
 		}
 		const apiClient = createAuthorizedClient(accessToken);
-		const { page, pageSize } = getPagination(context.query);
+		const { page, pageSize } = getPaginationFromQuery(context.query);
 		const messages = await loadMessages(context.locale!);
 		try {
 			return await next({ apiClient, page, pageSize, messages, accessToken });

@@ -1,11 +1,12 @@
 import { AdminAttraction } from "@api/client/models/AdminAttraction";
 import ROUTES from "@common/routes";
+import { PaginationType } from "@common/types";
 import AttractionStatus from "@components/AttractionStatus";
 import Button from "@components/Button";
 import ContentTable, { ACTIONS_CELL_STYLE } from "@components/ContentTable";
 import Page from "@components/Page";
 import PageTitleHeader from "@components/PageTitleHeader";
-import Pagination, { PaginationType } from "@components/Pagination";
+import Pagination from "@components/Pagination";
 import Spacer from "@components/Spacer";
 import { getLocalizedLabel } from "@services/content";
 import { useRouter } from "next/router";

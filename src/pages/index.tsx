@@ -1,6 +1,6 @@
 import { Attraction } from "@api/client/models/Attraction";
+import { PaginationType } from "@common/types";
 import AttractionsPage from "@components/pages/AttractionsPage";
-import { PaginationType } from "@components/Pagination";
 import withApiClientAndPagination from "@services/withApiClientAndPagination";
 import withAuth from "@services/withAuth";
 import { GetServerSideProps } from "next";

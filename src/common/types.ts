@@ -7,3 +7,9 @@ export type Membership = Required<Required<GetOrganizationMembershipsResponse>["
 export type Borough = NonNullable<Location["borough"]>;
 
 export type Tag = Required<Required<GetTagsResponse>["data"]>["tags"][0];
+
+export interface PaginationType {
+	page: number;
+	pageSize: number;
+	totalCount: number;
+}

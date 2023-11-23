@@ -1,9 +1,10 @@
 import { Attraction } from "@api/client/models/Attraction";
+import { PaginationType } from "@common/types";
 import AttractionStatus from "@components/AttractionStatus";
 import ContentTable from "@components/ContentTable";
 import Page from "@components/Page";
 import PageTitle from "@components/PageTitle";
-import Pagination, { PaginationType } from "@components/Pagination";
+import Pagination from "@components/Pagination";
 import Spacer from "@components/Spacer";
 import { getLocalizedLabel } from "@services/content";
 import { useTranslations } from "use-intl";

@@ -1,4 +1,4 @@
-import { PaginationType } from ".";
+import { PaginationType } from "@common/types";
 
 type Page = {
 	index: number;
