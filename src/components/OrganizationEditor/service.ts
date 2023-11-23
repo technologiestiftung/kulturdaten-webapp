@@ -1,6 +1,6 @@
 import { CreateOrganizationRequest } from "@api/client/models/CreateOrganizationRequest";
 import { Organization } from "@api/client/models/Organization";
-import { createLanguagesObject } from "@utils/content";
+import { createLanguagesObject } from "@services/content";
 
 export function getInitialRequest(
 	organization: Organization | null,

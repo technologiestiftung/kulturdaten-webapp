@@ -2,7 +2,7 @@ import { CreateMembershipRequest } from "@api/client/models/CreateMembershipRequ
 import { LoginResponse } from "@api/client/models/LoginResponse";
 import { Organization } from "@api/client/models/Organization";
 import ROUTES from "@common/routes";
-import { clearAccessToken, getAccessToken, storeAccessToken } from "@utils/auth";
+import { clearAccessToken, getAccessToken, storeAccessToken } from "@services/auth";
 import { useRouter } from "next/router";
 import { FC, ReactNode, createContext, useCallback, useEffect, useMemo, useState } from "react";
 

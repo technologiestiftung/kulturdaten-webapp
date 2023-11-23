@@ -1,5 +1,5 @@
 import LoginPage from "@components/LoginPage";
-import { loadMessages } from "@utils/i18n";
+import { loadMessages } from "@services/i18n";
 import { GetStaticProps } from "next";
 
 export const getStaticProps: GetStaticProps = async (context) => ({

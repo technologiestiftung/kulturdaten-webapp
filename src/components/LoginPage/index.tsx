@@ -17,7 +17,7 @@ import Head from "@components/Page/Head";
 import Spacer from "@components/Spacer";
 import styled from "@emotion/styled";
 import useUser from "@hooks/useUser";
-import { validateEmail } from "@utils/validation";
+import { validateEmail } from "@services/validation";
 import { FormEvent, useState } from "react";
 import { useTranslations } from "use-intl";
 

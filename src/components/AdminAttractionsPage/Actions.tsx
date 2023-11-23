@@ -1,7 +1,7 @@
 import { AdminAttraction } from "@api/client/models/AdminAttraction";
 import ROUTES from "@common/routes";
 import useApiClient from "@hooks/useApiClient";
-import { getAllowedStatusUpdates } from "@utils/attractions";
+import { getAllowedStatusUpdates } from "@services/attractions";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/router";
 import { useMemo } from "react";

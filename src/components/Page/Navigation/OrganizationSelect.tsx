@@ -1,6 +1,6 @@
 import { Organization } from "@api/client/models/Organization";
 import Select from "@components/Select";
-import { getLocalizedLabel } from "@utils/content";
+import { getLocalizedLabel } from "@services/content";
 import { useTranslations } from "next-intl";
 
 interface Props {

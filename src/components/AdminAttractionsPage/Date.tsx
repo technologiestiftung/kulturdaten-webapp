@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { formatDate } from "@utils/dates";
+import { formatDate } from "@services/dates";
 import { useRouter } from "next/router";
 
 const Time = styled.time({

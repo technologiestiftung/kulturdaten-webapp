@@ -1,6 +1,6 @@
 import { Attraction } from "@api/client/models/Attraction";
 import Page from "@components/Page";
-import { getLocalizedLabel } from "@utils/content";
+import { getLocalizedLabel } from "@services/content";
 import { useTranslations } from "use-intl";
 import AttractionStatus from "../AttractionStatus";
 import ContentTable from "../ContentTable";

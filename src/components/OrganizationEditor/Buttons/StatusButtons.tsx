@@ -1,7 +1,7 @@
 import { Organization } from "@api/client/models/Organization";
 import Button from "@components/Button";
 import useApiClient from "@hooks/useApiClient";
-import { getAllowedStatusUpdates } from "@utils/organizations";
+import { getAllowedStatusUpdates } from "@services/organizations";
 import { useTranslations } from "next-intl";
 import { ReactNode, useMemo } from "react";
 

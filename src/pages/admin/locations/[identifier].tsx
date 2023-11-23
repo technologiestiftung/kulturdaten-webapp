@@ -1,8 +1,8 @@
-import { withApiClientAndPagination } from "@utils/data";
 import { Location } from "@api/client/models/Location";
+import LocationDetailsPage from "@components/LocationDetailsPage";
+import { withApiClientAndPagination } from "@services/data";
+import withAuth from "@services/withAuth";
 import { GetServerSideProps } from "next";
-import LocationDetailsPage from "@/src/components/LocationDetailsPage";
-import withAuth from "@/src/utils/withAuth";
 
 interface Props {
 	location: Location;

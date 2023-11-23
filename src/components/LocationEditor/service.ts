@@ -1,6 +1,6 @@
 import { CreateLocationRequest } from "@api/client/models/CreateLocationRequest";
 import { Location } from "@api/client/models/Location";
-import { createLanguagesObject } from "@utils/content";
+import { createLanguagesObject } from "@services/content";
 
 export function getInitialRequest(location: Location | null, languages: Array<string>): CreateLocationRequest {
 	return {

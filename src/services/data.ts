@@ -2,9 +2,9 @@ import { createAuthorizedClient } from "@api/client";
 import { APIClient } from "@api/client/APIClient";
 import ROUTES from "@common/routes";
 import { PaginationType } from "@components/Pagination";
-import { decodeAccessToken, getAccessTokenFromContext } from "@utils/auth";
-import { loadMessages } from "@utils/i18n";
-import { getPagination } from "@utils/pagination";
+import { decodeAccessToken, getAccessTokenFromContext } from "@services/auth";
+import { loadMessages } from "@services/i18n";
+import { getPagination } from "@services/pagination";
 import { GetServerSidePropsContext, GetServerSidePropsResult, Redirect } from "next";
 
 type NextFunction<Props> = (parameters: {

@@ -1,7 +1,7 @@
 import AdminAttractionDetailsPage from "@components/AdminAttractionDetailsPage";
-import { withApiClientAndPagination } from "@utils/data";
-import { loadMessages } from "@utils/i18n";
-import withAuth from "@utils/withAuth";
+import { withApiClientAndPagination } from "@services/data";
+import { loadMessages } from "@services/i18n";
+import withAuth from "@services/withAuth";
 import { GetServerSideProps } from "next";
 
 interface Props {

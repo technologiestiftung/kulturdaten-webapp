@@ -1,6 +1,6 @@
 import { AdminAttraction } from "@api/client/models/AdminAttraction";
 import useApiClient from "@hooks/useApiClient";
-import { getAllowedStatusUpdates } from "@utils/attractions";
+import { getAllowedStatusUpdates } from "@services/attractions";
 import { useTranslations } from "next-intl";
 import { ReactNode, useMemo } from "react";
 import Button from "../../Button";

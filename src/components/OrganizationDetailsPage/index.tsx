@@ -6,7 +6,7 @@ import OrganizationStatus from "@components/OrganizationStatus";
 import Page from "@components/Page";
 import PageTitle from "@components/PageTitle";
 import Spacer from "@components/Spacer";
-import { getLocalizedLabel } from "@utils/content";
+import { getLocalizedLabel } from "@services/content";
 import { useRouter } from "next/router";
 import { useCallback } from "react";
 import { useTranslations } from "use-intl";

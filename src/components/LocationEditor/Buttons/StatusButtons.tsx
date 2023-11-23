@@ -1,6 +1,6 @@
 import { Location } from "@api/client/models/Location";
 import useApiClient from "@hooks/useApiClient";
-import { getAllowedStatusUpdates } from "@utils/locations";
+import { getAllowedStatusUpdates } from "@services/locations";
 import { useTranslations } from "next-intl";
 import { ReactNode, useMemo } from "react";
 import Button from "../../Button";

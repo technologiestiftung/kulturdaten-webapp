@@ -1,7 +1,7 @@
 import { AdminAttraction } from "@api/client/models/AdminAttraction";
 import ROUTES from "@common/routes";
 import Page from "@components/Page";
-import { getLocalizedLabel } from "@utils/content";
+import { getLocalizedLabel } from "@services/content";
 import { useRouter } from "next/router";
 import { useCallback } from "react";
 import { useTranslations } from "use-intl";

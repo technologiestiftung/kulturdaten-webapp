@@ -10,7 +10,7 @@ import UserRoleSelect from "@components/UserRoleSelect";
 import { Role } from "@contexts/userContext";
 import useApiClient from "@hooks/useApiClient";
 import useUser from "@hooks/useUser";
-import { getLocalizedLabel } from "@utils/content";
+import { getLocalizedLabel } from "@services/content";
 import { useRouter } from "next/router";
 import { ChangeEvent, useCallback, useState } from "react";
 import { useTranslations } from "use-intl";

@@ -1,4 +1,4 @@
-import { UserLike, getFullName } from "@utils/users";
+import { UserLike, getFullName } from "@services/users";
 
 interface Props {
 	user: UserLike;

@@ -7,7 +7,7 @@ import Spacer from "@components/Spacer";
 import UserRoleSelect from "@components/UserRoleSelect";
 import { Role } from "@contexts/userContext";
 import useApiClient from "@hooks/useApiClient";
-import { getFullName } from "@utils/users";
+import { getFullName } from "@services/users";
 import { useTranslations } from "next-intl";
 import { FormEventHandler, useCallback, useState } from "react";
 import Buttons from "./Buttons";
