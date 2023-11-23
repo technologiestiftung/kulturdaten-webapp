@@ -1,6 +1,6 @@
 import { Attraction } from "@api/client/models/Attraction";
-import { PaginationType } from "@common/types";
 import AttractionsPage from "@components/pages/AttractionsPage";
+import { getPaginationProps } from "@services/pagination";
 import withApiClientAndPagination from "@services/withApiClientAndPagination";
 import withAuth from "@services/withAuth";
 import { GetServerSideProps } from "next";
@@ -14,15 +14,10 @@ export const getServerSideProps: GetServerSideProps<Props> = (context) =>
 		const response = await apiClient.discoverCulturalData.getAttractions(page, pageSize, false);
 		const data = response.data!;
 		const attractions = data.attractions || [];
-		const pagination: PaginationType = {
-			page: data.page!,
-			pageSize: data.pageSize!,
-			totalCount: data.totalCount!,
-		};
 		return {
 			props: {
 				attractions,
-				pagination,
+				pagination: getPaginationProps(data),
 				messages,
 			},
 		};

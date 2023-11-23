@@ -11,7 +11,13 @@ import { GetServerSidePropsContext, GetServerSidePropsResult, Redirect } from "n
  * Also redirects to the login page if the token is missing or invalid.
  */
 export default function withApiClientAndPagination<Props>(context: GetServerSidePropsContext) {
-	return async function (next: NextFunction<Props>) {
+	const LOGIN_REDIRECT: { redirect: Redirect } = {
+		redirect: {
+			destination: ROUTES.login(),
+			permanent: false,
+		},
+	};
+	return async function (serverSideFunction: ServerSideFunction<Props>) {
 		const accessToken = getAccessTokenFromContext(context);
 		if (!accessToken || !isTokenValid(accessToken)) {
 			return LOGIN_REDIRECT;
@@ -20,7 +26,7 @@ export default function withApiClientAndPagination<Props>(context: GetServerSide
 		const { page, pageSize } = getPaginationFromQuery(context.query);
 		const messages = await loadMessages(context.locale!);
 		try {
-			return await next({ apiClient, page, pageSize, messages, accessToken });
+			return await serverSideFunction({ apiClient, page, pageSize, messages, accessToken });
 		} catch (error) {
 			// TODO: Show cause of error on the login page (e.g. via URL parameter).
 			return LOGIN_REDIRECT;
@@ -28,20 +34,13 @@ export default function withApiClientAndPagination<Props>(context: GetServerSide
 	};
 }
 
-type NextFunction<Props> = (parameters: {
+type ServerSideFunction<Props> = (parameters: {
 	apiClient: APIClient;
 	page: number;
 	pageSize: number;
 	messages: object;
 	accessToken: string;
 }) => Promise<GetServerSidePropsResult<Props>>;
-
-const LOGIN_REDIRECT: { redirect: Redirect } = {
-	redirect: {
-		destination: ROUTES.login(),
-		permanent: false,
-	},
-};
 
 function isTokenValid(accessToken: string) {
 	const decodedAccessToken = decodeAccessToken(accessToken);
