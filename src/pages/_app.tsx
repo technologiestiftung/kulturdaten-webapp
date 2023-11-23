@@ -10,8 +10,9 @@ ReactModal.setAppElement(`#${APP_ELEMENT_ID}`);
 
 export default function MyApp({ Component, pageProps }: AppProps) {
 	const router = useRouter();
+	const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 	return (
-		<NextIntlClientProvider messages={pageProps.messages} locale={router.locale}>
+		<NextIntlClientProvider messages={pageProps.messages} locale={router.locale} timeZone={timeZone}>
 			<UserContextProvider>
 				<GlobalStyles />
 				<Component {...pageProps} />
