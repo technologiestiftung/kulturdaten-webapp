@@ -1,4 +1,4 @@
-import OrganizationsPage from "@components/OrganizationsPage";
+import OrganizationsPage from "@components/pages/OrganizationsPage";
 import { loadMessages } from "@services/i18n";
 import withAuth from "@services/withAuth";
 import { GetStaticProps } from "next";

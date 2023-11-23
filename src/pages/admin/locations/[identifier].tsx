@@ -1,5 +1,5 @@
 import { Location } from "@api/client/models/Location";
-import LocationDetailsPage from "@components/LocationDetailsPage";
+import LocationDetailsPage from "@components/pages/LocationDetailsPage";
 import { withApiClientAndPagination } from "@services/data";
 import withAuth from "@services/withAuth";
 import { GetServerSideProps } from "next";

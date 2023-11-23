@@ -1,16 +1,16 @@
 import { Location } from "@api/client/models/Location";
 import { Borough } from "@common/types";
+import AddressFormFields from "@components/AddressFormFields";
+import Checkbox from "@components/Checkbox";
+import ContactFormFields from "@components/ContactFormFields";
+import FormField from "@components/FormField";
+import Input from "@components/Input";
+import Spacer from "@components/Spacer";
+import Textarea from "@components/Textarea";
 import useApiClient from "@hooks/useApiClient";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/router";
 import { FormEventHandler, useCallback, useState } from "react";
-import AddressFormFields from "../AddressFormFields";
-import Checkbox from "../Checkbox";
-import ContactFormFields from "../ContactFormFields";
-import FormField from "../FormField";
-import Input from "../Input";
-import Spacer from "../Spacer";
-import Textarea from "../Textarea";
 import Buttons from "./Buttons";
 import { getInitialRequest } from "./service";
 

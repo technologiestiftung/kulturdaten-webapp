@@ -1,7 +1,7 @@
 import { Membership } from "@common/types";
 import { useTranslations } from "next-intl";
 import { useMemo } from "react";
-import PopoverMenu, { MenuOption } from "../PopoverMenu";
+import PopoverMenu, { MenuOption } from "../../PopoverMenu";
 
 interface Props {
 	membership: Membership;

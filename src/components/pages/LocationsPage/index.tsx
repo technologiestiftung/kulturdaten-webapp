@@ -1,9 +1,9 @@
 import apiClient from "@api/client";
 import { Location } from "@api/client/models/Location";
-import LocationTable from "@components/LocationTable";
 import Page from "@components/Page";
 import { useEffect, useState } from "react";
 import { useTranslations } from "use-intl";
+import LocationTable from "./LocationTable";
 
 const LocationsPage = () => {
 	const t = useTranslations("Locations");

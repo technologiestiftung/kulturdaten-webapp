@@ -1,9 +1,9 @@
 import apiClient from "@api/client";
 import { Organization } from "@api/client/models/Organization";
-import OrganizationTable from "@components/OrganizationTable";
 import Page from "@components/Page";
 import { useEffect, useState } from "react";
 import { useTranslations } from "use-intl";
+import OrganizationTable from "./OrganizationTable";
 
 export default function OrganizationsPage() {
 	const t = useTranslations("Organizations");

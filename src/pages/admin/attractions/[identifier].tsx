@@ -1,5 +1,5 @@
 import { AdminAttraction } from "@api/client/models/AdminAttraction";
-import AdminAttractionDetailsPage from "@components/AdminAttractionDetailsPage";
+import AdminAttractionDetailsPage from "@components/pages/AdminAttractionDetailsPage";
 import { withApiClientAndPagination } from "@services/data";
 import withAuth from "@services/withAuth";
 import { GetServerSideProps } from "next";

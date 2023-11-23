@@ -1,8 +1,8 @@
-import { AdminAttraction } from "@api/client/models/AdminAttraction";
+import { Location } from "@api/client/models/Location";
 import { spacings } from "@common/styleVariables";
+import Button from "@components/Button";
 import styled from "@emotion/styled";
 import { ReactNode } from "react";
-import Button from "../../Button";
 import StatusButtons from "./StatusButtons";
 
 const Container = styled.div({
@@ -13,16 +13,16 @@ const Container = styled.div({
 });
 
 interface Props {
-	attraction: AdminAttraction | null;
+	location: Location | null;
 	onUpdated(): void;
 	submitLabel: ReactNode;
 }
 
-export default function Buttons({ attraction, onUpdated, submitLabel }: Props) {
+export default function Buttons({ location, onUpdated, submitLabel }: Props) {
 	return (
 		<Container>
 			<Button type="submit">{submitLabel}</Button>
-			<div>{attraction !== null && <StatusButtons attraction={attraction} onUpdated={onUpdated} />}</div>
+			<div>{location !== null && <StatusButtons location={location} onUpdated={onUpdated} />}</div>
 		</Container>
 	);
 }

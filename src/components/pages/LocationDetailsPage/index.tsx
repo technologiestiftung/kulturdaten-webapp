@@ -1,14 +1,14 @@
 import { Location } from "@api/client/models/Location";
 import ROUTES from "@common/routes";
+import LocationStatus from "@components/LocationStatus";
 import Page from "@components/Page";
 import PageTitle from "@components/PageTitle";
+import Spacer from "@components/Spacer";
 import { getLocalizedLabel } from "@services/content";
 import { useRouter } from "next/router";
 import { useCallback } from "react";
 import { useTranslations } from "use-intl";
-import LocationEditor from "../LocationEditor";
-import Spacer from "../Spacer";
-import LocationStatus from "../LocationStatus";
+import LocationEditor from "./LocationEditor";
 
 interface Props {
 	location: Location | null;

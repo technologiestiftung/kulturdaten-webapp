@@ -5,7 +5,7 @@ import { getAllowedStatusUpdates } from "@services/attractions";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/router";
 import { useMemo } from "react";
-import PopoverMenu, { MenuOption } from "../PopoverMenu";
+import PopoverMenu, { MenuOption } from "../../PopoverMenu";
 
 interface Props {
 	attraction: AdminAttraction;

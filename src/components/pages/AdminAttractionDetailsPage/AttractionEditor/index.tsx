@@ -1,12 +1,12 @@
 import { AdminAttraction } from "@api/client/models/AdminAttraction";
+import FormField from "@components/FormField";
+import Input from "@components/Input";
+import Spacer from "@components/Spacer";
+import Textarea from "@components/Textarea";
 import useApiClient from "@hooks/useApiClient";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/router";
 import { FormEventHandler, useCallback, useState } from "react";
-import FormField from "../FormField";
-import Input from "../Input";
-import Spacer from "../Spacer";
-import Textarea from "../Textarea";
 import Buttons from "./Buttons";
 import { getInitialRequest } from "./service";
 

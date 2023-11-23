@@ -1,4 +1,4 @@
-import LocationsPage from "@components/LocationsPage";
+import LocationsPage from "@components/pages/LocationsPage";
 import { loadMessages } from "@services/i18n";
 import withAuth from "@services/withAuth";
 import { GetStaticProps } from "next";

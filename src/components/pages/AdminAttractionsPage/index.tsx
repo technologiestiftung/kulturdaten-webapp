@@ -5,12 +5,12 @@ import { getLocalizedLabel } from "@services/content";
 import { useRouter } from "next/router";
 import { useCallback } from "react";
 import { useTranslations } from "use-intl";
-import AttractionStatus from "../AttractionStatus";
-import Button from "../Button";
-import ContentTable, { ACTIONS_CELL_STYLE } from "../ContentTable";
-import PageTitleHeader from "../PageTitleHeader";
-import Pagination, { PaginationType } from "../Pagination";
-import Spacer from "../Spacer";
+import AttractionStatus from "../../AttractionStatus";
+import Button from "../../Button";
+import ContentTable, { ACTIONS_CELL_STYLE } from "../../ContentTable";
+import PageTitleHeader from "../../PageTitleHeader";
+import Pagination, { PaginationType } from "../../Pagination";
+import Spacer from "../../Spacer";
 import Actions from "./Actions";
 import Date from "./Date";
 

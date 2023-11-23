@@ -1,7 +1,6 @@
 import { Organization } from "@api/client/models/Organization";
 import ROUTES from "@common/routes";
 import { Tag } from "@common/types";
-import OrganizationEditor from "@components/OrganizationEditor";
 import OrganizationStatus from "@components/OrganizationStatus";
 import Page from "@components/Page";
 import PageTitle from "@components/PageTitle";
@@ -10,6 +9,7 @@ import { getLocalizedLabel } from "@services/content";
 import { useRouter } from "next/router";
 import { useCallback } from "react";
 import { useTranslations } from "use-intl";
+import OrganizationEditor from "./OrganizationEditor";
 
 interface Props {
 	organization: Organization | null;

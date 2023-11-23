@@ -1,5 +1,5 @@
 import { Attraction } from "@api/client/models/Attraction";
-import AttractionsPage from "@components/AttractionsPage";
+import AttractionsPage from "@components/pages/AttractionsPage";
 import { PaginationType } from "@components/Pagination";
 import { withApiClientAndPagination } from "@services/data";
 import withAuth from "@services/withAuth";

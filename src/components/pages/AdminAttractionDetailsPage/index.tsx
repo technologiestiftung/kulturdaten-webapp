@@ -1,14 +1,14 @@
 import { AdminAttraction } from "@api/client/models/AdminAttraction";
 import ROUTES from "@common/routes";
+import AttractionStatus from "@components/AttractionStatus";
 import Page from "@components/Page";
 import PageTitle from "@components/PageTitle";
+import Spacer from "@components/Spacer";
 import { getLocalizedLabel } from "@services/content";
 import { useRouter } from "next/router";
 import { useCallback } from "react";
 import { useTranslations } from "use-intl";
-import AttractionEditor from "../AttractionEditor";
-import AttractionStatus from "../AttractionStatus";
-import Spacer from "../Spacer";
+import AttractionEditor from "./AttractionEditor";
 
 interface Props {
 	attraction: AdminAttraction | null;

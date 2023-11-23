@@ -1,5 +1,5 @@
 import { Membership } from "@common/types";
-import UsersPage from "@components/UsersPage";
+import UsersPage from "@components/pages/UsersPage";
 import { decodeAccessToken } from "@services/auth";
 import { withApiClientAndPagination } from "@services/data";
 import withAuth from "@services/withAuth";

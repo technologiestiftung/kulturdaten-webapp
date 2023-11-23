@@ -1,4 +1,4 @@
-import OrganizationDetailsPage from "@components/OrganizationDetailsPage";
+import OrganizationDetailsPage from "@components/pages/OrganizationDetailsPage";
 import { withApiClientAndPagination } from "@services/data";
 import { loadMessages } from "@services/i18n";
 import withAuth from "@services/withAuth";

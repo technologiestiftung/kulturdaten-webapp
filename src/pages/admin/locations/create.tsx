@@ -1,4 +1,4 @@
-import LocationDetailsPage from "@components/LocationDetailsPage";
+import LocationDetailsPage from "@components/pages/LocationDetailsPage";
 import { loadMessages } from "@services/i18n";
 import withAuth from "@services/withAuth";
 import { GetServerSideProps } from "next";
