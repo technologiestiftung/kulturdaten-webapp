@@ -1,16 +1,16 @@
 import { AdminAttraction } from "@api/client/models/AdminAttraction";
 import ROUTES from "@common/routes";
+import AttractionStatus from "@components/AttractionStatus";
+import Button from "@components/Button";
+import ContentTable, { ACTIONS_CELL_STYLE } from "@components/ContentTable";
 import Page from "@components/Page";
+import PageTitleHeader from "@components/PageTitleHeader";
+import Pagination, { PaginationType } from "@components/Pagination";
+import Spacer from "@components/Spacer";
 import { getLocalizedLabel } from "@services/content";
 import { useRouter } from "next/router";
 import { useCallback } from "react";
 import { useTranslations } from "use-intl";
-import AttractionStatus from "../../AttractionStatus";
-import Button from "../../Button";
-import ContentTable, { ACTIONS_CELL_STYLE } from "../../ContentTable";
-import PageTitleHeader from "../../PageTitleHeader";
-import Pagination, { PaginationType } from "../../Pagination";
-import Spacer from "../../Spacer";
 import Actions from "./Actions";
 import Date from "./Date";
 

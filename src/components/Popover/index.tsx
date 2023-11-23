@@ -1,4 +1,5 @@
 import { colors } from "@common/styleVariables";
+import Button from "@components/Button";
 import styled from "@emotion/styled";
 import {
 	FloatingFocusManager,
@@ -12,7 +13,6 @@ import {
 	useRole,
 } from "@floating-ui/react";
 import { ComponentPropsWithoutRef, ReactNode } from "react";
-import Button from "../Button";
 
 const TriggerButton = styled(Button)({});
 

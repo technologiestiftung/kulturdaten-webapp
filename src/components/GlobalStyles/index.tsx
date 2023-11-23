@@ -1,5 +1,5 @@
+import { colors, fontFamilies, fontSizes, fontWeights, lineHeights } from "@common/styleVariables";
 import { CSSObject, Global } from "@emotion/react";
-import { colors, fontFamilies, fontSizes, fontWeights, lineHeights } from "../../common/styleVariables";
 
 const styles: CSSObject = {
 	"*, *::before, *::after": {

@@ -1,7 +1,7 @@
 import { mediaQueries, spacings } from "@common/styleVariables";
+import PageTitle from "@components/PageTitle";
 import styled from "@emotion/styled";
 import { ReactNode } from "react";
-import PageTitle from "../PageTitle";
 
 const Container = styled.div({
 	display: "flex",

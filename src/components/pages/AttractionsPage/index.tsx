@@ -1,12 +1,12 @@
 import { Attraction } from "@api/client/models/Attraction";
+import AttractionStatus from "@components/AttractionStatus";
+import ContentTable from "@components/ContentTable";
 import Page from "@components/Page";
+import PageTitle from "@components/PageTitle";
+import Pagination, { PaginationType } from "@components/Pagination";
+import Spacer from "@components/Spacer";
 import { getLocalizedLabel } from "@services/content";
 import { useTranslations } from "use-intl";
-import AttractionStatus from "../../AttractionStatus";
-import ContentTable from "../../ContentTable";
-import PageTitle from "../../PageTitle";
-import Pagination, { PaginationType } from "../../Pagination";
-import Spacer from "../../Spacer";
 
 interface Props {
 	attractions: Attraction[];

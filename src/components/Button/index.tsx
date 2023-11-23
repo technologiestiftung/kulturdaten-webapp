@@ -1,7 +1,7 @@
+import { borderRadiuses, colors, fontWeights, lineHeights, spacings, timings } from "@common/styleVariables";
 import styled, { CSSObject } from "@emotion/styled";
 import NextLink from "next/link";
 import { AnchorHTMLAttributes, ButtonHTMLAttributes, Ref, forwardRef } from "react";
-import { borderRadiuses, colors, fontWeights, lineHeights, spacings, timings } from "../../common/styleVariables";
 
 type ButtonColor = "primary" | "neutral" | "danger";
 

@@ -1,5 +1,5 @@
+import Icon from "@components/Icon";
 import styled from "@emotion/styled";
-import Icon from "../Icon";
 
 const IconContainer = styled.div({});
 
