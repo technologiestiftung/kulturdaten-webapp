@@ -1,4 +1,4 @@
-import { Role } from "@contexts/UserContext";
+import { Role } from "@common/types";
 import { jwtDecode } from "jwt-decode";
 import { GetServerSidePropsContext } from "next";
 import { getCookie, removeCookie, setCookie } from "typescript-cookie";

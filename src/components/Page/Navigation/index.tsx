@@ -18,7 +18,7 @@ type NavigationGroup = {
 	links: Array<Link>;
 };
 
-export type Link = {
+type Link = {
 	href: string;
 	icon: IconName;
 	i18nKey: keyof IntlMessages["Navigation"];

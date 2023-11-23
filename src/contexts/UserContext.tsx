@@ -1,14 +1,12 @@
-import { CreateMembershipRequest } from "@api/client/models/CreateMembershipRequest";
 import { LoginResponse } from "@api/client/models/LoginResponse";
 import { Organization } from "@api/client/models/Organization";
 import ROUTES from "@common/routes";
+import { Role } from "@common/types";
 import { clearAccessToken, getAccessToken, storeAccessToken } from "@services/auth";
 import { useRouter } from "next/router";
 import { FC, ReactNode, createContext, useCallback, useEffect, useMemo, useState } from "react";
 
 type LoginData = Required<LoginResponse>["data"];
-
-export type Role = CreateMembershipRequest["role"];
 
 const STORAGE_KEY = "login-response";
 

@@ -1,6 +1,9 @@
-import { GetTagsResponse } from "@api/client/models/GetTagsResponse";
+import { CreateMembershipRequest } from "@api/client/models/CreateMembershipRequest";
 import { GetOrganizationMembershipsResponse } from "@api/client/models/GetOrganizationMembershipsResponse";
+import { GetTagsResponse } from "@api/client/models/GetTagsResponse";
 import { Location } from "@api/client/models/Location";
+
+export type Role = CreateMembershipRequest["role"];
 
 export type Membership = Required<Required<GetOrganizationMembershipsResponse>["data"]>["memberships"][0];
 

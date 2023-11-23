@@ -1,10 +1,10 @@
 import { CreateMembershipRequest } from "@api/client/models/CreateMembershipRequest";
 import { Organization } from "@api/client/models/Organization";
+import { Role } from "@common/types";
 import FormField from "@components/FormField";
 import Modal from "@components/Modal";
 import Spacer from "@components/Spacer";
 import UserRoleSelect from "@components/UserRoleSelect";
-import { Role } from "@contexts/UserContext";
 import useApiClient from "@hooks/useApiClient";
 import { useTranslations } from "next-intl";
 import { FormEventHandler, useCallback, useState } from "react";

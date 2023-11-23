@@ -34,7 +34,7 @@ const StyledTextarea = styled.textarea<Props>(({ error, disabled, readOnly }) =>
 	...(error ? errorStyle : {}),
 }));
 
-export interface Props extends DetailedHTMLProps<TextareaHTMLAttributes<HTMLTextAreaElement>, HTMLTextAreaElement> {
+interface Props extends DetailedHTMLProps<TextareaHTMLAttributes<HTMLTextAreaElement>, HTMLTextAreaElement> {
 	error?: string | null;
 }
 
