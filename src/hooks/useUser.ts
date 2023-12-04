@@ -19,11 +19,11 @@ export default function useUser() {
 			password,
 		});
 		storeLoginResponse(loginResponse);
-		await router.push("/");
+		await router.push(ROUTES.attractions());
 	};
 	const handleSelectOrganization = async (organization: Organization | null) => {
 		selectOrganization(organization);
-		await router.push("/");
+		await router.push(ROUTES.attractions());
 	};
 	return {
 		logIn,

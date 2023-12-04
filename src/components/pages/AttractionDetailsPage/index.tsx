@@ -14,7 +14,7 @@ interface Props {
 	attraction: AdminAttraction | null;
 }
 
-export default function AdminAttractionDetailsPage(props: Props) {
+export default function AttractionDetailsPage(props: Props) {
 	const { attraction } = props;
 	const router = useRouter();
 	const t = useTranslations("Attraction-Details");
@@ -23,7 +23,7 @@ export default function AdminAttractionDetailsPage(props: Props) {
 		? t("page-title-add")
 		: t("page-title-edit", { attractionTitle: getLocalizedLabel(attraction?.title) });
 	const handleAfterSubmit = useCallback(() => {
-		router.push(ROUTES.admin.attractions());
+		router.push(ROUTES.attractions());
 	}, [router]);
 	return (
 		<Page metadata={{ title: pageTitle }}>

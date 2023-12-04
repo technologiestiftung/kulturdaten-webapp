@@ -21,7 +21,7 @@ export default function Actions({ attraction, onUpdated }: Props) {
 		return [
 			{
 				label: t("table-option-edit"),
-				onClick: () => router.push(ROUTES.admin.attractionDetails(attraction.identifier)),
+				onClick: () => router.push(ROUTES.attractionDetails(attraction.identifier)),
 			},
 			allowedStatusUpdates.publish && {
 				label: t("table-option-publish"),

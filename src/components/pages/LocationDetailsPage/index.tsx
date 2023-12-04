@@ -23,7 +23,7 @@ export default function LocationDetailsPage(props: Props) {
 		? t("page-title-add")
 		: t("page-title-edit", { locationTitle: getLocalizedLabel(location?.title) });
 	const handleAfterSubmit = useCallback(() => {
-		router.push(ROUTES.admin.locations());
+		router.push(ROUTES.locations());
 	}, [router]);
 	return (
 		<Page metadata={{ title: pageTitle }}>
