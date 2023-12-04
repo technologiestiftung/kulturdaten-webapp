@@ -18,10 +18,10 @@ type Link = {
 
 function getLinks(): Array<Link> {
 	return [
-		{ href: ROUTES.attractions(), i18nKey: "link-admin-attractions", icon: "star" },
-		{ href: ROUTES.locations(), i18nKey: "link-admin-locations", icon: "map-pin" },
-		{ href: ROUTES.organizations(), i18nKey: "link-admin-organizations", icon: "drama" },
-		{ href: ROUTES.users(), i18nKey: "link-admin-users", icon: "users" },
+		{ href: ROUTES.attractions(), i18nKey: "link-attractions", icon: "star" },
+		{ href: ROUTES.locations(), i18nKey: "link-locations", icon: "map-pin" },
+		{ href: ROUTES.organizations(), i18nKey: "link-organizations", icon: "drama" },
+		{ href: ROUTES.users(), i18nKey: "link-users", icon: "users" },
 	];
 }
 
