@@ -23,7 +23,7 @@ export default function AdminAttractionDetailsPage(props: Props) {
 		? t("page-title-add")
 		: t("page-title-edit", { attractionTitle: getLocalizedLabel(attraction?.title) });
 	const handleAfterSubmit = useCallback(() => {
-		router.push(ROUTES.admin.attractions());
+		router.push(ROUTES.attractions());
 	}, [router]);
 	return (
 		<Page metadata={{ title: pageTitle }}>

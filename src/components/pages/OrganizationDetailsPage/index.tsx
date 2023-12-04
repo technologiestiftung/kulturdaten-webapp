@@ -25,7 +25,7 @@ export default function OrganizationDetailsPage(props: Props) {
 		? t("page-title-add")
 		: t("page-title-edit", { organizationTitle: getLocalizedLabel(organization!.title) });
 	const handleAfterSubmit = useCallback(() => {
-		router.push(ROUTES.admin.organizations());
+		router.push(ROUTES.organizations());
 	}, [router]);
 	return (
 		<Page metadata={{ title: pageTitle }}>

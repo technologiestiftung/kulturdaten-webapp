@@ -33,7 +33,7 @@ export default function AdminAttractionsPage(props: Props) {
 			<PageTitleHeader
 				title={t("page-title")}
 				side={
-					<Button as="a" useNextLink={true} href={ROUTES.admin.attractionCreate()}>
+					<Button as="a" useNextLink={true} href={ROUTES.attractionCreate()}>
 						{t("create-attraction")}
 					</Button>
 				}
@@ -75,7 +75,7 @@ export default function AdminAttractionsPage(props: Props) {
 						cellStyle: ACTIONS_CELL_STYLE,
 					},
 				]}
-				onClickItem={(attraction) => router.push(ROUTES.admin.attractionDetails(attraction.identifier))}
+				onClickItem={(attraction) => router.push(ROUTES.attractionDetails(attraction.identifier))}
 			/>
 			<Spacer size={20} />
 			<Pagination pagination={pagination} info={t("number-attractions", { count: pagination.totalCount })} />

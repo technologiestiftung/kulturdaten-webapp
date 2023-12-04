@@ -1,21 +1,16 @@
 const ROUTES = {
 	login: () => "/login",
 	registration: () => "/registration",
-	user: {
-		attractions: () => "/",
-	},
-	admin: {
-		attractions: () => "/admin/attractions",
-		attractionDetails: (identifier: string) => `/admin/attractions/${identifier}`,
-		attractionCreate: () => `/admin/attractions/create`,
-		locations: () => "/admin/locations",
-		locationDetails: (identifier: string) => `/admin/locations/${identifier}`,
-		locationCreate: () => `/admin/locations/create`,
-		organizations: () => "/admin/organizations",
-		organizationDetails: (identifier: string) => `/admin/organizations/${identifier}`,
-		organizationCreate: () => `/admin/organizations/create`,
-		users: () => "/admin/users",
-	},
+	attractions: () => "/attractions",
+	attractionDetails: (identifier: string) => `/attractions/${identifier}`,
+	attractionCreate: () => `/attractions/create`,
+	locations: () => "/locations",
+	locationDetails: (identifier: string) => `/locations/${identifier}`,
+	locationCreate: () => `/locations/create`,
+	organizations: () => "/organizations",
+	organizationDetails: (identifier: string) => `/organizations/${identifier}`,
+	organizationCreate: () => `/organizations/create`,
+	users: () => "/users",
 };
 
 export default ROUTES;
