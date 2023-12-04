@@ -1,5 +1,4 @@
 import OrganizationDetailsPage from "@components/pages/OrganizationDetailsPage";
-import { loadMessages } from "@services/i18n";
 import withApiClientAndPagination from "@services/withApiClientAndPagination";
 import withAuth from "@services/withAuth";
 import { GetServerSideProps } from "next";
@@ -9,10 +8,10 @@ interface Props {
 }
 
 export const getServerSideProps: GetServerSideProps<Props> = (context) =>
-	withApiClientAndPagination<Props>(context)(async () => ({
+	withApiClientAndPagination<Props>(context)(async ({ messages }) => ({
 		props: {
 			organization: null,
-			messages: await loadMessages(context.locale!),
+			messages,
 		},
 	}));
 
