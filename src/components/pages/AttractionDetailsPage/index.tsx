@@ -14,7 +14,7 @@ interface Props {
 	attraction: AdminAttraction | null;
 }
 
-export default function AdminAttractionDetailsPage(props: Props) {
+export default function AttractionDetailsPage(props: Props) {
 	const { attraction } = props;
 	const router = useRouter();
 	const t = useTranslations("Attraction-Details");

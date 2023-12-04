@@ -1,5 +1,5 @@
 import { AdminAttraction } from "@api/client/models/AdminAttraction";
-import AdminAttractionDetailsPage from "@components/pages/AdminAttractionDetailsPage";
+import AttractionDetailsPage from "@components/pages/AttractionDetailsPage";
 import withApiClientAndPagination from "@services/withApiClientAndPagination";
 import withAuth from "@services/withAuth";
 import { GetServerSideProps } from "next";
@@ -21,4 +21,4 @@ export const getServerSideProps: GetServerSideProps<Props> = (context) =>
 		};
 	});
 
-export default withAuth(AdminAttractionDetailsPage);
+export default withAuth(AttractionDetailsPage);

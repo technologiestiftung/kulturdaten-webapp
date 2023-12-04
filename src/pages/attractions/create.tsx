@@ -1,4 +1,4 @@
-import AdminAttractionDetailsPage from "@components/pages/AdminAttractionDetailsPage";
+import AttractionDetailsPage from "@components/pages/AttractionDetailsPage";
 import { loadMessages } from "@services/i18n";
 import withApiClientAndPagination from "@services/withApiClientAndPagination";
 import withAuth from "@services/withAuth";
@@ -16,4 +16,4 @@ export const getServerSideProps: GetServerSideProps<Props> = (context) =>
 		},
 	}));
 
-export default withAuth(AdminAttractionDetailsPage);
+export default withAuth(AttractionDetailsPage);
