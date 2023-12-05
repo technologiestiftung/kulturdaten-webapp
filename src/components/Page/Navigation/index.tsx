@@ -1,15 +1,5 @@
 import ROUTES from "@common/routes";
-import {
-	boxShadows,
-	colors,
-	fontWeights,
-	iconSizes,
-	mediaQueries,
-	spacings,
-	timings,
-	widths,
-	zIndexes,
-} from "@common/styleVariables";
+import { colors, fontWeights, iconSizes, mediaQueries, spacings, widths } from "@common/styleVariables";
 import Button from "@components/Button";
 import Icon, { IconName } from "@components/Icon";
 import Spacer from "@components/Spacer";
@@ -36,28 +26,19 @@ function getLinks(): Array<Link> {
 	];
 }
 
-const Container = styled.div<{ expanded: boolean }>(({ expanded }) => ({
-	width: `min(100%, ${widths.sidebar})`,
-	height: "100vh",
-	position: "fixed",
-	top: 0,
-	left: expanded ? 0 : "-100%",
-	transition: `left ${timings.medium} ease-in-out`,
-	overflow: "auto",
+const Container = styled.div({
 	display: "flex",
 	flexDirection: "column",
 	justifyContent: "space-between",
+	width: widths.sidebar,
+	maxWidth: "100%",
+	height: "100vh",
 	padding: spacings.get(3),
 	backgroundColor: colors.grayLight,
-	boxShadow: boxShadows.elevation100,
-	zIndex: zIndexes.navigationMenu,
 	[mediaQueries.m]: {
-		left: 0,
-		boxShadow: "none",
-		transition: "none",
 		padding: spacings.get(4),
 	},
-}));
+});
 
 const Header = styled.div({
 	display: "flex",
@@ -71,9 +52,6 @@ const PageTitle = styled.div({
 
 const CollapseButton = styled(Button)({
 	padding: spacings.get(1),
-	[mediaQueries.m]: {
-		display: "none",
-	},
 });
 
 const LinkList = styled.ul({
@@ -84,11 +62,10 @@ const LinkList = styled.ul({
 const LinkItem = styled.li({});
 
 interface Props {
-	expanded: boolean;
-	onCollapse: () => void;
+	onCollapse?(): void;
 }
 
-export default function Navigation({ expanded, onCollapse }: Props) {
+export default function Navigation({ onCollapse }: Props) {
 	const t = useTranslations("Navigation");
 	const { organizations, activeOrganization, selectOrganization, logOut } = useUser();
 	const router = useRouter();
@@ -105,13 +82,15 @@ export default function Navigation({ expanded, onCollapse }: Props) {
 		[router.route],
 	);
 	return (
-		<Container expanded={expanded} aria-hidden={!expanded}>
+		<Container>
 			<nav>
 				<Header>
 					<PageTitle>{t("title")}</PageTitle>
-					<CollapseButton color="neutral" onClick={onCollapse} title={t("menu-collapse")}>
-						<Icon name="arrow-left-from-line" size={iconSizes[24]} />
-					</CollapseButton>
+					{onCollapse && (
+						<CollapseButton color="neutral" onClick={onCollapse} title={t("menu-collapse")}>
+							<Icon name="arrow-left-from-line" size={iconSizes[24]} />
+						</CollapseButton>
+					)}
 				</Header>
 				<Spacer size={20} />
 				<OrganizationSelect

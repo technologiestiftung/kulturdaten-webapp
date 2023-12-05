@@ -1,10 +1,9 @@
 import { boxShadows, colors, mediaQueries, spacings, widths } from "@common/styleVariables";
 import styled from "@emotion/styled";
-import { ReactNode, useState } from "react";
+import { ReactNode } from "react";
 import Head from "./Head";
-import Navigation from "./Navigation";
+import NavigationDesktop from "./NavigationDesktop";
 import NavigationMobile from "./NavigationMobile";
-import NavigationOverlay from "./NavigationOverlay";
 
 const PageContainer = styled.div({
 	width: `min(100%, ${widths.maxContentWidth})`,
@@ -40,16 +39,14 @@ interface Props {
 }
 
 export default function Page({ children, metadata, showNavigation = true }: Props) {
-	const [navigationExpanded, setNavigationExpanded] = useState(false);
 	return (
 		<>
 			<Head metadata={metadata} />
 			<PageContainer>
 				{showNavigation && (
 					<>
-						{navigationExpanded && <NavigationOverlay onCollapse={() => setNavigationExpanded(false)} />}
-						<Navigation expanded={navigationExpanded} onCollapse={() => setNavigationExpanded(false)} />
-						<NavigationMobile onExpand={() => setNavigationExpanded(true)} />
+						<NavigationDesktop />
+						<NavigationMobile />
 					</>
 				)}
 				<Main>{children}</Main>
