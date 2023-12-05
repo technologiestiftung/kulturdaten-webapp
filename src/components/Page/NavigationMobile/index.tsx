@@ -1,7 +1,8 @@
 import { boxShadows, colors, mediaQueries, spacings } from "@common/styleVariables";
 import styled from "@emotion/styled";
 import { useTranslations } from "next-intl";
-import { useState } from "react";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 import ReactModal from "react-modal";
 import Navigation from "../Navigation";
 import ToggleButton from "./ToggleButton";
@@ -15,9 +16,21 @@ const MobileContainer = styled.div({
 	},
 });
 
+function useCollapseOnRouteChange(setExpanded: (expanded: boolean) => void) {
+	const router = useRouter();
+	useEffect(() => {
+		const handleRouteChange = () => setExpanded(false);
+		router.events.on("routeChangeComplete", handleRouteChange);
+		return () => {
+			router.events.off("routeChangeComplete", handleRouteChange);
+		};
+	}, [router.events, setExpanded]);
+}
+
 export default function NavigationMobile() {
 	const [expanded, setExpanded] = useState(false);
 	const t = useTranslations("Navigation");
+	useCollapseOnRouteChange(setExpanded);
 	return (
 		<>
 			<MobileContainer>
