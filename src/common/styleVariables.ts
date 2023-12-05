@@ -92,6 +92,8 @@ export const iconSizes = {
 
 export const zIndexes = {
 	popover: 1,
+	navigationOverlay: 1,
+	navigationMenu: 2,
 };
 
 export const getAsNumber = (pixelValue: string): number => Number(pixelValue.replace("px", ""));

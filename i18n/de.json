@@ -4,6 +4,8 @@
 	},
 	"Navigation": {
 		"title": "kulturdaten.berlin",
+        "menu-button": "Menü",
+        "menu-collapse": "Menü schließen",
 		"link-attractions": "Angebote",
 		"link-locations": "Orte",
 		"link-organizations": "Anbieter:innen",

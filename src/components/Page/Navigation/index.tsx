@@ -1,6 +1,17 @@
 import ROUTES from "@common/routes";
-import { colors, fontWeights, spacings, widths } from "@common/styleVariables";
-import { IconName } from "@components/Icon";
+import {
+	boxShadows,
+	colors,
+	fontWeights,
+	iconSizes,
+	mediaQueries,
+	spacings,
+	timings,
+	widths,
+	zIndexes,
+} from "@common/styleVariables";
+import Button from "@components/Button";
+import Icon, { IconName } from "@components/Icon";
 import Spacer from "@components/Spacer";
 import styled from "@emotion/styled";
 import useUser from "@hooks/useUser";
@@ -25,22 +36,44 @@ function getLinks(): Array<Link> {
 	];
 }
 
-const Container = styled.div({
+const Container = styled.div<{ expanded: boolean }>(({ expanded }) => ({
 	width: `min(100%, ${widths.sidebar})`,
 	height: "100vh",
 	position: "fixed",
 	top: 0,
-	left: `max(0, calc(50% - ${widths.maxContentWidth} / 2))`,
+	left: expanded ? 0 : "-100%",
+	transition: `left ${timings.medium} ease-in-out`,
 	overflow: "auto",
 	display: "flex",
 	flexDirection: "column",
 	justifyContent: "space-between",
-	padding: spacings.get(4),
+	padding: spacings.get(3),
 	backgroundColor: colors.grayLight,
+	boxShadow: boxShadows.elevation100,
+	zIndex: zIndexes.navigationMenu,
+	[mediaQueries.m]: {
+		left: 0,
+		boxShadow: "none",
+		transition: "none",
+		padding: spacings.get(4),
+	},
+}));
+
+const Header = styled.div({
+	display: "flex",
+	justifyContent: "space-between",
+	alignItems: "center",
 });
 
 const PageTitle = styled.div({
 	fontWeight: fontWeights.medium,
+});
+
+const CollapseButton = styled(Button)({
+	padding: spacings.get(1),
+	[mediaQueries.m]: {
+		display: "none",
+	},
 });
 
 const LinkList = styled.ul({
@@ -50,7 +83,12 @@ const LinkList = styled.ul({
 
 const LinkItem = styled.li({});
 
-export default function Navigation() {
+interface Props {
+	expanded: boolean;
+	onCollapse: () => void;
+}
+
+export default function Navigation({ expanded, onCollapse }: Props) {
 	const t = useTranslations("Navigation");
 	const { organizations, activeOrganization, selectOrganization, logOut } = useUser();
 	const router = useRouter();
@@ -67,16 +105,21 @@ export default function Navigation() {
 		[router.route],
 	);
 	return (
-		<Container>
+		<Container expanded={expanded} aria-hidden={!expanded}>
 			<nav>
-				<PageTitle>{t("title")}</PageTitle>
+				<Header>
+					<PageTitle>{t("title")}</PageTitle>
+					<CollapseButton color="neutral" onClick={onCollapse} title={t("menu-collapse")}>
+						<Icon name="arrow-left-from-line" size={iconSizes[24]} />
+					</CollapseButton>
+				</Header>
 				<Spacer size={20} />
 				<OrganizationSelect
 					organizations={organizations}
 					activeOrganization={activeOrganization}
 					onSelectOrganization={selectOrganization}
 				/>
-				<Spacer size={20} />
+				<Spacer size={30} />
 				<LinkList>
 					{links.map((link, index) => (
 						<LinkItem key={index}>
