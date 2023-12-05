@@ -1,4 +1,4 @@
-import { mediaQueries, zIndexes } from "@common/styleVariables";
+import { mediaQueries } from "@common/styleVariables";
 import styled from "@emotion/styled";
 import Navigation from "../Navigation";
 
@@ -8,7 +8,6 @@ const DesktopContainer = styled.div({
 	top: 0,
 	left: 0,
 	overflow: "auto",
-	zIndex: zIndexes.navigationMenu,
 	[mediaQueries.m]: {
 		display: "block",
 	},
