@@ -34,6 +34,14 @@ In the project directory, you can run:
 - `npm run build`: Builds the Next.js application for production usage.
 - `npm start`: Starts the Next.js server for production usage.
 
+## Deployment
+
+This project is currently deployed on [Render](https://render.com/).
+
+- Build command: `npm install; npm run build`
+- Start command: `npm start`
+- The `PORT` environment variable needs to be set to `10000` (to work with Render’s port detector)
+
 ## Internationalization
 
 Internationalization (i18n) is implemented via [next-intl](https://next-intl-docs.vercel.app/) and Next.js’ [i18n routing](https://nextjs.org/docs/pages/building-your-application/routing/internationalization).
