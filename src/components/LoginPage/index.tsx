@@ -1,5 +1,5 @@
 import { ApiError } from "@api/client/core/ApiError";
-import ROUTES from "@common/routes";
+import ROUTES, { ERROR_URL_PARAMETER } from "@common/routes";
 import {
 	borderRadiuses,
 	boxShadows,
@@ -18,6 +18,7 @@ import Spacer from "@components/Spacer";
 import styled from "@emotion/styled";
 import useUser from "@hooks/useUser";
 import { validateEmail } from "@services/validation";
+import { useRouter } from "next/router";
 import { FormEvent, useState } from "react";
 import { useTranslations } from "use-intl";
 
@@ -56,21 +57,16 @@ interface ErrorMessages {
 	email: string | null;
 }
 
-const emptyErrorMessages: ErrorMessages = {
+const initialErrorMessages: ErrorMessages = {
 	general: null,
 	email: null,
 };
 
-interface Props {
-	initialErrorMessage?: string | null;
-}
-
-export default function LoginPage({ initialErrorMessage }: Props) {
+export default function LoginPage() {
 	const t = useTranslations("Login");
-	const initialErrorMessages: ErrorMessages = {
-		general: initialErrorMessage ? t("error-initial", { errorMessage: initialErrorMessage }) : null,
-		email: null,
-	};
+	const router = useRouter();
+	const urlError = router.query[ERROR_URL_PARAMETER]?.toString() || null;
+	const urlErrorMessage = urlError ? t("error-initial", { errorMessage: urlError }) : null;
 	const [email, emailSet] = useState<string>("");
 	const [password, setPassword] = useState<string>("");
 	const [errorMessages, setErrorMessages] = useState<ErrorMessages>(initialErrorMessages);
@@ -86,7 +82,7 @@ export default function LoginPage({ initialErrorMessage }: Props) {
 	};
 
 	const onPasswordChange = (value: string) => {
-		setErrorMessages(emptyErrorMessages);
+		setErrorMessages(initialErrorMessages);
 		setPassword(value);
 	};
 
@@ -112,6 +108,8 @@ export default function LoginPage({ initialErrorMessage }: Props) {
 		<PageBackground>
 			<Head metadata={{ title: t("page-title") }} />
 			<Content>
+				<ErrorMessage error={urlErrorMessage || ""} />
+				{urlErrorMessage && <Spacer size={15} />}
 				<Header>{t("page-header")}</Header>
 				<Spacer size={10} />
 				<p>{t("page-description")}</p>
