@@ -1,6 +1,7 @@
 import ROUTES from "@common/routes";
-import { colors, fontWeights, spacings, widths } from "@common/styleVariables";
-import { IconName } from "@components/Icon";
+import { colors, fontWeights, iconSizes, mediaQueries, spacings, widths } from "@common/styleVariables";
+import Button from "@components/Button";
+import Icon, { IconName } from "@components/Icon";
 import Spacer from "@components/Spacer";
 import styled from "@emotion/styled";
 import useUser from "@hooks/useUser";
@@ -26,21 +27,31 @@ function getLinks(): Array<Link> {
 }
 
 const Container = styled.div({
-	width: `min(100%, ${widths.sidebar})`,
-	height: "100vh",
-	position: "fixed",
-	top: 0,
-	left: `max(0, calc(50% - ${widths.maxContentWidth} / 2))`,
-	overflow: "auto",
 	display: "flex",
 	flexDirection: "column",
 	justifyContent: "space-between",
-	padding: spacings.get(4),
+	width: widths.sidebar,
+	maxWidth: "100%",
+	height: "100vh",
+	padding: spacings.get(3),
 	backgroundColor: colors.grayLight,
+	[mediaQueries.m]: {
+		padding: spacings.get(4),
+	},
+});
+
+const Header = styled.div({
+	display: "flex",
+	justifyContent: "space-between",
+	alignItems: "center",
 });
 
 const PageTitle = styled.div({
 	fontWeight: fontWeights.medium,
+});
+
+const CollapseButton = styled(Button)({
+	padding: spacings.get(1),
 });
 
 const LinkList = styled.ul({
@@ -50,7 +61,11 @@ const LinkList = styled.ul({
 
 const LinkItem = styled.li({});
 
-export default function Navigation() {
+interface Props {
+	onCollapse?(): void;
+}
+
+export default function Navigation({ onCollapse }: Props) {
 	const t = useTranslations("Navigation");
 	const { organizations, activeOrganization, selectOrganization, logOut } = useUser();
 	const router = useRouter();
@@ -69,14 +84,21 @@ export default function Navigation() {
 	return (
 		<Container>
 			<nav>
-				<PageTitle>{t("title")}</PageTitle>
+				<Header>
+					<PageTitle>{t("title")}</PageTitle>
+					{onCollapse && (
+						<CollapseButton color="neutral" onClick={onCollapse} title={t("menu-collapse")}>
+							<Icon name="arrow-left-from-line" size={iconSizes[24]} />
+						</CollapseButton>
+					)}
+				</Header>
 				<Spacer size={20} />
 				<OrganizationSelect
 					organizations={organizations}
 					activeOrganization={activeOrganization}
 					onSelectOrganization={selectOrganization}
 				/>
-				<Spacer size={20} />
+				<Spacer size={30} />
 				<LinkList>
 					{links.map((link, index) => (
 						<LinkItem key={index}>

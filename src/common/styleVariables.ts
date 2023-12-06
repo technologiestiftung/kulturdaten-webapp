@@ -90,4 +90,8 @@ export const iconSizes = {
 	24: 24,
 };
 
+export const zIndexes = {
+	popover: 1,
+};
+
 export const getAsNumber = (pixelValue: string): number => Number(pixelValue.replace("px", ""));

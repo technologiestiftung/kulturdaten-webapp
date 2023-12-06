@@ -15,7 +15,7 @@ const getStyles = (isActive: boolean): CSSObject => ({
 	textDecoration: "none",
 	wordBreak: "break-word",
 	"&:hover": {
-		backgroundColor: isActive ? colors.blueLight : colors.white,
+		backgroundColor: isActive ? colors.blueLight : colors.neutral200,
 	},
 });
 

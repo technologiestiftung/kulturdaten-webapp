@@ -1,4 +1,4 @@
-import { colors } from "@common/styleVariables";
+import { colors, zIndexes } from "@common/styleVariables";
 import Button from "@components/Button";
 import styled from "@emotion/styled";
 import {
@@ -18,7 +18,7 @@ const TriggerButton = styled(Button)({});
 
 const PopoverContainer = styled.div({
 	backgroundColor: colors.white,
-	zIndex: 1,
+	zIndex: zIndexes.popover,
 });
 
 interface Props {
