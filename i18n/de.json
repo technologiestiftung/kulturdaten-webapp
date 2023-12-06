@@ -31,7 +31,7 @@
 		"login-button": "Einloggen",
 		"register-button": "Neu registrieren",
 		"error-initial": "Fehler aufgetreten: {errorMessage}",
-		"error-with-code": "Login fehlgeschlagen, {code}",
+		"error-with-code": "Login fehlgeschlagen ({code})",
 		"error-generic": "Verbindung fehlgeschlagen"
 	},
 	"Attractions": {

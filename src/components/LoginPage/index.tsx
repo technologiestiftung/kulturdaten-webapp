@@ -108,8 +108,6 @@ export default function LoginPage() {
 		<PageBackground>
 			<Head metadata={{ title: t("page-title") }} />
 			<Content>
-				<ErrorMessage error={urlErrorMessage || ""} />
-				{urlErrorMessage && <Spacer size={15} />}
 				<Header>{t("page-header")}</Header>
 				<Spacer size={10} />
 				<p>{t("page-description")}</p>
@@ -148,8 +146,8 @@ export default function LoginPage() {
 							{t("register-button")}
 						</Button>
 					</Buttons>
-					{errorMessages.general && <Spacer size={15} />}
-					<ErrorMessage error={errorMessages.general || ""} />
+					{(errorMessages.general || urlErrorMessage) && <Spacer size={15} />}
+					<ErrorMessage error={errorMessages.general || urlErrorMessage || ""} />
 				</form>
 			</Content>
 		</PageBackground>
