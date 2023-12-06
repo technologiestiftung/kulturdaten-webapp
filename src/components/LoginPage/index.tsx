@@ -56,13 +56,21 @@ interface ErrorMessages {
 	email: string | null;
 }
 
-const initialErrorMessages: ErrorMessages = {
+const emptyErrorMessages: ErrorMessages = {
 	general: null,
 	email: null,
 };
 
-export default function LoginPage() {
+interface Props {
+	initialErrorMessage?: string | null;
+}
+
+export default function LoginPage({ initialErrorMessage }: Props) {
 	const t = useTranslations("Login");
+	const initialErrorMessages: ErrorMessages = {
+		general: initialErrorMessage ? t("error-initial", { errorMessage: initialErrorMessage }) : null,
+		email: null,
+	};
 	const [email, emailSet] = useState<string>("");
 	const [password, setPassword] = useState<string>("");
 	const [errorMessages, setErrorMessages] = useState<ErrorMessages>(initialErrorMessages);
@@ -78,7 +86,7 @@ export default function LoginPage() {
 	};
 
 	const onPasswordChange = (value: string) => {
-		setErrorMessages(initialErrorMessages);
+		setErrorMessages(emptyErrorMessages);
 		setPassword(value);
 	};
 
