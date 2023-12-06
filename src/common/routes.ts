@@ -1,5 +1,13 @@
+export const ERROR_URL_PARAMETER = "error";
+
 const ROUTES = {
-	login: () => "/login",
+	login: (errorMessage?: string) => {
+		const route = "/login";
+		if (errorMessage) {
+			return `${route}?${ERROR_URL_PARAMETER}=${encodeURI(errorMessage)}`;
+		}
+		return route;
+	},
 	registration: () => "/registration",
 	attractions: () => "/attractions",
 	attractionDetails: (identifier: string) => `/attractions/${identifier}`,

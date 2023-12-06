@@ -1,5 +1,6 @@
 import { createAuthorizedClient } from "@api/client";
 import { APIClient } from "@api/client/APIClient";
+import { ApiError } from "@api/client/core/ApiError";
 import ROUTES from "@common/routes";
 import { decodeAccessToken, getAccessTokenFromContext } from "@services/auth";
 import { loadMessages } from "@services/i18n";
@@ -11,16 +12,16 @@ import { GetServerSidePropsContext, GetServerSidePropsResult, Redirect } from "n
  * Also redirects to the login page if the token is missing or invalid.
  */
 export default function withApiClientAndPagination<Props>(context: GetServerSidePropsContext) {
-	const LOGIN_REDIRECT: { redirect: Redirect } = {
-		redirect: {
-			destination: ROUTES.login(),
-			permanent: false,
-		},
-	};
 	return async function (serverSideFunction: ServerSideFunction<Props>) {
 		const accessToken = getAccessTokenFromContext(context);
 		if (!accessToken || !isTokenValid(accessToken)) {
-			return LOGIN_REDIRECT;
+			const loginRedirect: { redirect: Redirect } = {
+				redirect: {
+					destination: ROUTES.login(),
+					permanent: false,
+				},
+			};
+			return loginRedirect;
 		}
 		const apiClient = createAuthorizedClient(accessToken);
 		const { page, pageSize } = getPaginationFromQuery(context.query);
@@ -28,8 +29,15 @@ export default function withApiClientAndPagination<Props>(context: GetServerSide
 		try {
 			return await serverSideFunction({ apiClient, page, pageSize, messages, accessToken });
 		} catch (error) {
-			// TODO: Show cause of error on the login page (e.g. via URL parameter).
-			return LOGIN_REDIRECT;
+			const apiError = error as ApiError;
+			const errorMessage = `${apiError.message} (${apiError.status})`;
+			const loginRedirect: { redirect: Redirect } = {
+				redirect: {
+					destination: ROUTES.login(errorMessage),
+					permanent: false,
+				},
+			};
+			return loginRedirect;
 		}
 	};
 }

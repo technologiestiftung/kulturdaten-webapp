@@ -4,9 +4,9 @@
 	},
 	"Navigation": {
 		"title": "kulturdaten.berlin",
-        "menu-button": "Menü",
-        "menu-modal-label": "Menü",
-        "menu-collapse": "Menü schließen",
+		"menu-button": "Menü",
+		"menu-modal-label": "Menü",
+		"menu-collapse": "Menü schließen",
 		"link-attractions": "Angebote",
 		"link-locations": "Orte",
 		"link-organizations": "Anbieter:innen",
@@ -30,7 +30,8 @@
 		"label-password": "Passwort",
 		"login-button": "Einloggen",
 		"register-button": "Neu registrieren",
-		"error-with-code": "Login fehlgeschlagen, {code}",
+		"error-initial": "Fehler aufgetreten: {errorMessage}",
+		"error-with-code": "Login fehlgeschlagen ({code})",
 		"error-generic": "Verbindung fehlgeschlagen"
 	},
 	"Attractions": {

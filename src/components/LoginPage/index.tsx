@@ -1,5 +1,5 @@
 import { ApiError } from "@api/client/core/ApiError";
-import ROUTES from "@common/routes";
+import ROUTES, { ERROR_URL_PARAMETER } from "@common/routes";
 import {
 	borderRadiuses,
 	boxShadows,
@@ -18,6 +18,7 @@ import Spacer from "@components/Spacer";
 import styled from "@emotion/styled";
 import useUser from "@hooks/useUser";
 import { validateEmail } from "@services/validation";
+import { useRouter } from "next/router";
 import { FormEvent, useState } from "react";
 import { useTranslations } from "use-intl";
 
@@ -63,6 +64,9 @@ const initialErrorMessages: ErrorMessages = {
 
 export default function LoginPage() {
 	const t = useTranslations("Login");
+	const router = useRouter();
+	const urlError = router.query[ERROR_URL_PARAMETER]?.toString() || null;
+	const urlErrorMessage = urlError ? t("error-initial", { errorMessage: urlError }) : null;
 	const [email, emailSet] = useState<string>("");
 	const [password, setPassword] = useState<string>("");
 	const [errorMessages, setErrorMessages] = useState<ErrorMessages>(initialErrorMessages);
@@ -142,8 +146,8 @@ export default function LoginPage() {
 							{t("register-button")}
 						</Button>
 					</Buttons>
-					{errorMessages.general && <Spacer size={15} />}
-					<ErrorMessage error={errorMessages.general || ""} />
+					{(errorMessages.general || urlErrorMessage) && <Spacer size={15} />}
+					<ErrorMessage error={errorMessages.general || urlErrorMessage || ""} />
 				</form>
 			</Content>
 		</PageBackground>
