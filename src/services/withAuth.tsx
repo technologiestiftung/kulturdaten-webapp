@@ -20,6 +20,7 @@ export default function withAuth<Props>(wrappedComponent: ComponentType<Props>) 
 		}, [router]);
 
 		if (loading) {
+			// TODO: Style this loading state a bit more.
 			return <div>Loading...</div>;
 		}
 		return <WrappedComponent {...props} />;
