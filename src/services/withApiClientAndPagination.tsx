@@ -5,7 +5,7 @@ import ROUTES from "@common/routes";
 import { decodeAccessToken, getAccessTokenFromContext } from "@services/auth";
 import { loadMessages } from "@services/i18n";
 import { getPaginationFromQuery } from "@services/pagination";
-import { GetServerSidePropsContext, GetServerSidePropsResult, Redirect } from "next";
+import { GetServerSidePropsContext, GetServerSidePropsResult } from "next";
 
 type ServerSideFunction<Props> = (parameters: {
 	context: GetServerSidePropsContext;
@@ -27,13 +27,9 @@ export default function withApiClientAndPagination<Props>(serverSideFunction: Se
 	return async function (context: GetServerSidePropsContext): Promise<GetServerSidePropsResult<Props>> {
 		const accessToken = getAccessTokenFromContext(context);
 		if (!accessToken || !isTokenValid(accessToken)) {
-			const loginRedirect: { redirect: Redirect } = {
-				redirect: {
-					destination: ROUTES.login(),
-					permanent: false,
-				},
+			return {
+				redirect: { destination: ROUTES.login(), permanent: false },
 			};
-			return loginRedirect;
 		}
 		const apiClient = createAuthorizedClient(accessToken);
 		const { page, pageSize } = getPaginationFromQuery(context.query);
@@ -60,13 +56,9 @@ export default function withApiClientAndPagination<Props>(serverSideFunction: Se
 		} catch (error) {
 			const apiError = error as ApiError;
 			const errorMessage = `${apiError.message} (${apiError.status})`;
-			const loginRedirect: { redirect: Redirect } = {
-				redirect: {
-					destination: ROUTES.login(errorMessage),
-					permanent: false,
-				},
+			return {
+				redirect: { destination: ROUTES.login(errorMessage), permanent: false },
 			};
-			return loginRedirect;
 		}
 	};
 }
