@@ -56,6 +56,7 @@ const TrBody = styled.tr(({ onClick }) => ({
 const Td = styled.td({
 	flex: "1 0 auto",
 	padding: spacings.get(1.5),
+	// We assume that the first column should be bold and stretched across the whole row on mobile.
 	":first-of-type": {
 		flex: "1 0 100%",
 		fontWeight: fontWeights.medium,
