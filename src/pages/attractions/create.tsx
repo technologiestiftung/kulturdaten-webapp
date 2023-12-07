@@ -1,18 +1,15 @@
 import AttractionDetailsPage from "@components/pages/AttractionDetailsPage";
 import withApiClientAndPagination from "@services/withApiClientAndPagination";
 import withAuth from "@services/withAuth";
-import { GetServerSideProps } from "next";
+import { ComponentProps } from "react";
 
-interface Props {
-	attraction: null;
-}
+type Props = ComponentProps<typeof AttractionDetailsPage>;
 
-export const getServerSideProps: GetServerSideProps<Props> = (context) =>
-	withApiClientAndPagination<Props>(context)(async ({ messages }) => ({
-		props: {
-			attraction: null,
-			messages,
-		},
-	}));
+export const getServerSideProps = withApiClientAndPagination<Props>(async ({ messages }) => ({
+	props: {
+		attraction: null,
+		messages,
+	},
+}));
 
 export default withAuth(AttractionDetailsPage);
