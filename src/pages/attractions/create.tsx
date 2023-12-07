@@ -5,10 +5,9 @@ import { ComponentProps } from "react";
 
 type Props = ComponentProps<typeof AttractionDetailsPage>;
 
-export const getServerSideProps = withApiClientAndPagination<Props>(async ({ messages }) => ({
+export const getServerSideProps = withApiClientAndPagination<Props>(async () => ({
 	props: {
 		attraction: null,
-		messages,
 	},
 }));
 

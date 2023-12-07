@@ -5,13 +5,12 @@ import { ComponentProps } from "react";
 
 type Props = ComponentProps<typeof OrganizationDetailsPage>;
 
-export const getServerSideProps = withApiClientAndPagination<Props>(async ({ apiClient, messages }) => {
+export const getServerSideProps = withApiClientAndPagination<Props>(async ({ apiClient }) => {
 	const tagsResponse = await apiClient.discoverCulturalData.getTagsOrganizations();
 	return {
 		props: {
 			organization: null,
 			tags: tagsResponse.data!.tags!,
-			messages,
 		},
 	};
 });

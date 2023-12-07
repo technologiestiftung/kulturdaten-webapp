@@ -6,14 +6,13 @@ import { ComponentProps } from "react";
 
 type Props = ComponentProps<typeof AttractionsPage>;
 
-export const getServerSideProps = withApiClientAndPagination<Props>(async ({ apiClient, page, pageSize, messages }) => {
+export const getServerSideProps = withApiClientAndPagination<Props>(async ({ apiClient, page, pageSize }) => {
 	const response = await apiClient.admin.getAdminAttractions(page, pageSize);
 	const data = response.data!;
 	return {
 		props: {
 			attractions: data.attractions || [],
 			pagination: getPaginationProps(data),
-			messages,
 		},
 	};
 });

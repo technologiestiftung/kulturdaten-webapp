@@ -5,14 +5,13 @@ import { ComponentProps } from "react";
 
 type Props = ComponentProps<typeof LocationDetailsPage>;
 
-export const getServerSideProps = withApiClientAndPagination<Props>(async ({ context, apiClient, messages }) => {
+export const getServerSideProps = withApiClientAndPagination<Props>(async ({ context, apiClient }) => {
 	const identifier = context.query.identifier as string;
 	const response = await apiClient.discoverCulturalData.getLocations1(identifier);
 	const location = response.data!.location!;
 	return {
 		props: {
 			location,
-			messages,
 		},
 	};
 });

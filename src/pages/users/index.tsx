@@ -6,7 +6,7 @@ import { ComponentProps } from "react";
 
 type Props = ComponentProps<typeof UsersPage>;
 
-export const getServerSideProps = withApiClientAndPagination<Props>(async ({ apiClient, accessToken, messages }) => {
+export const getServerSideProps = withApiClientAndPagination<Props>(async ({ apiClient, accessToken }) => {
 	const decodedAccessToken = decodeAccessToken(accessToken);
 	const response = await apiClient.manageYourOrganizationData.getOrganizationsMemberships(
 		decodedAccessToken.organizationIdentifier,
@@ -15,7 +15,6 @@ export const getServerSideProps = withApiClientAndPagination<Props>(async ({ api
 	return {
 		props: {
 			memberships: data.memberships || [],
-			messages,
 		},
 	};
 });

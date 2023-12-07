@@ -5,7 +5,7 @@ import { ComponentProps } from "react";
 
 type Props = ComponentProps<typeof OrganizationDetailsPage>;
 
-export const getServerSideProps = withApiClientAndPagination<Props>(async ({ context, apiClient, messages }) => {
+export const getServerSideProps = withApiClientAndPagination<Props>(async ({ context, apiClient }) => {
 	const identifier = context.query.identifier as string;
 	const organizationResponse = await apiClient.discoverCulturalData.getOrganizations1(identifier);
 	const tagsResponse = await apiClient.discoverCulturalData.getTagsOrganizations();
@@ -13,7 +13,6 @@ export const getServerSideProps = withApiClientAndPagination<Props>(async ({ con
 		props: {
 			organization: organizationResponse.data!.organization!,
 			tags: tagsResponse.data!.tags!,
-			messages,
 		},
 	};
 });

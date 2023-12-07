@@ -12,16 +12,19 @@ type ServerSideFunction<Props> = (parameters: {
 	apiClient: APIClient;
 	page: number;
 	pageSize: number;
-	messages: object;
 	accessToken: string;
 }) => Promise<GetServerSidePropsResult<Props>>;
+
+function isProps<Props>(result: GetServerSidePropsResult<Props>): result is { props: Props } {
+	return "props" in result;
+}
 
 /**
  * Wrapper for getServerSideProps() function to generate access token, default pagination, and load i18n messages.
  * Also redirects to the login page if the token is missing or invalid.
  */
 export default function withApiClientAndPagination<Props>(serverSideFunction: ServerSideFunction<Props>) {
-	return async function (context: GetServerSidePropsContext) {
+	return async function (context: GetServerSidePropsContext): Promise<GetServerSidePropsResult<Props>> {
 		const accessToken = getAccessTokenFromContext(context);
 		if (!accessToken || !isTokenValid(accessToken)) {
 			const loginRedirect: { redirect: Redirect } = {
@@ -34,9 +37,26 @@ export default function withApiClientAndPagination<Props>(serverSideFunction: Se
 		}
 		const apiClient = createAuthorizedClient(accessToken);
 		const { page, pageSize } = getPaginationFromQuery(context.query);
-		const messages = await loadMessages(context.locale!);
+
 		try {
-			return await serverSideFunction({ context, apiClient, page, pageSize, messages, accessToken });
+			const result = await serverSideFunction({
+				context,
+				apiClient,
+				page,
+				pageSize,
+				accessToken,
+			});
+			if (!isProps(result)) {
+				return result;
+			}
+			// Load i18n messages and add them to result props.
+			return {
+				...result,
+				props: {
+					...result.props,
+					messages: await loadMessages(context.locale!),
+				},
+			};
 		} catch (error) {
 			const apiError = error as ApiError;
 			const errorMessage = `${apiError.message} (${apiError.status})`;

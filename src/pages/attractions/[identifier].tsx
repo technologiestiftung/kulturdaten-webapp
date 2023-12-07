@@ -5,14 +5,13 @@ import { ComponentProps } from "react";
 
 type Props = ComponentProps<typeof AttractionDetailsPage>;
 
-export const getServerSideProps = withApiClientAndPagination<Props>(async ({ context, apiClient, messages }) => {
+export const getServerSideProps = withApiClientAndPagination<Props>(async ({ context, apiClient }) => {
 	const identifier = context.query.identifier as string;
 	const response = await apiClient.admin.getAdminAttractions1(identifier);
 	const attraction = response.data!.attraction!;
 	return {
 		props: {
 			attraction,
-			messages,
 		},
 	};
 });
