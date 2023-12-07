@@ -105,7 +105,7 @@ export default function UsersPage(props: Props) {
 						},
 						canBeSorted: false,
 						headerStyle: { width: "160px" },
-						cellStyle: { width: "160px" },
+						cellStyle: { width: "160px", flex: "0 0 160px" },
 					},
 					{
 						header: "",
