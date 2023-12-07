@@ -58,11 +58,6 @@ export default function AttractionsPage(props: Props) {
 						canBeSorted: false,
 					},
 					{
-						header: t("table-header-created"),
-						getContent: (attraction) => <Date date={attraction.metadata.created} />,
-						canBeSorted: false,
-					},
-					{
 						header: t("table-header-updated"),
 						getContent: (attraction) => <Date date={attraction.metadata.updated} />,
 						width: "130px",
