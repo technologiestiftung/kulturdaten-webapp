@@ -75,6 +75,8 @@ type Column<Item> = {
 	canBeSorted: boolean;
 	headerStyle?: CSSProperties;
 	cellStyle?: CSSProperties;
+	/** CSS width of the column, e.g. "400px". */
+	width?: string;
 };
 
 type Props<Item> = {
@@ -84,10 +86,19 @@ type Props<Item> = {
 };
 
 export const ACTIONS_CELL_STYLE: CSSProperties = {
+	...getWidthStyle("40px"),
 	padding: "0px",
-	width: "40px",
-	flex: "0 0 auto",
 };
+
+function getWidthStyle(width?: string): CSSProperties {
+	if (!width) {
+		return {};
+	}
+	return {
+		width: width,
+		flex: `0 0 ${width}`,
+	};
+}
 
 export default function ContentTable<Item>(props: Props<Item>) {
 	const { items, columns, onClickItem } = props;
@@ -96,7 +107,7 @@ export default function ContentTable<Item>(props: Props<Item>) {
 			<thead>
 				<TrHeader>
 					{columns.map((column, index) => (
-						<Th key={index} style={column.headerStyle}>
+						<Th key={index} style={{ ...getWidthStyle(column.width), ...column.headerStyle }}>
 							{column.header}
 						</Th>
 					))}
@@ -110,7 +121,7 @@ export default function ContentTable<Item>(props: Props<Item>) {
 						tabIndex={onClickItem ? 0 : -1}
 					>
 						{columns.map((column, index) => (
-							<Td key={index} style={column.cellStyle}>
+							<Td key={index} style={{ ...getWidthStyle(column.width), ...column.cellStyle }}>
 								{column.getContent(item)}
 							</Td>
 						))}

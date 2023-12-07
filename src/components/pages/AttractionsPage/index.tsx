@@ -65,6 +65,7 @@ export default function AttractionsPage(props: Props) {
 					{
 						header: t("table-header-updated"),
 						getContent: (attraction) => <Date date={attraction.metadata.updated} />,
+						width: "130px",
 						canBeSorted: false,
 					},
 					{
