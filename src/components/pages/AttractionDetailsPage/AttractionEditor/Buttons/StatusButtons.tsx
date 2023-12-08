@@ -1,13 +1,13 @@
 import { AdminAttraction } from "@api/client/models/AdminAttraction";
 import Button from "@components/Button";
 import useApiClient from "@hooks/useApiClient";
-import { getAllowedStatusUpdates } from "@services/attractions";
+import { StatusUpdate, getAllowedStatusUpdates } from "@services/attractions";
 import { useTranslations } from "next-intl";
 import { ReactNode, useMemo } from "react";
 
 interface Props {
 	attraction: AdminAttraction;
-	onUpdated(): void;
+	onUpdated(newStatus: StatusUpdate): void;
 }
 
 export default function StatusButtons({ attraction, onUpdated }: Props) {
@@ -24,28 +24,28 @@ export default function StatusButtons({ attraction, onUpdated }: Props) {
 				children: t("status-update-publish"),
 				onClick: async () => {
 					await apiClient.manageCulturalData.postAttractionsPublish(attraction.identifier);
-					onUpdated();
+					onUpdated("publish");
 				},
 			},
 			allowedStatusUpdates.unpublish && {
 				children: t("status-update-unpublish"),
 				onClick: async () => {
 					await apiClient.manageCulturalData.postAttractionsUnpublish(attraction.identifier);
-					onUpdated();
+					onUpdated("unpublish");
 				},
 			},
 			allowedStatusUpdates.archive && {
 				children: t("status-update-archive"),
 				onClick: async () => {
 					await apiClient.manageCulturalData.postAttractionsArchive(attraction.identifier);
-					onUpdated();
+					onUpdated("archive");
 				},
 			},
 			allowedStatusUpdates.unarchive && {
 				children: t("status-update-unarchive"),
 				onClick: async () => {
 					await apiClient.manageCulturalData.postAttractionsUnarchive(attraction.identifier);
-					onUpdated();
+					onUpdated("unarchive");
 				},
 			},
 		].filter(Boolean) as ButtonProps[];
