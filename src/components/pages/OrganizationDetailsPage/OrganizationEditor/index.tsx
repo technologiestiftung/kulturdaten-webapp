@@ -8,6 +8,8 @@ import Spacer from "@components/Spacer";
 import TagEditor from "@components/TagEditor";
 import Textarea from "@components/Textarea";
 import useApiClient from "@hooks/useApiClient";
+import { StatusUpdate } from "@services/organizations";
+import { showErrorToast, showSuccessToast } from "@services/toast";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/router";
 import { FormEventHandler, useCallback, useState } from "react";
@@ -31,21 +33,35 @@ export default function OrganizationEditor(props: Props) {
 	const currentLanguage = languages[0];
 	const [organizationRequest, setOrganizationRequest] = useState(getInitialRequest(organization, languages));
 	const apiClient = useApiClient();
-	const handleUpdatedStatus = useCallback(() => {
-		router.replace(router.asPath, undefined, { scroll: false });
-		// TODO: Show success message.
-	}, [router]);
+	const handleUpdatedStatus = useCallback(
+		(newStatus: StatusUpdate) => {
+			router.replace(router.asPath, undefined, { scroll: false });
+			const toastMessages: Record<StatusUpdate, string> = {
+				archive: t("status-updated-archive"),
+				unarchive: t("status-updated-unarchive"),
+				publish: t("status-updated-publish"),
+				unpublish: t("status-updated-unpublish"),
+			};
+			showSuccessToast(toastMessages[newStatus]);
+		},
+		[router, t],
+	);
 	const handleSubmit = useCallback<FormEventHandler>(
 		async (event) => {
 			event.preventDefault();
-			if (isNew) {
-				await apiClient.manageCulturalData.postOrganizations(organizationRequest);
-			} else {
-				await apiClient.manageCulturalData.patchOrganizations(organization.identifier, organizationRequest);
+			try {
+				if (isNew) {
+					await apiClient.manageCulturalData.postOrganizations(organizationRequest);
+				} else {
+					await apiClient.manageCulturalData.patchOrganizations(organization.identifier, organizationRequest);
+				}
+				showSuccessToast(t("save-success"));
+				onAfterSubmit();
+			} catch (error) {
+				showErrorToast(t("save-error"));
 			}
-			onAfterSubmit();
 		},
-		[apiClient, organization?.identifier, organizationRequest, isNew, onAfterSubmit],
+		[apiClient, organization?.identifier, organizationRequest, isNew, onAfterSubmit, t],
 	);
 
 	return (

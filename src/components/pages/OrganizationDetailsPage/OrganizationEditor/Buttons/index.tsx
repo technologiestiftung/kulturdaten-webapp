@@ -2,6 +2,7 @@ import { Organization } from "@api/client/models/Organization";
 import { spacings } from "@common/styleVariables";
 import Button from "@components/Button";
 import styled from "@emotion/styled";
+import { StatusUpdate } from "@services/organizations";
 import { ReactNode } from "react";
 import StatusButtons from "./StatusButtons";
 
@@ -14,7 +15,7 @@ const Container = styled.div({
 
 interface Props {
 	organization: Organization | null;
-	onUpdated(): void;
+	onUpdated(newStatus: StatusUpdate): void;
 	submitLabel: ReactNode;
 }
 

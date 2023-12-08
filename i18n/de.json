@@ -114,13 +114,19 @@
 		"page-title-edit": "{organizationTitle} bearbeiten",
 		"save-button-add": "Anbieter:in erstellen",
 		"save-button-edit": "Anbieter:in speichern",
+		"save-success": "Anbieter:in gespeichert.",
+		"save-error": "Anbieter:in konnte nicht gespeichert werden.",
 		"label-title": "Titel",
 		"label-description": "Beschreibung",
 		"label-website": "Website",
 		"status-update-publish": "Veröffentlichen",
 		"status-update-unpublish": "Veröffentlichung aufheben",
 		"status-update-archive": "Archivieren",
-		"status-update-unarchive": "Wiederherstellen"
+		"status-update-unarchive": "Wiederherstellen",
+		"status-updated-archive": "Anbieter:in archiviert.",
+		"status-updated-unarchive": "Anbieter:in wiederhergestellt.",
+		"status-updated-publish": "Anbieter:in veröffentlicht.",
+		"status-updated-unpublish": "Anbieter:in nicht mehr veröffentlicht."
 	},
 	"Tags": {
 		"title": "Kategorisierung",
