@@ -15,15 +15,15 @@ const Container = styled.div({
 
 interface Props {
 	attraction: AdminAttraction | null;
-	onUpdated(newStatus: StatusUpdate): void;
+	onUpdateStatus(newStatus: StatusUpdate): void;
 	submitLabel: ReactNode;
 }
 
-export default function Buttons({ attraction, onUpdated, submitLabel }: Props) {
+export default function Buttons({ attraction, onUpdateStatus, submitLabel }: Props) {
 	return (
 		<Container>
 			<Button type="submit">{submitLabel}</Button>
-			<div>{attraction !== null && <StatusButtons attraction={attraction} onUpdated={onUpdated} />}</div>
+			<div>{attraction !== null && <StatusButtons attraction={attraction} onUpdate={onUpdateStatus} />}</div>
 		</Container>
 	);
 }

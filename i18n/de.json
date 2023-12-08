@@ -64,6 +64,7 @@
 		"status-update-unarchive": "Wiederherstellen",
 		"status-update-publish": "Veröffentlichen",
 		"status-update-unpublish": "Veröffentlichung aufheben",
+		"status-updated-error": "Angebot konnte nicht geändert werden.",
 		"status-updated-archive": "Angebot archiviert.",
 		"status-updated-unarchive": "Angebot wiederhergestellt.",
 		"status-updated-publish": "Angebot veröffentlicht.",
