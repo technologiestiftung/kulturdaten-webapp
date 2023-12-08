@@ -15,15 +15,15 @@ const Container = styled.div({
 
 interface Props {
 	location: Location | null;
-	onUpdated(newStatus: StatusUpdate): void;
+	onUpdateStatus(newStatus: StatusUpdate): void;
 	submitLabel: ReactNode;
 }
 
-export default function Buttons({ location, onUpdated, submitLabel }: Props) {
+export default function Buttons({ location, onUpdateStatus, submitLabel }: Props) {
 	return (
 		<Container>
 			<Button type="submit">{submitLabel}</Button>
-			<div>{location !== null && <StatusButtons location={location} onUpdated={onUpdated} />}</div>
+			<div>{location !== null && <StatusButtons location={location} onUpdate={onUpdateStatus} />}</div>
 		</Container>
 	);
 }
