@@ -141,13 +141,19 @@
 		"table-option-edit": "Bearbeiten",
 		"table-option-delete": "Aus Anbieter:in entfernen",
 		"table-name-current-user-indicator": "Ich",
+		"user-edit-success": "Benutzer:in gespeichert.",
+		"membership-invite-success": "Benutzer:in zur Anbieter:in eingeladen.",
+		"membership-delete-success": "Benutzer:in aus Anbieter:in entfernt.",
+		"membership-delete-error": "Benutzer:in konnte nicht aus Anbieter:in entfernt werden.",
 		"invite-user": "Benutzer:in einladen",
 		"number-users": "{count, plural, =1 {# Benutzer:in} other {# Benutzer:innen}}",
 		"role-admin": "Administrator",
 		"role-editor": "Editor",
 		"role-author": "Autor",
 		"role-member": "Mitglied",
-		"role-unassigned": "Keine"
+		"role-unassigned": "Keine",
+		"role-update-success": "Rolle erfolgreich geändert.",
+		"role-update-error": "Rolle konnte nicht geändert werden."
 	},
 	"User-Details": {
 		"invite-modal-title": "Benutzer:in einladen",
