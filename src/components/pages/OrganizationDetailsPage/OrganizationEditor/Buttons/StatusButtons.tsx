@@ -1,17 +1,15 @@
 import { Organization } from "@api/client/models/Organization";
 import Button from "@components/Button";
-import useApiClient from "@hooks/useApiClient";
 import { StatusUpdate, getAllowedStatusUpdates } from "@services/organizations";
 import { useTranslations } from "next-intl";
 import { ReactNode, useMemo } from "react";
 
 interface Props {
 	organization: Organization;
-	onUpdated(newStatus: StatusUpdate): void;
+	onUpdate(newStatus: StatusUpdate): void;
 }
 
-export default function StatusButtons({ organization, onUpdated }: Props) {
-	const apiClient = useApiClient();
+export default function StatusButtons({ organization, onUpdate }: Props) {
 	const t = useTranslations("Organization-Details");
 	type ButtonProps = {
 		children: ReactNode;
@@ -22,34 +20,22 @@ export default function StatusButtons({ organization, onUpdated }: Props) {
 		return [
 			allowedStatusUpdates.publish && {
 				children: t("status-update-publish"),
-				onClick: async () => {
-					await apiClient.manageCulturalData.postOrganizationsPublish(organization.identifier);
-					onUpdated("publish");
-				},
+				onClick: () => onUpdate("publish"),
 			},
 			allowedStatusUpdates.unpublish && {
 				children: t("status-update-unpublish"),
-				onClick: async () => {
-					await apiClient.manageCulturalData.postOrganizationsUnpublish(organization.identifier);
-					onUpdated("unpublish");
-				},
+				onClick: () => onUpdate("unpublish"),
 			},
 			allowedStatusUpdates.archive && {
 				children: t("status-update-archive"),
-				onClick: async () => {
-					await apiClient.manageCulturalData.postOrganizationsArchive(organization.identifier);
-					onUpdated("archive");
-				},
+				onClick: () => onUpdate("archive"),
 			},
 			allowedStatusUpdates.unarchive && {
 				children: t("status-update-unarchive"),
-				onClick: async () => {
-					await apiClient.manageCulturalData.postOrganizationsUnarchive(organization.identifier);
-					onUpdated("unarchive");
-				},
+				onClick: () => onUpdate("unarchive"),
 			},
 		].filter(Boolean) as ButtonProps[];
-	}, [apiClient, organization.identifier, organization.status, onUpdated, t]);
+	}, [organization.status, onUpdate, t]);
 	return (
 		<>
 			{buttons.map((props, index) => (

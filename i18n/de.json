@@ -125,6 +125,7 @@
 		"status-update-unpublish": "Veröffentlichung aufheben",
 		"status-update-archive": "Archivieren",
 		"status-update-unarchive": "Wiederherstellen",
+        "status-updated-error": "Anbieter:in konnte nicht geändert werden.",
 		"status-updated-archive": "Anbieter:in archiviert.",
 		"status-updated-unarchive": "Anbieter:in wiederhergestellt.",
 		"status-updated-publish": "Anbieter:in veröffentlicht.",

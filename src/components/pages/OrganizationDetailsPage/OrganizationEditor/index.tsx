@@ -33,19 +33,31 @@ export default function OrganizationEditor(props: Props) {
 	const currentLanguage = languages[0];
 	const [organizationRequest, setOrganizationRequest] = useState(getInitialRequest(organization, languages));
 	const apiClient = useApiClient();
-	const handleUpdatedStatus = useCallback(
-		(newStatus: StatusUpdate) => {
+	const handleUpdateStatus = async (newStatus: StatusUpdate) => {
+		try {
+			switch (newStatus) {
+				case "archive":
+					await apiClient.manageCulturalData.postOrganizationsArchive(organization!.identifier);
+					showSuccessToast(t("status-updated-archive"));
+					break;
+				case "unarchive":
+					await apiClient.manageCulturalData.postOrganizationsUnarchive(organization!.identifier);
+					showSuccessToast(t("status-updated-unarchive"));
+					break;
+				case "publish":
+					await apiClient.manageCulturalData.postOrganizationsPublish(organization!.identifier);
+					showSuccessToast(t("status-updated-publish"));
+					break;
+				case "unpublish":
+					await apiClient.manageCulturalData.postOrganizationsUnpublish(organization!.identifier);
+					showSuccessToast(t("status-updated-unpublish"));
+					break;
+			}
 			router.replace(router.asPath, undefined, { scroll: false });
-			const toastMessages: Record<StatusUpdate, string> = {
-				archive: t("status-updated-archive"),
-				unarchive: t("status-updated-unarchive"),
-				publish: t("status-updated-publish"),
-				unpublish: t("status-updated-unpublish"),
-			};
-			showSuccessToast(toastMessages[newStatus]);
-		},
-		[router, t],
-	);
+		} catch (error) {
+			showErrorToast(t("status-updated-error"));
+		}
+	};
 	const handleSubmit = useCallback<FormEventHandler>(
 		async (event) => {
 			event.preventDefault();
@@ -212,7 +224,7 @@ export default function OrganizationEditor(props: Props) {
 				}
 			/>
 			<Spacer size={30} />
-			<Buttons organization={organization} onUpdated={handleUpdatedStatus} submitLabel={submitLabel} />
+			<Buttons organization={organization} onUpdateStatus={handleUpdateStatus} submitLabel={submitLabel} />
 		</form>
 	);
 }
