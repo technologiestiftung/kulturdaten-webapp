@@ -2,6 +2,7 @@ import { Location } from "@api/client/models/Location";
 import { spacings } from "@common/styleVariables";
 import Button from "@components/Button";
 import styled from "@emotion/styled";
+import { StatusUpdate } from "@services/locations";
 import { ReactNode } from "react";
 import StatusButtons from "./StatusButtons";
 
@@ -14,7 +15,7 @@ const Container = styled.div({
 
 interface Props {
 	location: Location | null;
-	onUpdated(): void;
+	onUpdated(newStatus: StatusUpdate): void;
 	submitLabel: ReactNode;
 }
 

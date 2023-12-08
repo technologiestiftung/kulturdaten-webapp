@@ -1,6 +1,6 @@
 import { Location } from "@api/client/models/Location";
 
-type StatusUpdate = "archive" | "unarchive" | "publish" | "unpublish";
+export type StatusUpdate = "archive" | "unarchive" | "publish" | "unpublish";
 
 export function getAllowedStatusUpdates(currentStatus: Location["status"]): Record<StatusUpdate, boolean> {
 	return {

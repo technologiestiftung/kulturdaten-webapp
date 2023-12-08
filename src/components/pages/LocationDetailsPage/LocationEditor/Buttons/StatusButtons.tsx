@@ -1,13 +1,13 @@
 import { Location } from "@api/client/models/Location";
 import Button from "@components/Button";
 import useApiClient from "@hooks/useApiClient";
-import { getAllowedStatusUpdates } from "@services/locations";
+import { StatusUpdate, getAllowedStatusUpdates } from "@services/locations";
 import { useTranslations } from "next-intl";
 import { ReactNode, useMemo } from "react";
 
 interface Props {
 	location: Location;
-	onUpdated(): void;
+	onUpdated(newStatus: StatusUpdate): void;
 }
 
 export default function StatusButtons({ location, onUpdated }: Props) {
@@ -24,28 +24,28 @@ export default function StatusButtons({ location, onUpdated }: Props) {
 				children: t("status-update-publish"),
 				onClick: async () => {
 					await apiClient.manageCulturalData.postLocationsPublish(location.identifier);
-					onUpdated();
+					onUpdated("publish");
 				},
 			},
 			allowedStatusUpdates.unpublish && {
 				children: t("status-update-unpublish"),
 				onClick: async () => {
 					await apiClient.manageCulturalData.postLocationsUnpublish(location.identifier);
-					onUpdated();
+					onUpdated("unpublish");
 				},
 			},
 			allowedStatusUpdates.archive && {
 				children: t("status-update-archive"),
 				onClick: async () => {
 					await apiClient.manageCulturalData.postLocationsArchive(location.identifier);
-					onUpdated();
+					onUpdated("archive");
 				},
 			},
 			allowedStatusUpdates.unarchive && {
 				children: t("status-update-unarchive"),
 				onClick: async () => {
 					await apiClient.manageCulturalData.postLocationsUnarchive(location.identifier);
-					onUpdated();
+					onUpdated("unarchive");
 				},
 			},
 		].filter(Boolean) as ButtonProps[];
