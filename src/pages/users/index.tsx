@@ -1,27 +1,22 @@
-import { Membership } from "@common/types";
 import UsersPage from "@components/pages/UsersPage";
 import { decodeAccessToken } from "@services/auth";
 import withApiClientAndPagination from "@services/withApiClientAndPagination";
 import withAuth from "@services/withAuth";
-import { GetServerSideProps } from "next";
+import { ComponentProps } from "react";
 
-interface Props {
-	memberships: Membership[];
-}
+type Props = ComponentProps<typeof UsersPage>;
 
-export const getServerSideProps: GetServerSideProps<Props> = (context) =>
-	withApiClientAndPagination<Props>(context)(async ({ apiClient, accessToken, messages }) => {
-		const decodedAccessToken = decodeAccessToken(accessToken);
-		const response = await apiClient.manageYourOrganizationData.getOrganizationsMemberships(
-			decodedAccessToken.organizationIdentifier,
-		);
-		const data = response.data!;
-		return {
-			props: {
-				memberships: data.memberships || [],
-				messages,
-			},
-		};
-	});
+export const getServerSideProps = withApiClientAndPagination<Props>(async ({ apiClient, accessToken }) => {
+	const decodedAccessToken = decodeAccessToken(accessToken);
+	const response = await apiClient.manageYourOrganizationData.getOrganizationsMemberships(
+		decodedAccessToken.organizationIdentifier,
+	);
+	const data = response.data!;
+	return {
+		props: {
+			memberships: data.memberships || [],
+		},
+	};
+});
 
 export default withAuth(UsersPage);
