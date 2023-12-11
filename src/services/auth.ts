@@ -10,6 +10,7 @@ export function storeAccessToken(accessToken: string) {
 		// TODO: Calculate expiry date via loginResponseData.expiresIn.
 		// expires: loginResponseData.expiresIn ? new Date(loginResponseData.expiresIn) : undefined,
 		path: "/",
+		sameSite: "Strict",
 	});
 }
 
@@ -18,7 +19,9 @@ export function getAccessToken() {
 }
 
 export function clearAccessToken() {
-	removeCookie(ACCESS_TOKEN_COOKIE_NAME);
+	removeCookie(ACCESS_TOKEN_COOKIE_NAME, {
+		sameSite: "Strict",
+	});
 }
 
 export function getAccessTokenFromContext(context: GetServerSidePropsContext) {
