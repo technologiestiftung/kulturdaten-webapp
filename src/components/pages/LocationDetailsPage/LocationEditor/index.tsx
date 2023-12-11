@@ -8,6 +8,8 @@ import Input from "@components/Input";
 import Spacer from "@components/Spacer";
 import Textarea from "@components/Textarea";
 import useApiClient from "@hooks/useApiClient";
+import { StatusUpdate } from "@services/locations";
+import { showErrorToast, showSuccessToast } from "@services/toast";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/router";
 import { FormEventHandler, useCallback, useState } from "react";
@@ -30,21 +32,48 @@ export default function LocationEditor(props: Props) {
 	const currentLanguage = languages[0];
 	const [locationRequest, setLocationRequest] = useState(getInitialRequest(location, languages));
 	const apiClient = useApiClient();
-	const handleUpdatedStatus = useCallback(() => {
+	const handleUpdateStatus = async (newStatus: StatusUpdate) => {
+		try {
+			switch (newStatus) {
+				case "archive":
+					await apiClient.manageCulturalData.postLocationsArchive(location!.identifier);
+					showSuccessToast(t("status-updated-archive"));
+					break;
+				case "unarchive":
+					await apiClient.manageCulturalData.postLocationsUnarchive(location!.identifier);
+					showSuccessToast(t("status-updated-unarchive"));
+					break;
+				case "publish":
+					await apiClient.manageCulturalData.postLocationsPublish(location!.identifier);
+					showSuccessToast(t("status-updated-publish"));
+					break;
+				case "unpublish":
+					await apiClient.manageCulturalData.postLocationsUnpublish(location!.identifier);
+					showSuccessToast(t("status-updated-unpublish"));
+					break;
+			}
+			router.replace(router.asPath, undefined, { scroll: false });
+		} catch (error) {
+			showErrorToast(t("status-updated-error"));
+		}
 		router.replace(router.asPath, undefined, { scroll: false });
-		// TODO: Show success message.
-	}, [router]);
+	};
 	const handleSubmit = useCallback<FormEventHandler>(
 		async (event) => {
 			event.preventDefault();
-			if (isNew) {
-				await apiClient.manageCulturalData.postLocations(locationRequest);
-			} else {
-				await apiClient.manageCulturalData.patchLocations(location.identifier, locationRequest);
+			try {
+				if (isNew) {
+					await apiClient.manageCulturalData.postLocations(locationRequest);
+				} else {
+					await apiClient.manageCulturalData.patchLocations(location.identifier, locationRequest);
+				}
+				showSuccessToast(t("save-success"));
+				onAfterSubmit();
+			} catch (error) {
+				showErrorToast(t("save-error"));
 			}
-			onAfterSubmit();
 		},
-		[apiClient, location?.identifier, locationRequest, isNew, onAfterSubmit],
+		[apiClient, location?.identifier, locationRequest, isNew, onAfterSubmit, t],
 	);
 
 	return (
@@ -199,7 +228,7 @@ export default function LocationEditor(props: Props) {
 				}}
 			/>
 			<Spacer size={30} />
-			<Buttons location={location} onUpdated={handleUpdatedStatus} submitLabel={submitLabel} />
+			<Buttons location={location} onUpdateStatus={handleUpdateStatus} submitLabel={submitLabel} />
 		</form>
 	);
 }

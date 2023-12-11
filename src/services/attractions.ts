@@ -1,6 +1,6 @@
 import { Attraction } from "@api/client/models/Attraction";
 
-type StatusUpdate = "archive" | "unarchive" | "publish" | "unpublish";
+export type StatusUpdate = "archive" | "unarchive" | "publish" | "unpublish";
 
 export function getAllowedStatusUpdates(currentStatus: Attraction["status"]): Record<StatusUpdate, boolean> {
 	return {

@@ -1,17 +1,15 @@
 import { AdminAttraction } from "@api/client/models/AdminAttraction";
 import Button from "@components/Button";
-import useApiClient from "@hooks/useApiClient";
-import { getAllowedStatusUpdates } from "@services/attractions";
+import { StatusUpdate, getAllowedStatusUpdates } from "@services/attractions";
 import { useTranslations } from "next-intl";
 import { ReactNode, useMemo } from "react";
 
 interface Props {
 	attraction: AdminAttraction;
-	onUpdated(): void;
+	onUpdate(newStatus: StatusUpdate): void;
 }
 
-export default function StatusButtons({ attraction, onUpdated }: Props) {
-	const apiClient = useApiClient();
+export default function StatusButtons({ attraction, onUpdate }: Props) {
 	const t = useTranslations("Attraction-Details");
 	type ButtonProps = {
 		children: ReactNode;
@@ -22,34 +20,22 @@ export default function StatusButtons({ attraction, onUpdated }: Props) {
 		return [
 			allowedStatusUpdates.publish && {
 				children: t("status-update-publish"),
-				onClick: async () => {
-					await apiClient.manageCulturalData.postAttractionsPublish(attraction.identifier);
-					onUpdated();
-				},
+				onClick: () => onUpdate("publish"),
 			},
 			allowedStatusUpdates.unpublish && {
 				children: t("status-update-unpublish"),
-				onClick: async () => {
-					await apiClient.manageCulturalData.postAttractionsUnpublish(attraction.identifier);
-					onUpdated();
-				},
+				onClick: () => onUpdate("unpublish"),
 			},
 			allowedStatusUpdates.archive && {
 				children: t("status-update-archive"),
-				onClick: async () => {
-					await apiClient.manageCulturalData.postAttractionsArchive(attraction.identifier);
-					onUpdated();
-				},
+				onClick: () => onUpdate("archive"),
 			},
 			allowedStatusUpdates.unarchive && {
 				children: t("status-update-unarchive"),
-				onClick: async () => {
-					await apiClient.manageCulturalData.postAttractionsUnarchive(attraction.identifier);
-					onUpdated();
-				},
+				onClick: () => onUpdate("unarchive"),
 			},
 		].filter(Boolean) as ButtonProps[];
-	}, [apiClient, attraction.identifier, attraction.status, onUpdated, t]);
+	}, [attraction.status, onUpdate, t]);
 	return (
 		<>
 			{buttons.map((props, index) => (

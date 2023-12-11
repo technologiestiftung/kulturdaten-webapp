@@ -2,6 +2,7 @@ import { AdminAttraction } from "@api/client/models/AdminAttraction";
 import { spacings } from "@common/styleVariables";
 import Button from "@components/Button";
 import styled from "@emotion/styled";
+import { StatusUpdate } from "@services/attractions";
 import { ReactNode } from "react";
 import StatusButtons from "./StatusButtons";
 
@@ -14,15 +15,15 @@ const Container = styled.div({
 
 interface Props {
 	attraction: AdminAttraction | null;
-	onUpdated(): void;
+	onUpdateStatus(newStatus: StatusUpdate): void;
 	submitLabel: ReactNode;
 }
 
-export default function Buttons({ attraction, onUpdated, submitLabel }: Props) {
+export default function Buttons({ attraction, onUpdateStatus, submitLabel }: Props) {
 	return (
 		<Container>
 			<Button type="submit">{submitLabel}</Button>
-			<div>{attraction !== null && <StatusButtons attraction={attraction} onUpdated={onUpdated} />}</div>
+			<div>{attraction !== null && <StatusButtons attraction={attraction} onUpdate={onUpdateStatus} />}</div>
 		</Container>
 	);
 }

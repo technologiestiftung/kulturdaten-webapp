@@ -10,6 +10,7 @@ import UserRoleSelect from "@components/UserRoleSelect";
 import useApiClient from "@hooks/useApiClient";
 import useUser from "@hooks/useUser";
 import { getLocalizedLabel } from "@services/content";
+import { showErrorToast, showSuccessToast } from "@services/toast";
 import { useRouter } from "next/router";
 import { ChangeEvent, useCallback, useState } from "react";
 import { useTranslations } from "use-intl";
@@ -38,28 +39,35 @@ export default function UsersPage(props: Props) {
 	}, []);
 	const deleteMembership = useCallback(
 		async (membership: Membership) => {
-			// TODO: Error handling!
-			await apiClient.manageYourOrganizationData.deleteOrganizationsMemberships(
-				activeOrganization!.identifier,
-				membership.userIdentifier,
-			);
-			reloadPage();
+			try {
+				await apiClient.manageYourOrganizationData.deleteOrganizationsMemberships(
+					activeOrganization!.identifier,
+					membership.userIdentifier,
+				);
+				showSuccessToast(t("membership-delete-success"));
+				reloadPage();
+			} catch (error) {
+				showErrorToast(t("membership-delete-error"));
+			}
 		},
-		[activeOrganization, apiClient, reloadPage],
+		[activeOrganization, apiClient, reloadPage, t],
 	);
 	const handleChangeRole = useCallback(
 		async (event: ChangeEvent<HTMLSelectElement>, membership: Membership) => {
-			const newRole = event.target.value as Role;
-			// TODO: Error handling!
-			await apiClient.manageYourOrganizationData.patchOrganizationsMemberships(
-				activeOrganization!.identifier,
-				membership.userIdentifier,
-				{ role: newRole },
-			);
-			reloadPage();
-			// TODO: Show success message.
+			try {
+				const newRole = event.target.value as Role;
+				await apiClient.manageYourOrganizationData.patchOrganizationsMemberships(
+					activeOrganization!.identifier,
+					membership.userIdentifier,
+					{ role: newRole },
+				);
+				showSuccessToast(t("role-update-success"));
+				reloadPage();
+			} catch (error) {
+				showErrorToast(t("role-update-error"));
+			}
 		},
-		[apiClient, activeOrganization, reloadPage],
+		[apiClient, activeOrganization, reloadPage, t],
 	);
 	const isCurrentUser = (userIdentifier: string) => userIdentifier === activeUser!.identifier;
 	return (
@@ -126,6 +134,7 @@ export default function UsersPage(props: Props) {
 				onClose={() => setInviteModalOpen(false)}
 				onInvited={() => {
 					setInviteModalOpen(false);
+					showSuccessToast(t("membership-invite-success"));
 					reloadPage();
 				}}
 			/>
@@ -138,6 +147,7 @@ export default function UsersPage(props: Props) {
 					onChanged={() => {
 						setEditModalOpen(false);
 						setEditedMembership(null);
+						showSuccessToast(t("user-edit-success"));
 						reloadPage();
 					}}
 				/>
