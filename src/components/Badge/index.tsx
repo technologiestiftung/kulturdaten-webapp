@@ -1,9 +1,10 @@
-import { borderRadiuses, colors, fontSizes, spacings } from "@common/styleVariables";
+import { borderRadiuses, colors, fontSizes, fontWeights, spacings } from "@common/styleVariables";
 import styled from "@emotion/styled";
 import { ReactNode } from "react";
 
 const Container = styled.span({
 	fontSize: fontSizes.small,
+	fontWeight: fontWeights.default,
 	borderRadius: borderRadiuses.medium,
 	color: colors.white,
 	padding: `${spacings.get(0.5)} ${spacings.get(1)}`,

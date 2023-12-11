@@ -103,9 +103,8 @@ export default function UsersPage(props: Props) {
 							}
 							return "-";
 						},
+						width: "160px",
 						canBeSorted: false,
-						headerStyle: { width: "160px" },
-						cellStyle: { width: "160px" },
 					},
 					{
 						header: "",

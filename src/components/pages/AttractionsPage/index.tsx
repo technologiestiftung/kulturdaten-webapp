@@ -4,6 +4,7 @@ import { PaginationType } from "@common/types";
 import AttractionStatus from "@components/AttractionStatus";
 import Button from "@components/Button";
 import ContentTable, { ACTIONS_CELL_STYLE } from "@components/ContentTable";
+import Date from "@components/Date";
 import Page from "@components/Page";
 import PageTitleHeader from "@components/PageTitleHeader";
 import Pagination from "@components/Pagination";
@@ -13,7 +14,6 @@ import { useRouter } from "next/router";
 import { useCallback } from "react";
 import { useTranslations } from "use-intl";
 import Actions from "./Actions";
-import Date from "./Date";
 
 interface Props {
 	attractions: AdminAttraction[];
@@ -58,13 +58,9 @@ export default function AttractionsPage(props: Props) {
 						canBeSorted: false,
 					},
 					{
-						header: t("table-header-created"),
-						getContent: (attraction) => <Date date={attraction.metadata.created} />,
-						canBeSorted: false,
-					},
-					{
 						header: t("table-header-updated"),
 						getContent: (attraction) => <Date date={attraction.metadata.updated} />,
+						width: "130px",
 						canBeSorted: false,
 					},
 					{
