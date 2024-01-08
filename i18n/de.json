@@ -96,7 +96,10 @@
 	},
 	"Locations": {
 		"page-title": "Orte",
+		"table-header-identifier": "ID",
 		"table-header-title": "Ortstitel",
+		"table-header-status": "Status",
+		"number-locations": "{count, plural, =1 {# Ort} other {# Orte}}",
 		"create-location": "Ort erstellen",
 		"edit-location": "Ort bearbeiten",
 		"status-published": "Öffentlich",
