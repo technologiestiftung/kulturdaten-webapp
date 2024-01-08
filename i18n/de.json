@@ -96,6 +96,7 @@
 	},
 	"Locations": {
 		"page-title": "Orte",
+		"table-header-title": "Ortstitel",
 		"create-location": "Ort erstellen",
 		"edit-location": "Ort bearbeiten",
 		"status-published": "Öffentlich",
