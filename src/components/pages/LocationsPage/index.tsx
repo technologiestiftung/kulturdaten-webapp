@@ -47,7 +47,7 @@ export default function LocationsPage(props: Props) {
 						canBeSorted: false,
 					},
 					{
-						header: t("table-header-title"),
+						header: t("table-header-open-in-maps"),
 						getContent: (location) => <MapsLink location={location} />,
 						canBeSorted: false,
 					},

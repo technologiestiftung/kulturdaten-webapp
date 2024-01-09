@@ -105,7 +105,8 @@
 		"status-published": "Öffentlich",
 		"status-unpublished": "Entwurf",
 		"status-archived": "Archiviert",
-		"open-in-maps": "In Google Maps anzeigen"
+		"open-in-maps": "In Google Maps anzeigen",
+		"table-header-open-in-maps": "Maps"
 	},
 	"Organizations": {
 		"page-title": "Anbieter:innen",
