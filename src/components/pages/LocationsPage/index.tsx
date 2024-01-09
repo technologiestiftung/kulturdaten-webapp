@@ -1,6 +1,5 @@
 import { Location } from "@api/client/models/Location";
 import Page from "@components/Page";
-import { useCallback } from "react";
 import { useTranslations } from "use-intl";
 import { PaginationType } from "@common/types";
 import ROUTES from "@common/routes";
@@ -23,10 +22,6 @@ export default function LocationsPage(props: Props) {
 	const router = useRouter();
 	const { locations, pagination } = props;
 	const t = useTranslations("Locations");
-	const handleUpdated = useCallback(() => {
-		router.replace(router.asPath, undefined, { scroll: false });
-		// TODO: Show success message.
-	}, [router]);
 	return (
 		<Page metadata={{ title: t("page-title") }}>
 			<PageTitleHeader
