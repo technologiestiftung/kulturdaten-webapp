@@ -109,6 +109,10 @@
 	},
 	"Organizations": {
 		"page-title": "Anbieter:innen",
+		"table-header-identifier": "ID",
+		"table-header-title": "Anbieter:inn",
+		"table-header-status": "Status",
+		"number-organizations": "{count, plural, =1 {# Anbieter:in} other {# Anbieter:innen}}",
 		"create-organization": "Anbieter:in erstellen",
 		"edit-organization": "Anbieter:in bearbeiten",
 		"status-published": "Öffentlich",
