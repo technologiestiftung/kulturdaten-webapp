@@ -12,6 +12,7 @@ import ContentTable from "@components/ContentTable";
 import { getLocalizedLabel } from "@services/content";
 import LocationStatus from "@components/LocationStatus";
 import Pagination from "@components/Pagination";
+import MapsLink from "@components/MapsLink";
 
 interface Props {
 	locations: Location[];
@@ -48,6 +49,11 @@ export default function LocationsPage(props: Props) {
 					{
 						header: t("table-header-title"),
 						getContent: (location) => getLocalizedLabel(location.title!),
+						canBeSorted: false,
+					},
+					{
+						header: t("table-header-title"),
+						getContent: (location) => <MapsLink location={location} />,
 						canBeSorted: false,
 					},
 					{
