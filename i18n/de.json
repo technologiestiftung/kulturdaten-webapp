@@ -105,7 +105,7 @@
 		"status-published": "Öffentlich",
 		"status-unpublished": "Entwurf",
 		"status-archived": "Archiviert",
-		"open-in-maps": "In Google Maps anzeigen",
+		"open-in-maps": "Google Maps ↗",
 		"table-header-open-in-maps": "Maps"
 	},
 	"Organizations": {
