@@ -1,30 +1,66 @@
-import apiClient from "@api/client";
 import { Location } from "@api/client/models/Location";
 import Page from "@components/Page";
-import { useEffect, useState } from "react";
 import { useTranslations } from "use-intl";
-import LocationTable from "./LocationTable";
+import { PaginationType } from "@common/types";
+import ROUTES from "@common/routes";
+import Button from "@components/Button";
+import PageTitleHeader from "@components/PageTitleHeader";
+import { useRouter } from "next/router";
+import Spacer from "@components/Spacer";
+import ContentTable from "@components/ContentTable";
+import { getLocalizedLabel } from "@services/content";
+import LocationStatus from "@components/LocationStatus";
+import Pagination from "@components/Pagination";
+import MapsLink from "@components/MapsLink";
 
-const LocationsPage = () => {
+interface Props {
+	locations: Location[];
+	pagination: PaginationType;
+}
+
+export default function LocationsPage(props: Props) {
+	const router = useRouter();
+	const { locations, pagination } = props;
 	const t = useTranslations("Locations");
-	const [locations, setLocations] = useState<Location[] | undefined>(undefined);
-
-	const fetchLocations = () => {
-		apiClient.discoverCulturalData.getLocations().then((res) => {
-			const locationsObject = res?.data?.locations;
-			setLocations(locationsObject || undefined);
-		});
-	};
-
-	useEffect(() => {
-		fetchLocations();
-	}, []);
-
 	return (
 		<Page metadata={{ title: t("page-title") }}>
-			{locations ? <LocationTable locations={locations} fetchLocations={fetchLocations} /> : <div>Loading...</div>}
+			<PageTitleHeader
+				title={t("page-title")}
+				side={
+					<Button as="a" useNextLink={true} href={ROUTES.locationCreate()}>
+						{t("create-location")}
+					</Button>
+				}
+			/>
+			<Spacer size={20} />
+			<ContentTable
+				items={locations}
+				columns={[
+					{
+						header: t("table-header-title"),
+						getContent: (location) => getLocalizedLabel(location.title!),
+						canBeSorted: false,
+					},
+					{
+						header: t("table-header-identifier"),
+						getContent: (location) => location.identifier,
+						canBeSorted: false,
+					},
+					{
+						header: t("table-header-open-in-maps"),
+						getContent: (location) => <MapsLink location={location} />,
+						canBeSorted: false,
+					},
+					{
+						header: t("table-header-status"),
+						getContent: (location) => <LocationStatus status={location.status} />,
+						canBeSorted: false,
+					},
+				]}
+				onClickItem={(location) => router.push(ROUTES.locationDetails(location.identifier))}
+			/>
+			<Spacer size={20} />
+			<Pagination pagination={pagination} info={t("number-locations", { count: pagination.totalCount })} />
 		</Page>
 	);
-};
-
-export default LocationsPage;
+}

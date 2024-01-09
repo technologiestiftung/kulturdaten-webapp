@@ -96,14 +96,24 @@
 	},
 	"Locations": {
 		"page-title": "Orte",
+		"table-header-identifier": "ID",
+		"table-header-title": "Ortstitel",
+		"table-header-status": "Status",
+		"number-locations": "{count, plural, =1 {# Ort} other {# Orte}}",
 		"create-location": "Ort erstellen",
 		"edit-location": "Ort bearbeiten",
 		"status-published": "Öffentlich",
 		"status-unpublished": "Entwurf",
-		"status-archived": "Archiviert"
+		"status-archived": "Archiviert",
+		"open-in-maps": "Google Maps ↗",
+		"table-header-open-in-maps": "Maps"
 	},
 	"Organizations": {
 		"page-title": "Anbieter:innen",
+		"table-header-identifier": "ID",
+		"table-header-title": "Anbieter:inn",
+		"table-header-status": "Status",
+		"number-organizations": "{count, plural, =1 {# Anbieter:in} other {# Anbieter:innen}}",
 		"create-organization": "Anbieter:in erstellen",
 		"edit-organization": "Anbieter:in bearbeiten",
 		"status-published": "Öffentlich",
