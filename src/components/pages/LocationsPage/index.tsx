@@ -37,13 +37,13 @@ export default function LocationsPage(props: Props) {
 				items={locations}
 				columns={[
 					{
-						header: t("table-header-identifier"),
-						getContent: (location) => location.identifier,
+						header: t("table-header-title"),
+						getContent: (location) => getLocalizedLabel(location.title!),
 						canBeSorted: false,
 					},
 					{
-						header: t("table-header-title"),
-						getContent: (location) => getLocalizedLabel(location.title!),
+						header: t("table-header-identifier"),
+						getContent: (location) => location.identifier,
 						canBeSorted: false,
 					},
 					{
